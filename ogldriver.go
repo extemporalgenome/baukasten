@@ -1,5 +1,10 @@
 package baukasten
 
+import (
+	"os"
+	"github.com/banthar/gl"
+)
+
 type OGLDriver struct {
 
 }
