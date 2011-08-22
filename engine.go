@@ -43,6 +43,10 @@ func (e *Engine) Quit() os.Error {
 	return nil
 }
 
+func (e *Engine) GetOpenGLVersion() string {
+	return gl.GetString(gl.VERSION)
+}
+
 func (e *Engine) Resize(width, height int) os.Error {
 	if height == 0 {
 		height = 1

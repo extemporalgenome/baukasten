@@ -1,6 +1,7 @@
 package baukasten
 
 import (
+	"fmt"
 	"testing"
 	"os"
 )
@@ -13,6 +14,8 @@ func TestEngine(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+
+	fmt.Print(engine.GetOpenGLVersion())
 
 	err = engine.Resize(1024, 768)
 	if err != nil {
