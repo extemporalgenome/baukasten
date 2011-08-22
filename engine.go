@@ -12,6 +12,7 @@ import (
 type Engine struct {
 	graphicSettings *GraphicSettings
 	screen          *sdl.Surface
+	ticks           uint32
 }
 
 func NewEngine() *Engine {
@@ -85,6 +86,16 @@ func (e *Engine) Resize(width, height int) os.Error {
 	return nil
 }
 
+// Delta time in seconds.
+func (e *Engine) DeltaTime() float32 {
+	t := sdl.GetTicks()
+	delta := t - e.ticks
+	e.ticks = t
+	return float32(delta) / 1000.0
+}
+
+// TODO Frames
+
 func (e *Engine) BeginFrame() {
 	e.Clear()
 	gl.LoadIdentity()
@@ -92,7 +103,6 @@ func (e *Engine) BeginFrame() {
 
 func (e *Engine) EndFrame() {
 	sdl.GL_SwapBuffers()
-	// TODO Frames
 }
 
 func (e *Engine) Clear() {
