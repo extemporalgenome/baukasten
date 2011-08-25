@@ -115,7 +115,7 @@ func NewVector3(x, y, z float32) *Vector3 {
 
 // ### Vector4 ###
 
-typ Vector4 struct {
+type Vector4 struct {
 	X, Y, Z, W float32
 }
 
