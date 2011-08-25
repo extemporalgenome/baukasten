@@ -9,6 +9,7 @@ color.go\
 vector.go\
 point.go\
 size.go\
-rectangle.go
+rectangle.go\
+gradient.go
 
 include $(GOROOT)/src/Make.pkg
