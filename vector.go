@@ -110,7 +110,7 @@ type Vector3 struct {
 }
 
 func NewVector3(x, y, z float32) *Vector3 {
-	return &Vector3{x,y,z}
+	return &Vector3{x, y, z}
 }
 
 // ### Vector4 ###
