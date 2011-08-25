@@ -102,3 +102,23 @@ func DotProduct(a, b Vector2) float32 {
 func AngleBetween(a, b Vector2) float32 {
 	return float32(math.Acos(float64(DotProduct(a, b) / (a.Magnitude() * b.Magnitude()))))
 }
+
+// ### Vector3 ###
+
+type Vector3 struct {
+	X, Y, Z float32
+}
+
+func NewVector3(x, y, z float32) *Vector3 {
+	return &Vector3{x,y,z}
+}
+
+// ### Vector4 ###
+
+typ Vector4 struct {
+	X, Y, Z, W float32
+}
+
+func NewVector4(x, y, z, w float32) *Vector4 {
+	return &Vector4{x, y, z, w}
+}
