@@ -98,8 +98,6 @@ func (e *Engine) DeltaTime() float32 {
 	return float32(delta) / 1000.0
 }
 
-// TODO Frames
-
 func (e *Engine) BeginFrame() {
 	e.Clear()
 	gl.LoadIdentity()
@@ -111,5 +109,14 @@ func (e *Engine) EndFrame() {
 
 func (e *Engine) Clear() {
 	gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-	gl.ClearColor(0.0, 0.0, 0.0, 0.0)
+	gl.ClearColor(0.0, 0.0, 0.0, 1.0)
+}
+
+func (e *Engine) DrawPolygon(vertices []float32, colors []float32) {
+	gl.Begin(gl.TRIANGLES)
+	for i := 0; i < len(vertices); i += 4 {
+		gl.Color4f(colors[i], colors[i+1], colors[i+2], colors[i+3])
+		gl.Vertex4f(vertices[i], vertices[i+1], vertices[i+2], vertices[i+3])
+	}
+	gl.End()
 }
