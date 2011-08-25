@@ -5,7 +5,7 @@ type Rectangle struct {
 	Size     *Size
 }
 
-func NewRectangle(pos *Point, size *Size) {
+func NewRectangle(pos *Point, size *Size) *Rectangle {
 	return &Rectangle{pos, size}
 }
 
