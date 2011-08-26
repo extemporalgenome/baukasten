@@ -21,26 +21,22 @@ func TestEngine(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	/*
-		        vertices := []Vertex{ 
-				Vertex{ []float32{ 0, 0, -3.0, 1.0 }, []float32{ 1.0, 0.0, 0.0, 1.0 } }, 
-				Vertex{ []float32{ 1, 1, -3.0, 1.0 }, []float32{ 0.0, 1.0, 0.0, 1.0 } }, 
-				Vertex{ []float32{ 1, 0, -3.0, 1.0 }, []float32{ 0.0, 0.0, 1.0, 1.0 } } }
-	*/
-	vertices := []float32{
-		0, 0, -3, 1,
-		1, 1, -3, 1,
-		1, 0, -3, 1,
+
+	poly1 := []Vector2{
+		Vector2{0, 0},
+		Vector2{1, 1},
+		Vector2{1, 0},
 	}
-	colors := []float32{
-		1, 0, 0, 1,
-		0, 1, 0, 1,
-		0, 0, 1, 1,
+	poly2 := []Vector2{
+		Vector2{0, 0},
+		Vector2{-1, -1},
+		Vector2{-1, 0},
 	}
 
 	for i := 0; i < 1000; i++ { // Do 1000 frames
 		engine.BeginFrame()
-		engine.DrawPolygon(vertices, colors)
+		engine.DrawPolygon2(poly1)
+		engine.FillPolygon2(poly2)
 		engine.EndFrame()
 	}
 

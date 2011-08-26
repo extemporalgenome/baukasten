@@ -2,7 +2,6 @@ package baukasten
 
 import (
 	"fmt"
-	"math"
 	"os"
 
 	"github.com/banthar/gl"
@@ -64,26 +63,7 @@ func (e *Engine) Resize(width, height int) os.Error {
 	// Setup our viewport
 	gl.Viewport(0, 0, width, height)
 
-	// change to the projection matrix and set viewing volume
-	gl.MatrixMode(gl.PROJECTION)
-	gl.LoadIdentity()
-
-	// aspect ratio
-	aspect := float64(width) / float64(height)
-
-	// Set perspective
-	var fov, near, far float64
-	fov = 45.0
-	near = 0.1
-	far = 100.0
-	top := math.Tan(float64(fov*math.Pi/360.0)) * near
-	bottom := -top
-	left := aspect * bottom
-	right := aspect * top
-	gl.Frustum(left, right, bottom, top, near, far)
-
-	// Make sure we're changing the model view and not the projection
-	gl.MatrixMode(gl.MODELVIEW)
+	// TODO proper Camera and view handling
 
 	// Reset the view
 	gl.LoadIdentity()
@@ -112,11 +92,20 @@ func (e *Engine) Clear() {
 	gl.ClearColor(0.0, 0.0, 0.0, 1.0)
 }
 
-func (e *Engine) DrawPolygon(vertices []float32, colors []float32) {
+func (e *Engine) DrawPolygon2(vertices []Vector2) {
+	gl.PolygonMode(gl.FRONT_AND_BACK, gl.LINE)
 	gl.Begin(gl.TRIANGLES)
-	for i := 0; i < len(vertices); i += 4 {
-		gl.Color4f(colors[i], colors[i+1], colors[i+2], colors[i+3])
-		gl.Vertex4f(vertices[i], vertices[i+1], vertices[i+2], vertices[i+3])
+	for _, vector := range vertices {
+		gl.Vertex2f(vector.X, vector.Y)
+	}
+	gl.End()
+	gl.PolygonMode(gl.FRONT_AND_BACK, gl.FILL)
+}
+
+func (e *Engine) FillPolygon2(vertices []Vector2) {
+	gl.Begin(gl.TRIANGLES)
+	for _, vector := range vertices {
+		gl.Vertex2f(vector.X, vector.Y)
 	}
 	gl.End()
 }
