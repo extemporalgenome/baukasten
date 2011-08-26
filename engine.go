@@ -18,6 +18,7 @@ func NewEngine() *Engine {
 	return &Engine{}
 }
 
+// WARNING contains deprecated code as of OpenGL 3
 func (e *Engine) Init(graphicSettings *GraphicSettings) os.Error {
 	e.graphicSettings = graphicSettings
 	// SDL
@@ -42,10 +43,12 @@ func (e *Engine) Quit() os.Error {
 	return nil
 }
 
+// WARNING contains deprecated code as of OpenGL 3
 func (e *Engine) GetOpenGLVersion() string {
 	return gl.GetString(gl.VERSION)
 }
 
+// WARNING contains deprecated code as of OpenGL 3
 func (e *Engine) Resize(width, height int) os.Error {
 	if height == 0 {
 		height = 1
@@ -78,6 +81,7 @@ func (e *Engine) DeltaTime() float32 {
 	return float32(delta) / 1000.0
 }
 
+// WARNING contains deprecated code as of OpenGL 3
 func (e *Engine) BeginFrame() {
 	e.Clear()
 	gl.LoadIdentity()
@@ -92,20 +96,24 @@ func (e *Engine) Clear() {
 	gl.ClearColor(0.0, 0.0, 0.0, 1.0)
 }
 
+// WARNING contains deprecated code as of OpenGL 3
 func (e *Engine) StartList() uint {
 	list := gl.GenLists(1)
 	gl.NewList(list, gl.COMPILE)
 	return list
 }
 
+// WARNING contains deprecated code as of OpenGL 3
 func (e *Engine) EndList() {
 	gl.EndList()
 }
 
+// WARNING contains deprecated code as of OpenGL 3
 func (e *Engine) DrawList(list uint) {
 	gl.CallList(list)
 }
 
+// WARNING contains deprecated code as of OpenGL 3
 func (e *Engine) DrawPolygon2(vertices []Vector2) {
 	gl.PolygonMode(gl.FRONT_AND_BACK, gl.LINE)
 	gl.Begin(gl.TRIANGLES)
@@ -116,6 +124,7 @@ func (e *Engine) DrawPolygon2(vertices []Vector2) {
 	gl.PolygonMode(gl.FRONT_AND_BACK, gl.FILL)
 }
 
+// WARNING contains deprecated code as of OpenGL 3
 func (e *Engine) FillPolygon2(vertices []Vector2) {
 	gl.Begin(gl.TRIANGLES)
 	for _, vector := range vertices {
