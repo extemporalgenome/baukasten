@@ -92,6 +92,20 @@ func (e *Engine) Clear() {
 	gl.ClearColor(0.0, 0.0, 0.0, 1.0)
 }
 
+func (e *Engine) StartList() uint {
+	list := gl.GenLists(1)
+	gl.NewList(list, gl.COMPILE)
+	return list
+}
+
+func (e *Engine) EndList() {
+	gl.EndList()
+}
+
+func (e *Engine) DrawList(list uint) {
+	gl.CallList(list)
+}
+
 func (e *Engine) DrawPolygon2(vertices []Vector2) {
 	gl.PolygonMode(gl.FRONT_AND_BACK, gl.LINE)
 	gl.Begin(gl.TRIANGLES)

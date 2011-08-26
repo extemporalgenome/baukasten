@@ -33,10 +33,14 @@ func TestEngine(t *testing.T) {
 		Vector2{-1, 0},
 	}
 
+	list := engine.StartList()
+	engine.FillPolygon2(poly2)
+	engine.EndList()
+
 	for i := 0; i < 1000; i++ { // Do 1000 frames
 		engine.BeginFrame()
 		engine.DrawPolygon2(poly1)
-		engine.FillPolygon2(poly2)
+		engine.DrawList(list)
 		engine.EndFrame()
 	}
 
