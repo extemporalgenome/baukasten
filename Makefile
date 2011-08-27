@@ -6,7 +6,9 @@ GOFILES:=engine.go\
 graphicsettings.go\
 events.go\
 color.go\
+math.go\
 vector.go\
+matrix4x4.go\
 point.go\
 size.go\
 rectangle.go\
