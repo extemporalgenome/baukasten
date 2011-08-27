@@ -13,14 +13,16 @@ type Engine struct {
 	screen          *sdl.Surface
 	ticks           uint32
 
-	onSystemEvent chan SystemEvent
-	onResizeEvent chan ResizeEvent
+	onKeyboardEvent chan KeyboardEvent
+	onQuitEvent     chan QuitEvent
+	onResizeEvent   chan ResizeEvent
 }
 
 func NewEngine() *Engine {
 	return &Engine{
-		onResizeEvent: make(chan ResizeEvent),
-		onSystemEvent: make(chan SystemEvent)}
+		onKeyboardEvent: make(chan KeyboardEvent),
+		onResizeEvent:   make(chan ResizeEvent),
+		onQuitEvent:     make(chan QuitEvent)}
 }
 
 // WARNING contains deprecated code as of OpenGL 3
@@ -49,14 +51,30 @@ func (e *Engine) Quit() os.Error {
 }
 
 func (e *Engine) PollEvent() {
-	event := sdl.PollEvent()
-	switch event.(type) {
+	ev := sdl.PollEvent()
+	switch event := ev.(type) {
 	case *sdl.ResizeEvent:
-		re := event.(*sdl.ResizeEvent)
-		e.onResizeEvent <- ResizeEvent{int(re.W), int(re.H)}
+		e.onResizeEvent <- ResizeEvent{int(event.W), int(event.H)}
 	case *sdl.QuitEvent:
-		e.onSystemEvent <- SystemEvent_Quit
+		e.onQuitEvent <- QuitEvent{int(event.Type)}
+	case *sdl.KeyboardEvent:
+		e.onKeyboardEvent <- KeyboardEvent{
+			Key:   uint(event.Keysym.Sym),
+			State: uint(event.State),
+			Type:  uint(event.Type)}
 	}
+}
+
+func (e *Engine) OnKeyboardEvent() chan KeyboardEvent {
+	return e.onKeyboardEvent
+}
+
+func (e *Engine) OnQuitEvent() chan QuitEvent {
+	return e.onQuitEvent
+}
+
+func (e *Engine) OnResizeEvent() chan ResizeEvent {
+	return e.onResizeEvent
 }
 
 // WARNING contains deprecated code as of OpenGL 3
