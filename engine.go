@@ -8,6 +8,11 @@ import (
 	"sdl"
 )
 
+const (
+	MatrixProjection = iota
+	MatrixModelView
+)
+
 type Engine struct {
 	graphicSettings *GraphicSettings
 	screen          *sdl.Surface
@@ -147,20 +152,17 @@ func (e *Engine) DrawList(list uint) {
 	gl.CallList(list)
 }
 
-func (e *Engine) PushMatrix() {
-	gl.PushMatrix()
-}
-
-func (e *Engine) PopMatrix() {
-	gl.PopMatrix()
-}
-
-func (e *Engine) Translate(vec Vector3) {
-	gl.Translatef(vec.X, vec.Y, vec.Z)
-}
-
-func (e *Engine) Rotate(vec Vector3, amount float32) {
-	gl.Rotatef(vec.X, vec.Y, vec.Z, amount)
+func (e *Engine) SetMatrix(mType int, m Matrix4x4) os.Error {
+	switch mType {
+	case MatrixProjection:
+		gl.MatrixMode(gl.PROJECTION)
+	case MatrixModelView:
+		gl.MatrixMode(gl.MODELVIEW)
+	default:
+		return os.NewError("Engine.SetMatrix(): Invalid matrix type.")
+	}
+	gl.LoadMatrixf(&m.M11)
+	return nil
 }
 
 // WARNING contains deprecated code as of OpenGL 3
