@@ -92,6 +92,11 @@ func (v *Vector2) Normalize() {
 	v.Y *= l
 }
 
+func (v *Vector3) Normalized() *Vector3 {
+	l := 1.0 / v.Magnitude()
+	return &Vector3{v.X * l, v.Y * l, v.Z * l}
+}
+
 // Utility functions
 
 // Computes and returns the dot product.
@@ -111,6 +116,22 @@ type Vector3 struct {
 
 func NewVector3(x, y, z float32) *Vector3 {
 	return &Vector3{x, y, z}
+}
+
+func (v *Vector3) LengthSqrt() float32 {
+	return v.X*v.X + v.Y*v.Y + v.Z*v.Z
+}
+
+// Returns the length of the vector.
+func (v *Vector3) Magnitude() float32 {
+	return float32(math.Sqrt(float64(v.LengthSqrt())))
+}
+
+func (v *Vector3) Normalize() {
+	l := 1.0 / v.Magnitude()
+	v.X *= l
+	v.Y *= l
+	v.Z *= l
 }
 
 // ### Vector4 ###
