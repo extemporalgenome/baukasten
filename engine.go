@@ -12,10 +12,15 @@ type Engine struct {
 	graphicSettings *GraphicSettings
 	screen          *sdl.Surface
 	ticks           uint32
+
+	onSystemEvent chan SystemEvent
+	onResizeEvent chan ResizeEvent
 }
 
 func NewEngine() *Engine {
-	return &Engine{}
+	return &Engine{
+		onResizeEvent: make(chan ResizeEvent),
+		onSystemEvent: make(chan SystemEvent)}
 }
 
 // WARNING contains deprecated code as of OpenGL 3
@@ -41,6 +46,17 @@ func (e *Engine) Init(graphicSettings *GraphicSettings) os.Error {
 func (e *Engine) Quit() os.Error {
 	sdl.Quit()
 	return nil
+}
+
+func (e *Engine) PollEvent() {
+	event := sdl.PollEvent()
+	switch event.(type) {
+	case *sdl.ResizeEvent:
+		re := event.(*sdl.ResizeEvent)
+		e.onResizeEvent <- ResizeEvent{int(re.W), int(re.H)}
+	case *sdl.QuitEvent:
+		e.onSystemEvent <- SystemEvent_Quit
+	}
 }
 
 // WARNING contains deprecated code as of OpenGL 3
@@ -92,8 +108,8 @@ func (e *Engine) EndFrame() {
 }
 
 func (e *Engine) Clear() {
-	gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 	gl.ClearColor(0.0, 0.0, 0.0, 1.0)
+	gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 }
 
 // WARNING contains deprecated code as of OpenGL 3

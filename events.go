@@ -11,6 +11,10 @@ type FrameEvent struct {
 
 type SystemEvent int
 
+type ResizeEvent struct {
+	Width, Height int
+}
+
 type MouseMotionEvent interface {
 	Position() (int, int)
 	Difference() (int, int)
