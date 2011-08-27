@@ -161,7 +161,7 @@ func (e *Engine) SetMatrix(mType int, m Matrix4x4) os.Error {
 	default:
 		return os.NewError("Engine.SetMatrix(): Invalid matrix type.")
 	}
-	gl.LoadMatrixf(&m.M11)
+	gl.LoadMatrixf(&m[0])
 	return nil
 }
 
