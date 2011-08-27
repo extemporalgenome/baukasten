@@ -1,9 +1,5 @@
 package baukasten
 
-import (
-	"math"
-)
-
 type Vector2 struct {
 	X, Y float32
 }
@@ -41,14 +37,14 @@ func (v *Vector2) Normalized() *Vector2 {
 
 // Signbit returns true and true if x and y are negative or negative zero. 
 func (v *Vector2) Signbit() (bool, bool) {
-	return math.Signbit(float64(v.X)), math.Signbit(float64(v.Y))
+	return Signbit(v.X), Signbit(v.Y)
 }
 
 // Distance between two points.
 func (v *Vector2) Distance(vec Vector2) float32 {
 	x := v.X - vec.X
 	y := v.Y - vec.Y
-	return float32(math.Sqrt(float64(x*x + y*y)))
+	return Sqrt(x*x + y*y)
 }
 
 // Modify functions
@@ -83,7 +79,7 @@ func (v *Vector2) LengthSqrt() float32 {
 
 // Returns the length of the vector.
 func (v *Vector2) Magnitude() float32 {
-	return float32(math.Sqrt(float64(v.LengthSqrt())))
+	return Sqrt(v.LengthSqrt())
 }
 
 func (v *Vector2) Normalize() {
@@ -105,7 +101,7 @@ func DotProduct(a, b Vector2) float32 {
 }
 
 func AngleBetween(a, b Vector2) float32 {
-	return float32(math.Acos(float64(DotProduct(a, b) / (a.Magnitude() * b.Magnitude()))))
+	return Acos(DotProduct(a, b) / (a.Magnitude() * b.Magnitude()))
 }
 
 // ### Vector3 ###
@@ -124,7 +120,7 @@ func (v *Vector3) LengthSqrt() float32 {
 
 // Returns the length of the vector.
 func (v *Vector3) Magnitude() float32 {
-	return float32(math.Sqrt(float64(v.LengthSqrt())))
+	return Sqrt(v.LengthSqrt())
 }
 
 func (v *Vector3) Normalize() {
