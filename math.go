@@ -19,3 +19,7 @@ func Sqrt(value float32) float32 {
 func Signbit(value float32) bool {
 	return math.Signbit(float64(value))
 }
+
+func Acos(angle float32) float32 {
+	return float32(math.Acos(float64(angle)))
+}
