@@ -147,6 +147,22 @@ func (e *Engine) DrawList(list uint) {
 	gl.CallList(list)
 }
 
+func (e *Engine) PushMatrix() {
+	gl.PushMatrix()
+}
+
+func (e *Engine) PopMatrix() {
+	gl.PopMatrix()
+}
+
+func (e *Engine) Translate(vec Vector3) {
+	gl.Translatef(vec.X, vec.Y, vec.Z)
+}
+
+func (e *Engine) Rotate(vec Vector3, amount float32) {
+	gl.Rotatef(vec.X, vec.Y, vec.Z, amount)
+}
+
 // WARNING contains deprecated code as of OpenGL 3
 func (e *Engine) DrawPolygon2(vertices []Vector2) {
 	gl.PolygonMode(gl.FRONT_AND_BACK, gl.LINE)
