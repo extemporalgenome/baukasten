@@ -7,11 +7,11 @@ graphicsettings.go\
 events.go\
 color.go\
 math.go\
-vector.go\
 matrix4x4.go\
 point.go\
 size.go\
 rectangle.go\
-gradient.go
+gradient.go\
+vector.go
 
 include $(GOROOT)/src/Make.pkg
