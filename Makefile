@@ -3,15 +3,14 @@ include $(GOROOT)/src/Make.inc
 TARG:=github.com/Agon/baukasten
 
 GOFILES:=engine.go\
+drivers.go\
 graphicsettings.go\
-events.go\
-color.go\
 math.go\
-matrix4x4.go\
+vector.go\
 point.go\
 size.go\
 rectangle.go\
-gradient.go\
-vector.go
+glfwdriver.go\
+ogldriver.go
 
 include $(GOROOT)/src/Make.pkg

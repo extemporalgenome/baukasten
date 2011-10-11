@@ -9,12 +9,12 @@ type GraphicSettings struct {
 	BitDepth      int
 	Fullscreen    bool
 	Resizeable    bool
-	Caption       string
+	Title         string
 }
 
-func NewGraphicSettings(width, height, bitDepth int, fullscreen, resizeable bool, caption string) *GraphicSettings {
+func NewGraphicSettings(width, height, bitDepth int, fullscreen, resizeable bool, title string) *GraphicSettings {
 	if bitDepth > 0 && bitDepth <= 32 {
-		return &GraphicSettings{width, height, bitDepth, fullscreen, resizeable, caption}
+		return &GraphicSettings{width, height, bitDepth, fullscreen, resizeable, title}
 	}
-	return &GraphicSettings{width, height, BitDepthDefault, fullscreen, resizeable, caption}
+	return &GraphicSettings{width, height, BitDepthDefault, fullscreen, resizeable, title}
 }
