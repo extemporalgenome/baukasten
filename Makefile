@@ -11,6 +11,7 @@ point.go\
 size.go\
 rectangle.go\
 glfwdriver.go\
-ogldriver.go
+ogldriver.go\
+oglsurface.go
 
 include $(GOROOT)/src/Make.pkg
