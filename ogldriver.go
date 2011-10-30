@@ -16,10 +16,11 @@ import (
 
 type OglDriver struct {
 	settings *GraphicSettings
+	textures []gl.Texture
 }
 
 func NewOglDriver() *OglDriver {
-	return &OglDriver{}
+	return &OglDriver{textures: make([]gl.Texture, 0)}
 }
 
 func (driver *OglDriver) Init(graphicSettings *GraphicSettings) os.Error {
@@ -36,7 +37,9 @@ func (driver *OglDriver) Init(graphicSettings *GraphicSettings) os.Error {
 }
 
 func (driver *OglDriver) Close() {
-	// TODO Release all loaded memory assets (textures)
+	for _, texture := range driver.textures {
+		texture.Delete()
+	}
 }
 
 func (driver *OglDriver) BeginFrame() {
@@ -76,6 +79,9 @@ func (driver *OglDriver) LoadSurface(img image.Image) (surface Surface, err os.E
 	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
 
 	texture.Unbind(gl.TEXTURE_2D)
+
+	// Register the texture id to the GraphicDriver for clean deleting later.
+	driver.textures = append(driver.textures, texture)
 
 	return &OglSurface{texture}, nil
 }
