@@ -24,7 +24,7 @@ func TestEngine(t *testing.T) {
 	fmt.Println("Engine loaded.")
 
 	var logo Surface
-	logo, err = engine.LoadSurface("./baukastenlogo.tga")
+	logo, err = engine.OpenSurface("./baukastenlogo.tga")
 	if err != nil {
 		t.Fatal(err)
 		return

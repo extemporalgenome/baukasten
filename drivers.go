@@ -15,7 +15,7 @@ type ContextDriver interface {
 	Init(*GraphicSettings) os.Error
 	Close()
 	SwapBuffers()
-	LoadSurface(string) (Surface, os.Error)
+	OpenSurface(string) (Surface, os.Error)
 }
 
 type InputDriver interface {

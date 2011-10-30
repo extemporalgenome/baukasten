@@ -52,7 +52,7 @@ func (driver *GlfwDriver) SwapBuffers() {
 	glfw.SwapBuffers()
 }
 // TODO Move image loading to the Go package image
-func (driver *GlfwDriver) LoadSurface(name string) (surface Surface, err os.Error) {
+func (driver *GlfwDriver) OpenSurface(name string) (surface Surface, err os.Error) {
 	texture := gl.GenTexture()
 	texture.Bind(gl.TEXTURE_2D)
 

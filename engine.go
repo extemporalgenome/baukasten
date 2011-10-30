@@ -43,6 +43,6 @@ func (e *Engine) EndFrame() {
 	e.context.SwapBuffers()
 }
 
-func (e *Engine) LoadSurface(name string) (Surface, os.Error) {
-	return e.context.LoadSurface(name)
+func (e *Engine) OpenSurface(name string) (Surface, os.Error) {
+	return e.context.OpenSurface(name)
 }
