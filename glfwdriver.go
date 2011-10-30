@@ -2,6 +2,13 @@ package baukasten
 
 import (
 	"image"
+	// For image loading
+	_ "image/bmp"
+	_ "image/gif"
+	_ "image/jpeg"
+	_ "image/png"
+	_ "image/tiff"
+	_ "image/ycbcr"
 	"os"
 
 	"gl"
@@ -52,24 +59,28 @@ func (driver *GlfwDriver) Close() {
 func (driver *GlfwDriver) SwapBuffers() {
 	glfw.SwapBuffers()
 }
-// TODO Move image loading to the Go package image
+
 func (driver *GlfwDriver) OpenSurface(name string) (surface Surface, err os.Error) {
-	texture := gl.GenTexture()
-	texture.Bind(gl.TEXTURE_2D)
-
-	if glfw.LoadTexture2D(name, 0) {
-		return nil, os.NewError("Failed to load texture: " + name)
+	file, err := os.Open(name)
+	if err != nil {
+		return
 	}
-	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
-
-	texture.Unbind(gl.TEXTURE_2D)
-	return &OglSurface{texture}, nil
+	img, _, err := image.Decode(file)
+	if err != nil {
+		return
+	}
+	return driver.LoadSurface(img)
 }
 
 func (driver *GlfwDriver) LoadSurface(img image.Image) (surface Surface, err os.Error) {
-	rgba := imageToRGBA(img)
-
+	w := img.Bounds().Dx()
+	h := img.Bounds().Dy()
+	rgba := image.NewRGBA(w, h)
+	for x := 0; x < w; x++ {
+		for y := 0; y < h; y++ {
+			rgba.Set(x, y, img.At(x, y))
+		}
+	}
 	texture := gl.GenTexture()
 	texture.Bind(gl.TEXTURE_2D)
 
@@ -81,18 +92,6 @@ func (driver *GlfwDriver) LoadSurface(img image.Image) (surface Surface, err os.
 	texture.Unbind(gl.TEXTURE_2D)
 
 	return &OglSurface{texture}, nil
-}
-
-func imageToRGBA(img image.Image) (rgba *image.RGBA) {
-	w := img.Bounds().Dx()
-	h := img.Bounds().Dy()
-	rgba = image.NewRGBA(w, h)
-	for x := 0; x < w; x++ {
-		for y := 0; y < h; y++ {
-			rgba.Set(x, y, img.At(x, y))
-		}
-	}
-	return
 }
 
 // InputDriver implementations
