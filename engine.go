@@ -45,9 +45,9 @@ func (e *Engine) EndFrame() {
 }
 
 func (e *Engine) OpenSurface(name string) (Surface, os.Error) {
-	return e.context.OpenSurface(name)
+	return e.graphic.OpenSurface(name)
 }
 
 func (e *Engine) LoadSurface(image image.Image) (Surface, os.Error) {
-	return e.context.LoadSurface(image)
+	return e.graphic.LoadSurface(image)
 }
