@@ -1,6 +1,7 @@
 package baukasten
 
 import (
+	"image"
 	"os"
 )
 
@@ -16,6 +17,7 @@ type ContextDriver interface {
 	Close()
 	SwapBuffers()
 	OpenSurface(string) (Surface, os.Error)
+	LoadSurface(image.Image) (Surface, os.Error)
 }
 
 type InputDriver interface {

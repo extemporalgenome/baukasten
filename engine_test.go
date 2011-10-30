@@ -2,8 +2,16 @@ package baukasten
 
 import (
 	"fmt"
+	"image"
+	_ "image/png"
+	"io"
 	"testing"
 	"os"
+)
+
+const (
+	LogoFileNameTGA = "./baukastenlogo.tga"
+	LogoFileNamePNG = "./baukastenlogo.png"
 )
 
 func TestEngine(t *testing.T) {
@@ -24,17 +32,39 @@ func TestEngine(t *testing.T) {
 	fmt.Println("Engine loaded.")
 
 	var logo Surface
-	logo, err = engine.OpenSurface("./baukastenlogo.tga")
+	logo, err = engine.OpenSurface(LogoFileNameTGA)
 	if err != nil {
 		t.Fatal(err)
 		return
 	}
-	fmt.Println("Surface loaded.")
+	fmt.Println("Surface1 opened.")
 
-	rec := NewRectangleF(&Vector2{0, 0}, NewSizeF(1, 1))
+	var logo2 Surface
+	var logoStream io.Reader
+	var logo2Img image.Image
+	logoStream, err = os.Open(LogoFileNamePNG)
+	if err != nil {
+		t.Fatal(err)
+		return
+	}
+	logo2Img, _, err = image.Decode(logoStream)
+	if err != nil {
+		t.Fatal(err)
+		return
+	}
+	logo2, err = engine.LoadSurface(logo2Img)
+	if err != nil {
+		t.Fatal(err)
+		return
+	}
+	fmt.Println("Surface2 loaded.")
+
+	rec1 := NewRectangleF(&Vector2{-0.5, 0}, NewSizeF(1, 1))
+	rec2 := NewRectangleF(&Vector2{0.5, 0}, NewSizeF(1, 1))
 	for i := 0; i < 1000; i++ {
 		engine.BeginFrame()
-		logo.Draw(rec)
+		logo.Draw(rec1)
+		logo2.Draw(rec2)
 		engine.EndFrame()
 	}
 }
