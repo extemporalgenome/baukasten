@@ -1,4 +1,4 @@
-###*Baukasten* is a game library written in Go which focuses on easy game development.<br>*Baukasten* is the German word for "construction kit".
+*Baukasten* is a game library written in Go which focuses on easy game development. *Baukasten* is the German word for "construction kit".
 
 ## Description
 *Baukasten* is modular as it uses so called drivers. <br>
@@ -12,6 +12,7 @@ GraphicDrivers:
 - OpenGL
 
 ## Dependencies:
+- Go weekly.2012-01-20
 - Graphic rendering with OpenGL 3.3: https://github.com/chsc/GoGL
 - Context creation with GLFW 2.7: https://github.com/jteeuwen/glfw
 - Text support with freetype: http://code.google.com/p/freetype-go/
