@@ -4,6 +4,7 @@ import (
 	"image/color"
 )
 
+// Converts a Go type color.Color to red, green, blue and alpha float32 values with a range of 0 to 1.
 func ConvertColorF(color color.Color) (r float32, g float32, b float32, a float32) {
 	red, green, blue, alpha := color.RGBA()
 	if red == 0 {

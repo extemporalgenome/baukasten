@@ -1,9 +1,7 @@
+## Baukasten
 Baukasten is a game library written in Go which focuses on easy game development.<br>
-Baukasten is the German word for "construction kit".
-
-## Description
-Baukasten is modular as it uses so called drivers. <br>
-At the moment following drivers are available:<br>
+Baukasten is the German word for "construction kit".<br>
+The library is modular as it uses so called drivers. At the moment following drivers are available:<br>
 ContextDrivers:
 
 - GLFW
@@ -13,15 +11,15 @@ GraphicDrivers:
 - OpenGL
 
 ## Dependencies
-- Go weekly.2012-01-20
+- Go weekly.2012-01-20: http://weekly.golang.org
 - Graphic rendering with OpenGL 3.3: https://github.com/chsc/GoGL
 - Context creation with GLFW 2.7: https://github.com/jteeuwen/glfw
 - Text support with freetype: http://code.google.com/p/freetype-go/
 
 ## Documentation
-Engine: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten
-GLFW driver: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/glfw
-OpenGL 3.3 driver: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/ogl
+- Engine: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten
+- GLFW driver: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/glfw
+- OpenGL 3.3 driver: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/ogl
 
 ## Status
 At the moment you can only load the engine, render images as surfaces and create surfaces from text.<br>

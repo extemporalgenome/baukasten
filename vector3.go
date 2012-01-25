@@ -4,6 +4,7 @@ import (
 	"strconv"
 )
 
+// Vector3 is a three dimensional vector.
 type Vector3 struct{ X, Y, Z float32 }
 
 func Vec3(x, y, z float32) Vector3 {

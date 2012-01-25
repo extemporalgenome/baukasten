@@ -4,6 +4,7 @@ import (
 	"strconv"
 )
 
+// Vector2 is a two dimensional vector.
 type Vector2 struct{ X, Y float32 }
 
 func Vec2(x, y float32) Vector2 {

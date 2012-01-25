@@ -21,6 +21,7 @@ func NewEngine(graphic GraphicDriver, context ContextDriver) *Engine {
 	return &Engine{graphic: graphic, context: context}
 }
 
+// Initializes the engine and it's drivers.
 func (e *Engine) Init(settings *GraphicSettings) (err error) {
 	err = e.context.Init(settings)
 	if err != nil {
@@ -35,6 +36,7 @@ func (e *Engine) Init(settings *GraphicSettings) (err error) {
 	return nil
 }
 
+// Shuts down the engine and it's drivers.
 func (e *Engine) Close() {
 	e.graphic.Close()
 	e.context.Close()
@@ -49,15 +51,18 @@ func (e *Engine) DeltaTime() float32 {
 	return float32(duration.Seconds())
 }
 
+// This should be called before each frame is rendered.
 func (e *Engine) BeginFrame() {
 	e.graphic.BeginFrame()
 }
 
+// This ends the current rendering to a frame.
 func (e *Engine) EndFrame() {
 	e.graphic.EndFrame()
 	e.context.SwapBuffers()
 }
 
+// Resizes the graphic screen.
 func (e *Engine) GraphicResize(w, h int) {
 	e.graphic.Resize(w, h)
 }
