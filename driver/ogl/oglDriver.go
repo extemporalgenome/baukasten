@@ -16,23 +16,45 @@ const (
 
 var DefaultDriver = NewDriver()
 
-type Driver struct{}
+type Driver struct {
+	primitivesProgram        *Program
+	primitivesAttributeCoord *AttributeLocation
+}
 
 func NewDriver() *Driver {
 	return &Driver{}
 }
 
-func (d *Driver) Init(graphicSettings *baukasten.GraphicSettings) (err error) {
-
+func (d *Driver) Init(graphicSettings *baukasten.GraphicSettings) error {
+	var err error
 	err = gl.Init()
 	if err != nil {
-		err = errors.New(fmt.Sprintf("Init OpenGL extension loading failed with %s.\n", err))
-		return
+		return errors.New(fmt.Sprintf("Init OpenGL extension loading failed with %s.\n", err))
 	}
 
 	gl.Enable(gl.BLEND)
 	gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
-	return
+
+	// Load primitives shaders
+	primitivesVertexShader, err := LoadShader(PrimitiveVertexShaderSource, VertexShaderType)
+	if err != nil {
+		return err
+	}
+	primitivesFragmentShader, err := LoadShader(PrimitiveFragmentShaderSource, FragmentShaderType)
+	if err != nil {
+		return err
+	}
+	d.primitivesProgram = NewProgram()
+	d.primitivesProgram.AttachShaders(primitivesVertexShader, primitivesFragmentShader)
+	err = d.primitivesProgram.Link()
+	if err != nil {
+		return err
+	}
+	d.primitivesAttributeCoord, err = d.primitivesProgram.GetAttributeLocation(PrimitiveAttributeLocationName)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (d *Driver) Close() {}
@@ -54,8 +76,4 @@ func (d *Driver) Resize(w, h int) {
 	ScreenWidth = w
 	ScreenHeight = h
 	gl.Viewport(0, 0, gl.Sizei(w), gl.Sizei(h))
-}
-
-func Offset(p gl.Pointer, o uint) gl.Pointer {
-	return gl.Pointer(uintptr(p) + uintptr(o))
 }

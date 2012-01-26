@@ -157,14 +157,14 @@ func (s *Surface) Draw(x, y float32) {
 
 	s.vbo.Bind()
 	defer s.vbo.Unbind()
-	s.coord2d.AttribPointer(2, gl.FLOAT, false, 16, Offset(nil, 0))
+	s.coord2d.AttribPointer(2, gl.FLOAT, false, 16, gl.Offset(nil, 0))
 
 	s.texture.Bind()
 	defer s.texture.Unbind()
 
 	s.texcoord.Enable()
 	defer s.texcoord.Disable()
-	s.texcoord.AttribPointer(2, gl.FLOAT, false, 16, Offset(nil, 8))
+	s.texcoord.AttribPointer(2, gl.FLOAT, false, 16, gl.Offset(nil, 8))
 
 	s.vbo.DrawArrays(0, 6)
 }
