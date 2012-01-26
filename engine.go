@@ -118,6 +118,10 @@ func (e *Engine) MouseWheelEvent() chan MouseWheelEvent {
 	return e.input.MouseWheelEvent()
 }
 
+func (e *Engine) DrawTriangle(vec1, vec2, vec3 Vector2, color color.Color) {
+	e.graphic.DrawTriangle(vec1, vec2, vec3, color)
+}
+
 func (e *Engine) OpenSurface(name string) (Surface, error) {
 	return e.graphic.OpenSurface(name)
 }

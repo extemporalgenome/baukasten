@@ -14,6 +14,7 @@ type GraphicDriver interface {
 	OpenSurface(string) (Surface, error)
 	LoadSurface(image.Image) (Surface, error)
 	Resize(int, int)
+	DrawTriangle(vec1, vec2, vec3 Vector2, color color.Color)
 }
 
 type ContextDriver interface {
