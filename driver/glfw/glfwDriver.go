@@ -9,9 +9,9 @@ const (
 	ChanBuffer = 1
 )
 
-var DefaultDriver = NewGlfwDriver()
+var DefaultDriver = NewDriver()
 
-type GlfwDriver struct {
+type Driver struct {
 	graphicSettings    *baukasten.GraphicSettings
 	resizeEvent        chan baukasten.WindowSizeEvent
 	contextEvent       chan baukasten.ContextEvent
@@ -21,8 +21,8 @@ type GlfwDriver struct {
 	mouseWheelEvent    chan baukasten.MouseWheelEvent
 }
 
-func NewGlfwDriver() *GlfwDriver {
-	return &GlfwDriver{
+func NewDriver() *Driver {
+	return &Driver{
 		resizeEvent:        make(chan baukasten.WindowSizeEvent, ChanBuffer),
 		contextEvent:       make(chan baukasten.ContextEvent, ChanBuffer),
 		keyEvent:           make(chan baukasten.KeyEvent, ChanBuffer),
@@ -32,7 +32,7 @@ func NewGlfwDriver() *GlfwDriver {
 	}
 }
 
-func (driver *GlfwDriver) Init(settings *baukasten.GraphicSettings) (err error) {
+func (d *Driver) Init(settings *baukasten.GraphicSettings) (err error) {
 	err = glfw.Init()
 	if err != nil {
 		return
@@ -57,55 +57,55 @@ func (driver *GlfwDriver) Init(settings *baukasten.GraphicSettings) (err error) 
 	glfw.SetWindowTitle(settings.Title)
 	glfw.SetWindowSizeCallback(func(w, h int) {
 		select {
-		case driver.resizeEvent <- NewWindowSize(uint(w), uint(h)):
+		case d.resizeEvent <- NewWindowSize(uint(w), uint(h)):
 		default:
 		}
 	})
 	glfw.SetWindowCloseCallback(func() int {
 		select {
-		case driver.contextEvent <- ContextEvent(baukasten.SystemQuit):
+		case d.contextEvent <- ContextEvent(baukasten.SystemQuit):
 		default:
 		}
 		return 0
 	})
 	glfw.SetKeyCallback(func(key, state int) {
 		select {
-		case driver.keyEvent <- NewKeyEvent(key, state):
+		case d.keyEvent <- NewKeyEvent(key, state):
 		default:
 		}
 	})
 
-	driver.graphicSettings = settings
+	d.graphicSettings = settings
 	return nil
 }
 
-func (driver *GlfwDriver) ResizeEvent() chan baukasten.WindowSizeEvent {
-	return driver.resizeEvent
+func (d *Driver) ResizeEvent() chan baukasten.WindowSizeEvent {
+	return d.resizeEvent
 }
 
-func (driver *GlfwDriver) ContextEvent() chan baukasten.ContextEvent {
-	return driver.contextEvent
+func (d *Driver) ContextEvent() chan baukasten.ContextEvent {
+	return d.contextEvent
 }
 
-func (driver *GlfwDriver) KeyEvent() chan baukasten.KeyEvent {
-	return driver.keyEvent
+func (d *Driver) KeyEvent() chan baukasten.KeyEvent {
+	return d.keyEvent
 }
 
-func (driver *GlfwDriver) MouseButtonEvent() chan baukasten.MouseButtonEvent {
-	return driver.mouseButtonEvent
+func (d *Driver) MouseButtonEvent() chan baukasten.MouseButtonEvent {
+	return d.mouseButtonEvent
 }
-func (driver *GlfwDriver) MousePositionEvent() chan baukasten.MousePositionEvent {
-	return driver.mousePositionEvent
+func (d *Driver) MousePositionEvent() chan baukasten.MousePositionEvent {
+	return d.mousePositionEvent
 }
-func (driver *GlfwDriver) MouseWheelEvent() chan baukasten.MouseWheelEvent {
-	return driver.mouseWheelEvent
+func (d *Driver) MouseWheelEvent() chan baukasten.MouseWheelEvent {
+	return d.mouseWheelEvent
 }
 
-func (driver *GlfwDriver) Close() {
+func (d *Driver) Close() {
 	glfw.Terminate()
 	glfw.CloseWindow()
 }
 
-func (driver *GlfwDriver) SwapBuffers() {
+func (d *Driver) SwapBuffers() {
 	glfw.SwapBuffers()
 }

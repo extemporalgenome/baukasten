@@ -12,15 +12,15 @@ type Texture struct {
 	id gl.Uint
 }
 
-func (driver *OpenGLDriver) OpenTexture(name string) (*Texture, error) {
+func (d *Driver) OpenTexture(name string) (*Texture, error) {
 	img, err := baukasten.OpenImage(name)
 	if err != nil {
 		return nil, err
 	}
-	return driver.LoadTexture(img)
+	return d.LoadTexture(img)
 }
 
-func (driver *OpenGLDriver) LoadTexture(img image.Image) (*Texture, error) {
+func (d *Driver) LoadTexture(img image.Image) (*Texture, error) {
 	w := img.Bounds().Dx()
 	h := img.Bounds().Dy()
 	rgba := image.NewRGBA(image.Rect(0, 0, w, h))

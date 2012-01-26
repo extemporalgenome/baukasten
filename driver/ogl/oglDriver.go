@@ -14,11 +14,15 @@ const (
 	FragmentShaderType
 )
 
-var DefaultDriver = &OpenGLDriver{}
+var DefaultDriver = NewDriver()
 
-type OpenGLDriver struct{}
+type Driver struct{}
 
-func (driver *OpenGLDriver) Init(graphicSettings *baukasten.GraphicSettings) (err error) {
+func NewDriver() *Driver {
+	return &Driver{}
+}
+
+func (d *Driver) Init(graphicSettings *baukasten.GraphicSettings) (err error) {
 
 	err = gl.Init()
 	if err != nil {
@@ -31,24 +35,22 @@ func (driver *OpenGLDriver) Init(graphicSettings *baukasten.GraphicSettings) (er
 	return
 }
 
-func (driver *OpenGLDriver) Close() {
+func (d *Driver) Close() {}
 
-}
-
-func (driver *OpenGLDriver) BeginFrame() {
+func (d *Driver) BeginFrame() {
 	gl.Clear(gl.COLOR_BUFFER_BIT)
 }
 
-func (driver *OpenGLDriver) SetClearColor(color color.Color) {
+func (d *Driver) SetClearColor(color color.Color) {
 	r, g, b, a := baukasten.ConvertColorF(color)
 	gl.ClearColor(gl.Clampf(r), gl.Clampf(g), gl.Clampf(b), gl.Clampf(a))
 }
 
-func (driver *OpenGLDriver) EndFrame() {
+func (d *Driver) EndFrame() {
 
 }
 
-func (driver *OpenGLDriver) Resize(w, h int) {
+func (d *Driver) Resize(w, h int) {
 	ScreenWidth = w
 	ScreenHeight = h
 	gl.Viewport(0, 0, gl.Sizei(w), gl.Sizei(h))

@@ -45,19 +45,19 @@ type Surface struct {
 var ScreenHeight = 480
 var ScreenWidth = 640
 
-func (driver *OpenGLDriver) OpenSurface(name string) (baukasten.Surface, error) {
+func (d *Driver) OpenSurface(name string) (baukasten.Surface, error) {
 	img, err := baukasten.OpenImage(name)
 	if err != nil {
 		return nil, err
 	}
-	return driver.LoadSurface(img)
+	return d.LoadSurface(img)
 }
 
-func (driver *OpenGLDriver) LoadSurface(img image.Image) (baukasten.Surface, error) {
+func (d *Driver) LoadSurface(img image.Image) (baukasten.Surface, error) {
 	var err error
 	s := &Surface{}
 	// Texture
-	s.texture, err = driver.LoadTexture(img)
+	s.texture, err = d.LoadTexture(img)
 	if err != nil {
 		return nil, err
 	}
