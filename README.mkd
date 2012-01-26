@@ -31,7 +31,6 @@ It is also possible to track mouse, key and system events.
 - Extended surface rendering
 - Simple 2D camera matrix
 - Shader support (loading custom shaders for surface rendering)
-- Font driver (extract the font system into a driver interface)
 - Sound driver
 
 ## Note

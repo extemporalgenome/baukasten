@@ -1,10 +1,9 @@
-package baukasten
+package freetype
 
 import (
 	"image"
 	"image/color"
 	"image/draw"
-	"io/ioutil"
 
 	"code.google.com/p/freetype-go/freetype"
 )
@@ -12,21 +11,6 @@ import (
 type FontContext struct {
 	context *freetype.Context
 	units   int
-}
-
-func OpenFont(name string) (*FontContext, error) {
-	b, err := ioutil.ReadFile(name)
-	if err != nil {
-		return nil, err
-	}
-	font, err := freetype.ParseFont(b)
-	if err != nil {
-		return nil, err
-	}
-	// Context
-	c := freetype.NewContext()
-	c.SetFont(font)
-	return &FontContext{c, font.UnitsPerEm()}, nil
 }
 
 func (f *FontContext) Render(text string, width, height int, size float64, color color.Color) image.Image {

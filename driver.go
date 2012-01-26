@@ -31,13 +31,18 @@ type InputDriver interface {
 	MouseWheelEvent() chan MouseWheelEvent
 }
 
+type FontDriver interface {
+	OpenFont(fileName string) (Font, error)
+	LoadFont(data []byte) (Font, error)
+}
+
+type Font interface {
+	Render(text string, width, height int, size float64, color color.Color) image.Image
+}
+
 type Surface interface {
 	Draw(x, y float32)
 	Delete()
 	Scale(x, y float32)
 	Rotate(angle float32)
-}
-
-type Font interface {
-	Render(text string, width, height int, size float64, color color.Color) image.Image
 }

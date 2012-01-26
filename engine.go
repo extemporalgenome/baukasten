@@ -12,6 +12,7 @@ type Engine struct {
 	graphic GraphicDriver
 	context ContextDriver
 	input   InputDriver
+	font    FontDriver
 
 	settings *GraphicSettings
 
@@ -19,8 +20,8 @@ type Engine struct {
 	lastTime    time.Time
 }
 
-func NewEngine(graphic GraphicDriver, context ContextDriver, input InputDriver) *Engine {
-	return &Engine{graphic: graphic, context: context, input: input}
+func NewEngine(graphic GraphicDriver, context ContextDriver, input InputDriver, font FontDriver) *Engine {
+	return &Engine{graphic: graphic, context: context, input: input, font: font}
 }
 
 // Initializes the engine and it's drivers.
@@ -102,7 +103,7 @@ func (e *Engine) LoadSurface(image image.Image) (Surface, error) {
 }
 
 func (e *Engine) OpenFont(name string) (Font, error) {
-	return OpenFont(name)
+	return e.font.OpenFont(name)
 }
 
 func (e *Engine) RenderSurface(text string, width, height int, size float64, color color.Color, font Font) (Surface, error) {
