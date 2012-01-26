@@ -8,7 +8,12 @@ import (
 	"code.google.com/p/freetype-go/freetype"
 )
 
-type Driver struct {
+var DefaultDriver = NewDriver()
+
+type Driver struct{}
+
+func NewDriver() *Driver {
+	return &Driver{}
 }
 
 func (d *Driver) OpenFont(fileName string) (baukasten.Font, error) {
