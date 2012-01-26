@@ -18,8 +18,9 @@ GraphicDrivers:
 
 ## Documentation
 - Engine: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten
-- GLFW driver: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/glfw
-- OpenGL 3.3 driver: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/ogl
+- GLFW driver implements ContextDriver and InputDriver: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/glfw
+- OpenGL 3.3 driver implements GraphicDriver: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/ogl
+- Freetype driver implements FontDriver: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/freetype
 
 ## Status
 At the moment you can only load the engine, render images as surfaces and create surfaces from text.<br>
