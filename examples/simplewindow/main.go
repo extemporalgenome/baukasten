@@ -1,3 +1,9 @@
+// In this example a GraphicDriver, ContextDriver and an InputDriver are loaded into the engine.
+// By initialzing the engine and the drivers a window is created and events are logged.
+// A time.Ticker locks the frames to maximum of MaxFPS.
+// KeyEvents and ResizeEvents are logged. On WindowResize the GraphicDrivers viewport is resized, too.
+// The ContextEvent SystemQuit ends the progam.
+
 package main
 
 import (
@@ -11,7 +17,7 @@ import (
 )
 
 const (
-	// 16/9
+	// 16/9 aspect ratio
 	ScreenWidth  = 853
 	ScreenHeight = 480
 	BitDepth     = 0
@@ -28,6 +34,8 @@ func main() {
 	var err error
 	graphicSettings := baukasten.NewGraphicSettings(ScreenWidth, ScreenHeight, BitDepth, FullScreen, Resizeable, WindowTitle)
 
+	// Only a GraphicDriver and a ContextDriver are required to run the engine.
+	// But in this example we log keyboard events which requires to load an InputDriver into the engine.
 	engine = baukasten.NewEngine(ogl.DefaultDriver, glfw.DefaultDriver, glfw.DefaultDriver, nil)
 	err = engine.Init(graphicSettings)
 	if err != nil {
@@ -50,9 +58,8 @@ func main() {
 			log.Printf("Window resized to %d,%d\n", windowSize.Width(), windowSize.Height())
 			engine.GraphicResize(int(windowSize.Width()), int(windowSize.Height()))
 		case keyEvent := <-engine.KeyEvent():
-			log.Printf("KeyEvent: Key %d=%s , State %d", keyEvent.Key(), string(keyEvent.Key()), keyEvent.State())
+			log.Printf("KeyEvent: Key %d=%s , State=%d", keyEvent.Key(), string(keyEvent.Key()), keyEvent.State())
 		case <-ticker.C:
-			// Graphics:
 			engine.BeginFrame()
 			// TODO Render code here
 			engine.EndFrame()
