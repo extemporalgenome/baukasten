@@ -40,9 +40,17 @@ func (d *Driver) Init(graphicSettings *baukasten.GraphicSettings) error {
 	if err != nil {
 		return fmt.Errorf("Init OpenGL extension loading failed at loading PrimitivesVertexShader with %s.\n", err)
 	}
+	err = primitivesVertexShader.Compile()
+	if err != nil {
+		return fmt.Errorf("Init OpenGL extension loading failed at compiling PrimitivesVertexShader with %s.\n", err)
+	}
 	primitivesFragmentShader, err := LoadShader(PrimitiveFragmentShaderSource, FragmentShaderType)
 	if err != nil {
 		return fmt.Errorf("Init OpenGL extension loading failed at loading PrimitivesFragmentShader with %s.\n", err)
+	}
+	err = primitivesFragmentShader.Compile()
+	if err != nil {
+		return fmt.Errorf("Init OpenGL extension loading failed at compiling FragmentShaderType with %s.\n", err)
 	}
 	d.primitivesProgram = NewProgram()
 	d.primitivesProgram.AttachShaders(primitivesVertexShader, primitivesFragmentShader)

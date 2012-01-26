@@ -43,7 +43,7 @@ func (p *Program) GetAttributeLocation(name string) (*AttributeLocation, error) 
 	if attributeTemp == -1 {
 		return nil, errors.New(fmt.Sprintf("Could not bind attribute %s\n", gl.GoString(attributeName)))
 	}
-	
+
 	return &AttributeLocation{id: gl.Uint(attributeTemp)}, nil
 }
 
