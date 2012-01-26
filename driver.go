@@ -20,9 +20,11 @@ type ContextDriver interface {
 	Init(*GraphicSettings) error
 	Close()
 	SwapBuffers()
-
 	ResizeEvent() chan WindowSizeEvent
 	ContextEvent() chan ContextEvent
+}
+
+type InputDriver interface {
 	KeyEvent() chan KeyEvent
 	MouseButtonEvent() chan MouseButtonEvent
 	MousePositionEvent() chan MousePositionEvent

@@ -1,3 +1,4 @@
+// Baukasten is a game library with focuse on easy game development.
 package baukasten
 
 import (
@@ -10,6 +11,7 @@ type Engine struct {
 	// Drivers
 	graphic GraphicDriver
 	context ContextDriver
+	input   InputDriver
 
 	settings *GraphicSettings
 
@@ -17,8 +19,8 @@ type Engine struct {
 	lastTime    time.Time
 }
 
-func NewEngine(graphic GraphicDriver, context ContextDriver) *Engine {
-	return &Engine{graphic: graphic, context: context}
+func NewEngine(graphic GraphicDriver, context ContextDriver, input InputDriver) *Engine {
+	return &Engine{graphic: graphic, context: context, input: input}
 }
 
 // Initializes the engine and it's drivers.
@@ -76,7 +78,19 @@ func (e *Engine) ContextEvent() chan ContextEvent {
 }
 
 func (e *Engine) KeyEvent() chan KeyEvent {
-	return e.context.KeyEvent()
+	return e.input.KeyEvent()
+}
+
+func (e *Engine) MouseButtonEvent() chan MouseButtonEvent {
+	return e.input.MouseButtonEvent()
+}
+
+func (e *Engine) MousePositionEvent() chan MousePositionEvent {
+	return e.input.MousePositionEvent()
+}
+
+func (e *Engine) MouseWheelEvent() chan MouseWheelEvent {
+	return e.input.MouseWheelEvent()
 }
 
 func (e *Engine) OpenSurface(name string) (Surface, error) {
