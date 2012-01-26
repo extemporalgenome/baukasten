@@ -10,13 +10,13 @@ import (
 
 const (
 	PrimitiveCoordAttribLocationName = "coord"
-	PrimitiveColerAttribLocationName = "v_color"
+	PrimitiveColorAttribLocationName = "v_color"
 	PrimitiveVertexShaderSource      = "#version 120\n" +
 		"attribute vec2 " + PrimitiveCoordAttribLocationName + ";\n" +
-		"attribute vec4 " + PrimitiveColerAttribLocationName + ";\n" +
+		"attribute vec4 " + PrimitiveColorAttribLocationName + ";\n" +
 		"attribute vec4 f_color;\n" +
 		"void main(void) {\n  gl_Position = vec4(" + PrimitiveCoordAttribLocationName + ", 0.0, 1.0);" +
-		"f_color = " + PrimitiveColerAttribLocationName + ";\n}"
+		"f_color = " + PrimitiveColorAttribLocationName + ";\n}"
 	PrimitiveFragmentShaderSource = "#version 120\n" +
 		"varying vec4 f_color;\n" +
 		"void main(void) {\n" +

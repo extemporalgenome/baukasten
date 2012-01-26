@@ -38,22 +38,22 @@ func (p *Program) Use() {
 
 func (p *Program) GetAttributeLocation(name string) (*AttributeLocation, error) {
 	attributeName := gl.GLString(name)
+	defer gl.GLStringFree(attributeName)
 	attributeTemp := gl.GetAttribLocation(p.id, attributeName)
 	if attributeTemp == -1 {
 		return nil, errors.New(fmt.Sprintf("Could not bind attribute %s\n", gl.GoString(attributeName)))
 	}
-	id := gl.Uint(attributeTemp)
-	gl.GLStringFree(attributeName)
-	return &AttributeLocation{id: id}, nil
+	
+	return &AttributeLocation{id: gl.Uint(attributeTemp)}, nil
 }
 
 func (p *Program) GetUniformLocation(name string) (*UniformLocation, error) {
 	attributeName := gl.GLString(name)
+	defer gl.GLStringFree(attributeName)
 	id := gl.GetUniformLocation(p.id, attributeName)
 	if id == -1 {
 		return nil, errors.New(fmt.Sprintf("Could not bind uniform %s\n", gl.GoString(attributeName)))
 	}
-	gl.GLStringFree(attributeName)
 	return &UniformLocation{id: id}, nil
 }
 

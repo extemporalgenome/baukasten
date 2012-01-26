@@ -1,7 +1,6 @@
 package ogl
 
 import (
-	"errors"
 	"fmt"
 	"image/color"
 
@@ -30,7 +29,7 @@ func (d *Driver) Init(graphicSettings *baukasten.GraphicSettings) error {
 	var err error
 	err = gl.Init()
 	if err != nil {
-		return errors.New(fmt.Sprintf("Init OpenGL extension loading failed with %s.\n", err))
+		return fmt.Errorf("Init OpenGL extension loading failed with %s.\n", err)
 	}
 
 	gl.Enable(gl.BLEND)
@@ -39,25 +38,25 @@ func (d *Driver) Init(graphicSettings *baukasten.GraphicSettings) error {
 	// Load primitives shaders
 	primitivesVertexShader, err := LoadShader(PrimitiveVertexShaderSource, VertexShaderType)
 	if err != nil {
-		return err
+		return fmt.Errorf("Init OpenGL extension loading failed at loading PrimitivesVertexShader with %s.\n", err)
 	}
 	primitivesFragmentShader, err := LoadShader(PrimitiveFragmentShaderSource, FragmentShaderType)
 	if err != nil {
-		return err
+		return fmt.Errorf("Init OpenGL extension loading failed at loading PrimitivesFragmentShader with %s.\n", err)
 	}
 	d.primitivesProgram = NewProgram()
 	d.primitivesProgram.AttachShaders(primitivesVertexShader, primitivesFragmentShader)
 	err = d.primitivesProgram.Link()
 	if err != nil {
-		return err
+		return fmt.Errorf("Init OpenGL extension loading failed at linking PrimitivesProgram with %s.\n", err)
 	}
 	d.primitivesAttributeCoord, err = d.primitivesProgram.GetAttributeLocation(PrimitiveCoordAttribLocationName)
 	if err != nil {
-		return err
+		return fmt.Errorf("Init OpenGL extension loading failed at getting PrimitiveCoordAttribLocation with %s.\n", err)
 	}
-	d.primitivesAttributeColor, err = d.primitivesProgram.GetAttributeLocation(PrimitiveColerAttribLocationName)
+	d.primitivesAttributeColor, err = d.primitivesProgram.GetAttributeLocation(PrimitiveColorAttribLocationName)
 	if err != nil {
-		return err
+		return fmt.Errorf("Init OpenGL extension loading failed at getting PrimitiveColorAttribLocation with %s.\n", err)
 	}
 	return nil
 }
