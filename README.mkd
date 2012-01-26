@@ -4,11 +4,19 @@ Baukasten is the German word for "construction kit".<br>
 The library is modular as it uses so called drivers. At the moment following drivers are available:<br>
 ContextDrivers:
 
-- GLFW
+- GLFW 2.7
 
 GraphicDrivers:
 
-- OpenGL
+- OpenGL 3.3
+
+InputDrivers:
+
+- GLFW 2.7
+
+FontDrivers:
+
+- Freetype
 
 ## Dependencies
 - Go weekly.2012-01-20: http://weekly.golang.org
@@ -18,9 +26,9 @@ GraphicDrivers:
 
 ## Documentation
 - Engine: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten
-- GLFW driver implements ContextDriver and InputDriver: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/glfw
-- OpenGL 3.3 driver implements GraphicDriver: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/ogl
-- Freetype driver implements FontDriver: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/freetype
+- GLFW driver (ContextDriver, InputDriver): http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/glfw
+- OpenGL 3.3 driver (GraphicDriver): http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/ogl
+- Freetype driver (FontDriver): http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/freetype
 
 ## Status
 At the moment you can only load the engine, render images as surfaces and create surfaces from text.<br>
@@ -33,7 +41,8 @@ It is also possible to track mouse, key and system events.
 - Simple 2D camera matrix
 - Shader support (loading custom shaders for surface rendering)
 - Sound driver
+- Replacing the buffered event with a new event
 
 ## Note
 You need to call runtime.LockOSThread() before calling engine related functions. To unlock call runtime.LockOSThread().<br>
-Events are send through a channel with a buffer size of one, if the buffer is full new events are not passgoled through, at the moment.
+Events are send through a channel with a buffer size of one, if the buffer is full new events are not passed through, at the moment.
