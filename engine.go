@@ -2,10 +2,16 @@
 package baukasten
 
 import (
+	"errors"
 	"image"
 	"image/color"
 	"time"
 )
+
+var NoContextDriverError = errors.New("baukasten.Engine has no loaded ContextDriver.")
+var NoGraphicDriverError = errors.New("baukasten.Engine has no loaded GraphicDriver.")
+var NoInputDriverError = errors.New("baukasten.Engine has no loaded InputDriver.")
+var NoFontDriverError = errors.New("baukasten.Engine has no loaded InputDriver.")
 
 type Engine struct {
 	// Drivers
@@ -26,9 +32,15 @@ func NewEngine(graphic GraphicDriver, context ContextDriver, input InputDriver, 
 
 // Initializes the engine and it's drivers.
 func (e *Engine) Init(settings *GraphicSettings) (err error) {
+	if e.context == nil {
+		return NoContextDriverError
+	}
 	err = e.context.Init(settings)
 	if err != nil {
 		return err
+	}
+	if e.input == nil {
+		return NoGraphicDriverError
 	}
 	err = e.graphic.Init(settings)
 	if err != nil {
@@ -79,18 +91,30 @@ func (e *Engine) ContextEvent() chan ContextEvent {
 }
 
 func (e *Engine) KeyEvent() chan KeyEvent {
+	if e.input == nil {
+		panic(NoInputDriverError)
+	}
 	return e.input.KeyEvent()
 }
 
 func (e *Engine) MouseButtonEvent() chan MouseButtonEvent {
+	if e.input == nil {
+		panic(NoInputDriverError)
+	}
 	return e.input.MouseButtonEvent()
 }
 
 func (e *Engine) MousePositionEvent() chan MousePositionEvent {
+	if e.input == nil {
+		panic(NoInputDriverError)
+	}
 	return e.input.MousePositionEvent()
 }
 
 func (e *Engine) MouseWheelEvent() chan MouseWheelEvent {
+	if e.input == nil {
+		panic(NoInputDriverError)
+	}
 	return e.input.MouseWheelEvent()
 }
 
@@ -103,10 +127,16 @@ func (e *Engine) LoadSurface(image image.Image) (Surface, error) {
 }
 
 func (e *Engine) OpenFont(name string) (Font, error) {
+	if e.font == nil {
+		return nil, NoFontDriverError
+	}
 	return e.font.OpenFont(name)
 }
 
 func (e *Engine) RenderSurface(text string, width, height int, size float64, color color.Color, font Font) (Surface, error) {
+	if e.font == nil {
+		return nil, NoFontDriverError
+	}
 	img := font.Render(text, width, height, size, color)
 	return e.LoadSurface(img)
 }

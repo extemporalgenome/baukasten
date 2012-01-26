@@ -30,6 +30,9 @@ FontDrivers:
 - OpenGL 3.3 driver (GraphicDriver): http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/ogl
 - Freetype driver (FontDriver): http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/freetype
 
+## Examples
+Examples can be found in baukasten/examples/ .
+
 ## Status
 At the moment you can only load the engine, render images as surfaces and create surfaces from text.<br>
 It is also possible to track mouse, key and system events.
@@ -42,6 +45,7 @@ It is also possible to track mouse, key and system events.
 - Shader support (loading custom shaders for surface rendering)
 - Sound driver
 - Replacing the buffered event with a new event
+- Tests
 
 ## Note
 You need to call runtime.LockOSThread() before calling engine related functions. To unlock call runtime.LockOSThread().<br>
