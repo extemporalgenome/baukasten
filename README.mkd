@@ -32,6 +32,7 @@ FontDrivers:
 
 ## Examples
 Examples can be found in baukasten/examples/ .
+A demo application can be found under baukasten/examples/demo which can load different demos.
 
 ## Status
 At the moment you can only load the engine, render images as surfaces and create surfaces from text.<br>
