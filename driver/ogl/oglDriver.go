@@ -19,6 +19,7 @@ var DefaultDriver = NewDriver()
 type Driver struct {
 	primitivesProgram        *Program
 	primitivesAttributeCoord *AttributeLocation
+	primitivesAttributeColor *AttributeLocation
 }
 
 func NewDriver() *Driver {
@@ -50,7 +51,11 @@ func (d *Driver) Init(graphicSettings *baukasten.GraphicSettings) error {
 	if err != nil {
 		return err
 	}
-	d.primitivesAttributeCoord, err = d.primitivesProgram.GetAttributeLocation(PrimitiveAttributeLocationName)
+	d.primitivesAttributeCoord, err = d.primitivesProgram.GetAttributeLocation(PrimitiveCoordAttribLocationName)
+	if err != nil {
+		return err
+	}
+	d.primitivesAttributeColor, err = d.primitivesProgram.GetAttributeLocation(PrimitiveColerAttribLocationName)
 	if err != nil {
 		return err
 	}
