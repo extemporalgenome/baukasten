@@ -24,11 +24,12 @@ func main() {
 	flags.IntVar(&MaxFPS, "fps", 60, "Maximum frames per second.")
 
 	// Demos
-	simpleWindow := NewSimpleWindowDemo()
+	simpleWindowDemo := NewSimpleWindowDemo()
+	primitivesDemo := NewPrimitivesDemo()
 
 	demoManager := NewDemoManager()
 	defer demoManager.Unload()
-	demoManager.AddDemos(simpleWindow)
+	demoManager.AddDemos(simpleWindowDemo, primitivesDemo)
 
 	ticker := time.NewTicker(time.Second / time.Duration(MaxFPS))
 	for !exit {
@@ -66,6 +67,7 @@ func main() {
 			if len(demoName) > 0 {
 				err := demoManager.Load(demoName)
 				if err != nil {
+					demoManager.Unload()
 					fmt.Println(err)
 				}
 				demoName = ""

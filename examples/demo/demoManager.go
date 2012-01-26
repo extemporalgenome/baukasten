@@ -40,6 +40,7 @@ func (m *DemoManager) Load(name string) error {
 func (m *DemoManager) Unload() {
 	if m.running != nil {
 		m.running.Unload()
+		m.running = nil
 	}
 }
 
