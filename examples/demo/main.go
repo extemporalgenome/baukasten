@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"runtime"
 	"strings"
 	"time"
 )
@@ -31,6 +32,8 @@ func main() {
 	defer demoManager.Unload()
 	demoManager.AddDemos(simpleWindowDemo, primitivesDemo)
 
+	runtime.LockOSThread()
+	defer runtime.UnlockOSThread()
 	ticker := time.NewTicker(time.Second / time.Duration(MaxFPS))
 	for !exit {
 		select {

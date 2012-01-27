@@ -1,8 +1,6 @@
 package main
 
 import (
-	"runtime"
-
 	"github.com/Agon/baukasten"
 	"github.com/Agon/baukasten/driver/glfw"
 	"github.com/Agon/baukasten/driver/ogl"
@@ -25,7 +23,6 @@ func (demo *SimpleWindowDemo) Description() string {
 }
 
 func (demo *SimpleWindowDemo) Load() error {
-	runtime.LockOSThread()
 	graphicSettings := baukasten.NewGraphicSettings(853, 480, 0, false, true, "baukasten - Demo - SimpleWindow")
 
 	demo.engine = baukasten.NewEngine(ogl.DefaultDriver, glfw.DefaultDriver, glfw.DefaultDriver, nil)
@@ -33,7 +30,6 @@ func (demo *SimpleWindowDemo) Load() error {
 	if err != nil {
 		return err
 	}
-	runtime.UnlockOSThread()
 	return nil
 }
 
@@ -43,7 +39,6 @@ func (demo *SimpleWindowDemo) Unload() error {
 }
 
 func (demo *SimpleWindowDemo) Update() {
-	runtime.LockOSThread()
 	select {
 	case contextEvent := <-demo.engine.ContextEvent():
 		switch contextEvent.Type() {
@@ -58,5 +53,4 @@ func (demo *SimpleWindowDemo) Update() {
 	demo.engine.BeginFrame()
 	// TODO Render code here
 	demo.engine.EndFrame()
-	runtime.UnlockOSThread()
 }

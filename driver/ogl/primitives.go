@@ -27,18 +27,17 @@ const (
 func (d *Driver) DrawTriangle(vec1, vec2, vec3 baukasten.Vector2, color color.Color) {
 	vertices := []float32{vec1.X, vec1.Y, vec2.X, vec2.Y, vec3.X, vec3.Y}
 	r, g, b, a := baukasten.ConvertColorF(color)
-	colors := []float32{r, g, b, a}
-	colors = append(colors, append(colors, colors...)...) // colors += colors + colors
+	colors := []float32{r, g, b, a, r, g, b, a, r, g, b, a, r, g, b, a}
 
 	d.primitivesProgram.Use()
 	d.primitivesAttributeCoord.Enable()
-	d.primitivesAttributeCoord.AttribPointer(2, gl.FLOAT, false, 0, gl.Pointer(&vertices))
+	d.primitivesAttributeCoord.AttribPointer(2, gl.FLOAT, false, 0, gl.Pointer(&vertices[0]))
 
 	d.primitivesAttributeColor.Enable()
-	d.primitivesAttributeColor.AttribPointer(4, gl.FLOAT, false, 0, gl.Pointer(&colors))
+	d.primitivesAttributeColor.AttribPointer(4, gl.FLOAT, false, 0, gl.Pointer(&colors[0]))
 
 	gl.DrawArrays(gl.TRIANGLES, 0, 3)
-	d.primitivesAttributeCoord.Disable()
+
 	d.primitivesAttributeColor.Disable()
 
 }

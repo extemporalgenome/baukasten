@@ -2,7 +2,6 @@ package main
 
 import (
 	"image/color"
-	"runtime"
 
 	"github.com/Agon/baukasten"
 	"github.com/Agon/baukasten/driver/glfw"
@@ -18,7 +17,7 @@ func NewPrimitivesDemo() *PrimitivesDemo {
 }
 
 func (demo *PrimitivesDemo) Name() string {
-	return "PrimitivesDemo"
+	return "primitives"
 }
 
 func (demo *PrimitivesDemo) Description() string {
@@ -26,8 +25,6 @@ func (demo *PrimitivesDemo) Description() string {
 }
 
 func (demo *PrimitivesDemo) Load() error {
-	runtime.LockOSThread()
-	defer runtime.UnlockOSThread()
 	graphicSettings := baukasten.NewGraphicSettings(853, 480, 0, false, true, "baukasten - Demo - SimpleWindow")
 
 	demo.engine = baukasten.NewEngine(ogl.DefaultDriver, glfw.DefaultDriver, glfw.DefaultDriver, nil)
@@ -45,8 +42,6 @@ func (demo *PrimitivesDemo) Unload() error {
 }
 
 func (demo *PrimitivesDemo) Update() {
-	runtime.LockOSThread()
-	defer runtime.UnlockOSThread()
 	select {
 	case contextEvent := <-demo.engine.ContextEvent():
 		switch contextEvent.Type() {
