@@ -54,7 +54,8 @@ func (demo *PrimitivesDemo) Update() {
 	default:
 	}
 	demo.engine.BeginFrame()
+	demo.engine.DrawPoints(color.White, baukasten.Vector2{0.1, -0.5}, baukasten.Vector2{0.2, -0.5}, baukasten.Vector2{0.3, -0.5}, baukasten.Vector2{0.4, -0.5})
 	demo.engine.DrawLineStrip(color.White, baukasten.Vector2{-1, 0}, baukasten.Vector2{0, 1}, baukasten.Vector2{0, 0})
-	demo.engine.DrawTriangle(baukasten.Vector2{0, 0}, baukasten.Vector2{1, 0}, baukasten.Vector2{1, 1}, color.White)
+	demo.engine.DrawTriangle(color.White, baukasten.Vector2{0, 0}, baukasten.Vector2{1, 0}, baukasten.Vector2{1, 1})
 	demo.engine.EndFrame()
 }
