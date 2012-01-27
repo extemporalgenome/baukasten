@@ -23,6 +23,7 @@ func main() {
 	flags.BoolVar(&listDemos, "list", false, "Lists all demos.")
 	flags.BoolVar(&exit, "exit", false, "Exists the demo.")
 	flags.IntVar(&MaxFPS, "fps", 60, "Maximum frames per second.")
+	flags.PrintDefaults()
 
 	// Demos
 	simpleWindowDemo := NewSimpleWindowDemo()
@@ -47,15 +48,7 @@ func main() {
 			}
 			args := strings.Split(line, " ")
 			err := flags.Parse(args)
-			if err == flag.ErrHelp {
-				flags.PrintDefaults()
-				continue
-			}
-			if err != nil {
-				fmt.Println(err)
-				continue
-			}
-			if exit {
+			if exit || err != nil {
 				continue
 			}
 			if listDemos {
@@ -76,7 +69,6 @@ func main() {
 				demoName = ""
 				continue
 			}
-			flags.PrintDefaults()
 		case <-ticker.C:
 			demoManager.Update()
 		}

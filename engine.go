@@ -118,6 +118,10 @@ func (e *Engine) MouseWheelEvent() chan MouseWheelEvent {
 	return e.input.MouseWheelEvent()
 }
 
+func (e *Engine) DrawLineStrip(color color.Color, vecs ...Vector2) {
+	e.graphic.DrawLineStrip(color, vecs...)
+}
+
 func (e *Engine) DrawTriangle(vec1, vec2, vec3 Vector2, color color.Color) {
 	e.graphic.DrawTriangle(vec1, vec2, vec3, color)
 }
