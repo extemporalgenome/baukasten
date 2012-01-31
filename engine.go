@@ -13,6 +13,7 @@ var NoGraphicDriverError = errors.New("baukasten.Engine has no loaded GraphicDri
 var NoInputDriverError = errors.New("baukasten.Engine has no loaded InputDriver.")
 var NoFontDriverError = errors.New("baukasten.Engine has no loaded InputDriver.")
 
+// Engine handles loading, unloading of drivers and is able to call general functions to the drivers.
 type Engine struct {
 	// Drivers
 	graphic GraphicDriver
@@ -118,10 +119,13 @@ func (e *Engine) MouseWheelEvent() chan MouseWheelEvent {
 	return e.input.MouseWheelEvent()
 }
 
+// DrawPoints draws each vector as a single point.
 func (e *Engine) DrawPoints(color color.Color, vecs ...Vector2) {
 	e.graphic.DrawPoints(color, vecs...)
 }
 
+// DrawLines draws each pair of vectors as an independent line segment.
+// The length of vecs needs to be a power of 2.
 func (e *Engine) DrawLines(color color.Color, vecs ...Vector2) {
 	if len(vecs) < 2 {
 		panic("Not enough vectors specified.")
@@ -132,6 +136,7 @@ func (e *Engine) DrawLines(color color.Color, vecs ...Vector2) {
 	e.graphic.DrawLines(color, vecs...)
 }
 
+// DrawLineStrip draws a connected group of line segments from the first vector to the last.
 func (e *Engine) DrawLineStrip(color color.Color, vecs ...Vector2) {
 	if len(vecs) < 2 {
 		panic("Not enough vectors specified.")
@@ -139,6 +144,7 @@ func (e *Engine) DrawLineStrip(color color.Color, vecs ...Vector2) {
 	e.graphic.DrawLineStrip(color, vecs...)
 }
 
+// DrawLineLoop draws a connected group of line segments from the first vector to the last, then back to the frist.
 func (e *Engine) DrawLineLoop(color color.Color, vecs ...Vector2) {
 	if len(vecs) < 2 {
 		panic("Not enough vectors specified.")
@@ -146,6 +152,8 @@ func (e *Engine) DrawLineLoop(color color.Color, vecs ...Vector2) {
 	e.graphic.DrawLineLoop(color, vecs...)
 }
 
+// DrawTriangles draws three vectors as an independent triangle.
+// The length of vecs needs to be a power of 3.
 func (e *Engine) DrawTriangles(color color.Color, vecs ...Vector2) {
 	if len(vecs)%3 != 0 {
 		panic("Length of vecs is not a power of 3")
@@ -153,14 +161,18 @@ func (e *Engine) DrawTriangles(color color.Color, vecs ...Vector2) {
 	e.graphic.DrawTriangles(color, vecs...)
 }
 
+// OpenSurface loads and decodes an image, then creates a Surface of it.
+// Following image formats are supported: bmp, gif, jpeg, png, tiff
 func (e *Engine) OpenSurface(name string) (Surface, error) {
 	return e.graphic.OpenSurface(name)
 }
 
+// LoadSurface loads a Surface from a type which implements Go image.Image.
 func (e *Engine) LoadSurface(image image.Image) (Surface, error) {
 	return e.graphic.LoadSurface(image)
 }
 
+// OpenFont loads a font file and creates a Font.
 func (e *Engine) OpenFont(name string) (Font, error) {
 	if e.font == nil {
 		return nil, NoFontDriverError
@@ -168,6 +180,7 @@ func (e *Engine) OpenFont(name string) (Font, error) {
 	return e.font.OpenFont(name)
 }
 
+// RenderSurface renders a text to an image and creates a Surface of it.
 func (e *Engine) RenderSurface(text string, width, height int, size float64, color color.Color, font Font) (Surface, error) {
 	if e.font == nil {
 		return nil, NoFontDriverError
