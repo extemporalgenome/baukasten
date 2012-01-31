@@ -19,7 +19,7 @@ FontDrivers:
 - Freetype
 
 ## Dependencies
-- Go weekly.2012-01-20: http://weekly.golang.org
+- Go weekly.2012-01-27: http://weekly.golang.org
 - Graphic rendering with OpenGL 3.3: https://github.com/chsc/GoGL
 - Context creation with GLFW 2.7: https://github.com/jteeuwen/glfw
 - Text support with freetype: http://code.google.com/p/freetype-go/
@@ -38,7 +38,7 @@ At the moment you can only load the engine, render images as surfaces and create
 It is also possible to track mouse, key and system events.
 
 ## Planned features
-- Primitive geometry rendering (dot, line, triangle, rectangle, circle, polygon)
+- Extended primitive geometry rendering (triangle, rectangle, circle, polygon)
 - Extended text rendering
 - Extended surface rendering
 - Simple 2D camera matrix
