@@ -18,7 +18,7 @@ type GraphicDriver interface {
 	DrawLines(color color.Color, vecs ...Vector2)
 	DrawLineStrip(color color.Color, vecs ...Vector2)
 	DrawLineLoop(color color.Color, vecs ...Vector2)
-	DrawTriangle(color color.Color, vec1, vec2, vec3 Vector2)
+	DrawTriangles(color color.Color, vecs ...Vector2)
 }
 
 type ContextDriver interface {

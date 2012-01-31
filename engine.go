@@ -146,8 +146,11 @@ func (e *Engine) DrawLineLoop(color color.Color, vecs ...Vector2) {
 	e.graphic.DrawLineLoop(color, vecs...)
 }
 
-func (e *Engine) DrawTriangle(color color.Color, vec1, vec2, vec3 Vector2) {
-	e.graphic.DrawTriangle(color, vec1, vec2, vec3)
+func (e *Engine) DrawTriangles(color color.Color, vecs ...Vector2) {
+	if len(vecs)%3 != 0 {
+		panic("Length of vecs is not a power of 3")
+	}
+	e.graphic.DrawTriangles(color, vecs...)
 }
 
 func (e *Engine) OpenSurface(name string) (Surface, error) {
