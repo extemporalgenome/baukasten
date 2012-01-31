@@ -15,7 +15,9 @@ type GraphicDriver interface {
 	LoadSurface(image.Image) (Surface, error)
 	Resize(int, int)
 	DrawPoints(color color.Color, vecs ...Vector2)
+	DrawLines(color color.Color, vecs ...Vector2)
 	DrawLineStrip(color color.Color, vecs ...Vector2)
+	DrawLineLoop(color color.Color, vecs ...Vector2)
 	DrawTriangle(color color.Color, vec1, vec2, vec3 Vector2)
 }
 

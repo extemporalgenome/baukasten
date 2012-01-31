@@ -122,8 +122,28 @@ func (e *Engine) DrawPoints(color color.Color, vecs ...Vector2) {
 	e.graphic.DrawPoints(color, vecs...)
 }
 
+func (e *Engine) DrawLines(color color.Color, vecs ...Vector2) {
+	if len(vecs) < 2 {
+		panic("Not enough vectors specified.")
+	}
+	if len(vecs)%2 != 0 {
+		panic("Length of vecs is not a power of 2")
+	}
+	e.graphic.DrawLines(color, vecs...)
+}
+
 func (e *Engine) DrawLineStrip(color color.Color, vecs ...Vector2) {
+	if len(vecs) < 2 {
+		panic("Not enough vectors specified.")
+	}
 	e.graphic.DrawLineStrip(color, vecs...)
+}
+
+func (e *Engine) DrawLineLoop(color color.Color, vecs ...Vector2) {
+	if len(vecs) < 2 {
+		panic("Not enough vectors specified.")
+	}
+	e.graphic.DrawLineLoop(color, vecs...)
 }
 
 func (e *Engine) DrawTriangle(color color.Color, vec1, vec2, vec3 Vector2) {
