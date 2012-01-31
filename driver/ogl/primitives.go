@@ -40,7 +40,7 @@ func (d *Driver) DrawPoints(color color.Color, vecs ...baukasten.Vector2) {
 	d.primitivesAttributeColor.Enable()
 	d.primitivesAttributeColor.AttribPointer(4, gl.FLOAT, false, 0, gl.Pointer(&colors[0]))
 
-	gl.DrawArrays(gl.POINTS, 0, gl.Sizei(len(vertices)))
+	gl.DrawArrays(gl.POINTS, 0, gl.Sizei(len(vecs)))
 
 	d.primitivesAttributeColor.Disable()
 	d.primitivesAttributeCoord.Disable()
@@ -62,7 +62,7 @@ func (d *Driver) DrawLines(color color.Color, vecs ...baukasten.Vector2) {
 	d.primitivesAttributeColor.Enable()
 	d.primitivesAttributeColor.AttribPointer(4, gl.FLOAT, false, 0, gl.Pointer(&colors[0]))
 
-	gl.DrawArrays(gl.LINES, 0, gl.Sizei(len(vertices)))
+	gl.DrawArrays(gl.LINES, 0, gl.Sizei(len(vecs)))
 
 	d.primitivesAttributeColor.Disable()
 	d.primitivesAttributeCoord.Disable()
@@ -84,7 +84,7 @@ func (d *Driver) DrawLineStrip(color color.Color, vecs ...baukasten.Vector2) {
 	d.primitivesAttributeColor.Enable()
 	d.primitivesAttributeColor.AttribPointer(4, gl.FLOAT, false, 0, gl.Pointer(&colors[0]))
 
-	gl.DrawArrays(gl.LINE_STRIP, 0, gl.Sizei(len(vertices)))
+	gl.DrawArrays(gl.LINE_STRIP, 0, gl.Sizei(len(vecs)))
 
 	d.primitivesAttributeColor.Disable()
 	d.primitivesAttributeCoord.Disable()
@@ -106,7 +106,7 @@ func (d *Driver) DrawLineLoop(color color.Color, vecs ...baukasten.Vector2) {
 	d.primitivesAttributeColor.Enable()
 	d.primitivesAttributeColor.AttribPointer(4, gl.FLOAT, false, 0, gl.Pointer(&colors[0]))
 
-	gl.DrawArrays(gl.LINE_LOOP, 0, gl.Sizei(len(vertices)))
+	gl.DrawArrays(gl.LINE_LOOP, 0, gl.Sizei(len(vecs)))
 
 	d.primitivesAttributeColor.Disable()
 	d.primitivesAttributeCoord.Disable()
