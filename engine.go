@@ -58,13 +58,13 @@ func (e *Engine) Close() {
 	e.context.Close()
 }
 
-// Returns the duration (delta time) between the last call to DeltaTime and now in seconds.
+// Returns the duration (delta time) between the last call to DeltaTime and now.
 // If DeltaTime is called for the first time the duration between the Init call and now is returned.
-func (e *Engine) DeltaTime() float32 {
+func (e *Engine) DeltaTime() time.Duration {
 	e.currentTime = time.Now()
 	duration := e.currentTime.Sub(e.lastTime)
 	e.lastTime = e.currentTime
-	return float32(duration.Seconds())
+	return duration
 }
 
 // This should be called before each frame is rendered.
