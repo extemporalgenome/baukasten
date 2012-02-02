@@ -41,18 +41,9 @@ With Baukasten, you have complete control over your rendering. You can pull even
 A demo application can be found under baukasten-demo which can load different demos.
 
 ## Status
-At the moment you can only load the engine, render images as surfaces and create surfaces from text.<br>
-It is also possible to track mouse, key and system events.
-
-## Planned features
-- Extended primitive geometry rendering (triangle, rectangle, circle, polygon)
-- Extended text rendering
-- Extended surface rendering
-- Simple 2D camera matrix
-- Shader support (loading custom shaders for surface rendering)
-- Sound driver
-- Replacing the buffered event with a new event
-- Tests
+At the moment you can load the engine, render images as surfaces and create surfaces from text.<br>
+Drawing different primitive types is implemented, too.<br>
+It is also possible to track mouse, keyboard and system events.
 
 ## Note
 You need to call runtime.LockOSThread() before calling engine related functions. To unlock call runtime.LockOSThread().<br>
