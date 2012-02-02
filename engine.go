@@ -186,6 +186,16 @@ func (e *Engine) DrawRectangle(color color.Color, r RectangleF) {
 	e.graphic.DrawTriangles(color, r.Min, Vector2{r.Min.X, r.Max.Y}, Vector2{r.Max.X, r.Min.Y}, Vector2{r.Max.X, r.Min.Y}, Vector2{r.Min.X, r.Max.Y}, r.Max)
 }
 
+// DrawCircle draws a circle centered at v with a radius of r, with n number of points in color c.
+func (e *Engine) DrawCircle(c color.Color, r float32, n int, v Vector2) {
+	vectors := make([]Vector2, n)
+	for i := 0; i < n; i++ {
+		degInRad := (360 / float32(i)) * Pi() / 180
+		vectors[i] = v.Add(Vector2{Cos(degInRad) * r, Sin(degInRad) * r})
+	}
+	e.DrawLineLoop(c, vectors...)
+}
+
 // OpenSurface loads and decodes an image, then creates a Surface of it.
 // Following image formats are supported: bmp, gif, jpeg, png, tiff
 func (e *Engine) OpenSurface(name string) (Surface, error) {
