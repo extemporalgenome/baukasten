@@ -181,6 +181,11 @@ func (e *Engine) DrawTriangleFan(color color.Color, vecs ...Vector2) {
 	e.graphic.DrawTriangleFan(color, vecs...)
 }
 
+// DrawRectangle draws a RectangleF as two triangles.
+func (e *Engine) DrawRectangle(color color.Color, r RectangleF) {
+	e.graphic.DrawTriangles(color, r.Min, Vector2{r.Min.X, r.Max.Y}, Vector2{r.Max.X, r.Min.Y}, Vector2{r.Max.X, r.Min.Y}, Vector2{r.Min.X, r.Max.Y}, r.Max)
+}
+
 // OpenSurface loads and decodes an image, then creates a Surface of it.
 // Following image formats are supported: bmp, gif, jpeg, png, tiff
 func (e *Engine) OpenSurface(name string) (Surface, error) {
