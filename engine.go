@@ -137,6 +137,7 @@ func (e *Engine) DrawLines(color color.Color, vecs ...Vector2) {
 }
 
 // DrawLineStrip draws a connected group of line segments from the first vector to the last.
+// The length of vecs needs to be greater than one.
 func (e *Engine) DrawLineStrip(color color.Color, vecs ...Vector2) {
 	if len(vecs) < 2 {
 		panic("Not enough vectors specified.")
@@ -145,6 +146,7 @@ func (e *Engine) DrawLineStrip(color color.Color, vecs ...Vector2) {
 }
 
 // DrawLineLoop draws a connected group of line segments from the first vector to the last, then back to the frist.
+// The length of vecs needs to be greater than one.
 func (e *Engine) DrawLineLoop(color color.Color, vecs ...Vector2) {
 	if len(vecs) < 2 {
 		panic("Not enough vectors specified.")
@@ -156,9 +158,27 @@ func (e *Engine) DrawLineLoop(color color.Color, vecs ...Vector2) {
 // The length of vecs needs to be a power of 3.
 func (e *Engine) DrawTriangles(color color.Color, vecs ...Vector2) {
 	if len(vecs)%3 != 0 {
-		panic("Length of vecs is not a power of 3")
+		panic("Length of vecs is not a power of 3.")
 	}
 	e.graphic.DrawTriangles(color, vecs...)
+}
+
+// DrawTriangleStrip draws a connected group of triangles.
+// The length of vecs needs to be greater than two.
+func (e *Engine) DrawTriangleStrip(color color.Color, vecs ...Vector2) {
+	if len(vecs) < 3 {
+		panic("Not enough vectors specified.")
+	}
+	e.graphic.DrawTriangleStrip(color, vecs...)
+}
+
+// DrawTriangleFan draws a connected group of triangles, centering around the second vector.
+// The length of vecs needs to be greater than two.
+func (e *Engine) DrawTriangleFan(color color.Color, vecs ...Vector2) {
+	if len(vecs) < 3 {
+		panic("Not enough vectors specified.")
+	}
+	e.graphic.DrawTriangleFan(color, vecs...)
 }
 
 // OpenSurface loads and decodes an image, then creates a Surface of it.
