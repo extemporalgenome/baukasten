@@ -1,8 +1,6 @@
 package main
 
 import (
-	"image/color"
-
 	"github.com/Agon/baukasten"
 	"github.com/Agon/baukasten/driver/glfw"
 	"github.com/Agon/baukasten/driver/ogl"
@@ -32,7 +30,7 @@ func (demo *PrimitivesDemo) Load() error {
 	if err != nil {
 		return err
 	}
-	ogl.DefaultDriver.SetClearColor(color.Black)
+	ogl.DefaultDriver.SetClearColor(baukasten.Black)
 	return nil
 }
 
@@ -54,10 +52,13 @@ func (demo *PrimitivesDemo) Update() {
 	default:
 	}
 	demo.engine.BeginFrame()
-	demo.engine.DrawPoints(color.White, baukasten.Vector2{0.1, -0.5}, baukasten.Vector2{0.2, -0.5}, baukasten.Vector2{0.3, -0.5}, baukasten.Vector2{0.4, -0.5})
-	demo.engine.DrawLines(color.White, baukasten.Vector2{-1, 0}, baukasten.Vector2{0, 0})
-	demo.engine.DrawLineStrip(color.White, baukasten.Vector2{-1, -0.5}, baukasten.Vector2{0, -0.5}, baukasten.Vector2{0, -1})
-	demo.engine.DrawLineLoop(color.White, baukasten.Vector2{-1, 0.5}, baukasten.Vector2{0, 0.5}, baukasten.Vector2{0.5, 1})
-	demo.engine.DrawTriangles(color.White, baukasten.Vector2{0, 0}, baukasten.Vector2{1, 0}, baukasten.Vector2{1, 1})
+	demo.engine.DrawPoints(baukasten.White, baukasten.Vector2{0.1, -0.5}, baukasten.Vector2{0.2, -0.5}, baukasten.Vector2{0.3, -0.5}, baukasten.Vector2{0.4, -0.5})
+	demo.engine.DrawLines(baukasten.Aqua, baukasten.Vector2{-1, 0}, baukasten.Vector2{0, 0})
+	demo.engine.DrawLineStrip(baukasten.Blue, baukasten.Vector2{-1, -0.5}, baukasten.Vector2{0, -0.5}, baukasten.Vector2{0, -1})
+	demo.engine.DrawLineLoop(baukasten.Lightblue, baukasten.Vector2{-1, 0.5}, baukasten.Vector2{0, 0.5}, baukasten.Vector2{0.5, 1})
+	demo.engine.DrawTriangles(baukasten.Red, baukasten.Vector2{0, 0}, baukasten.Vector2{1, 0}, baukasten.Vector2{1, 1})
+	demo.engine.DrawTriangleStrip(baukasten.Lime, baukasten.Vector2{0, -0.2}, baukasten.Vector2{1, -0.2}, baukasten.Vector2{1, 0.8})
+	demo.engine.DrawTriangleFan(baukasten.Blue, baukasten.Vector2{0, -0.4}, baukasten.Vector2{1, -0.4}, baukasten.Vector2{1, 0.6})
+
 	demo.engine.EndFrame()
 }
