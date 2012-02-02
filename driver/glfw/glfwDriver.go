@@ -1,3 +1,4 @@
+// GLFW 2.7 ContextDriver package for baukasten.
 package glfw
 
 import (

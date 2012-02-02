@@ -1,3 +1,4 @@
+// OpenGL 3.3 GraphicDriver package for baukasten.
 package ogl
 
 import (

@@ -1,3 +1,4 @@
+// Freetype FontDriver package for baukasten.
 package freetype
 
 import (

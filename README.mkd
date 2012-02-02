@@ -1,7 +1,11 @@
 ## Baukasten
 Baukasten is a game library written in Go which focuses on easy game development.<br>
 Baukasten is the German word for "construction kit".<br>
-The library is modular as it uses so called drivers. At the moment following drivers are available:<br>
+
+## Features
+### Driver based architecture
+Baukasten operates through a driver or plug-in model.
+At the moment following driver interfaces and driver implementation are available:<br>
 ContextDrivers:
 
 - GLFW 2.7
@@ -17,6 +21,9 @@ InputDrivers:
 FontDrivers:
 
 - Freetype
+
+### Flexible coding structure
+With Baukasten, you have complete control over your rendering. You can pull events when and where you want.
 
 ## Dependencies
 - Go weekly.2012-01-27: http://weekly.golang.org
