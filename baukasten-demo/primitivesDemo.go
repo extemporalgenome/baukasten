@@ -23,7 +23,7 @@ func (demo *PrimitivesDemo) Description() string {
 }
 
 func (demo *PrimitivesDemo) Load() error {
-	graphicSettings := baukasten.NewGraphicSettings(853, 480, 0, false, true, "baukasten - Demo - SimpleWindow")
+	graphicSettings := baukasten.NewGraphicSettings(853, 480, 0, false, true, "baukasten - Demo - Particles")
 
 	demo.engine = baukasten.NewEngine(ogl.DefaultDriver, glfw.DefaultDriver, glfw.DefaultDriver, nil)
 	err := demo.engine.Init(graphicSettings)
