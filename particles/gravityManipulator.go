@@ -6,6 +6,7 @@ import (
 	"github.com/Agon/baukasten"
 )
 
+// GravityManipulator manipulates all particles with a gravity.
 type GravityManipulator struct {
 	Gravity baukasten.Vector2
 }

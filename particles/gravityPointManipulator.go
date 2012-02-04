@@ -6,6 +6,8 @@ import (
 	"github.com/Agon/baukasten"
 )
 
+// GravityPointManipulator manipulates particles, which are in range of the manipulator,
+// towards or away from the position of the manipulator.
 type GravityPointManipulator struct {
 	Position baukasten.Vector2
 	Force    float32

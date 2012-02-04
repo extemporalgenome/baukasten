@@ -6,6 +6,9 @@ import (
 	"github.com/Agon/baukasten"
 )
 
+// SurfaceEmitter implements the ParticleEmitter interface.
+// It emits and simulates particle with the Euler method.
+// Particles are drawn through a surface.
 type SurfaceEmitter struct {
 	Particle
 	particles []Particle
