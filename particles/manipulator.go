@@ -5,6 +5,5 @@ import (
 )
 
 type Manipulator interface {
-	Manipulate(*Particle)
-	Update(time.Duration)
+	Update(time.Duration, []Particle)
 }

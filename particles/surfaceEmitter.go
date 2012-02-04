@@ -1,8 +1,9 @@
 package particles
 
 import (
-	"github.com/Agon/baukasten"
 	"time"
+
+	"github.com/Agon/baukasten"
 )
 
 type SurfaceEmitter struct {
@@ -45,7 +46,7 @@ func (e *SurfaceEmitter) Emit(frequency, life time.Duration, acceleration baukas
 
 func (e *SurfaceEmitter) Update(deltaTime time.Duration) {
 	sec := float32(deltaTime.Seconds())
-	if e.emitFrequency != 0 {
+	if e.emitFrequency > 0 {
 		e.emitTime += deltaTime
 		for e.emitTime > 0 {
 			e.EmitParticle(e.emitAcceleration, e.emitVelocity, e.emitLife, Alive)
@@ -53,12 +54,7 @@ func (e *SurfaceEmitter) Update(deltaTime time.Duration) {
 		}
 	}
 	for _, m := range e.manipulators {
-		if m != nil {
-			m.Update(deltaTime)
-			for i := range e.particles {
-				m.Manipulate(&e.particles[i])
-			}
-		}
+		m.Update(deltaTime, e.particles)
 	}
 	for i := range e.particles {
 		if e.particles[i].Life <= 0 {

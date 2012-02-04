@@ -37,9 +37,11 @@ func (demo *ParticlesDemo) Load() error {
 	if err != nil {
 		return err
 	}
+	gravity := particles.NewGravityManipulator(baukasten.Vector2{10, -10})
 	demo.emitter = particles.NewSurfaceEmitter(surface)
 	demo.emitter.Position = baukasten.Vector2{400, 480}
 	demo.emitter.Emit(time.Second/2, time.Second*5, baukasten.Vector2{0, -10}, baukasten.Vector2{0, -10})
+	demo.emitter.AddManipulator(gravity)
 	return nil
 }
 
