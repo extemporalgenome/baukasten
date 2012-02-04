@@ -28,7 +28,7 @@ type Engine struct {
 }
 
 func NewEngine(graphic GraphicDriver, context ContextDriver, input InputDriver, font FontDriver) *Engine {
-	return &Engine{graphic: graphic, context: context, input: input, font: font}
+	return &Engine{graphic: graphic, context: context, input: input, font: font, lastTime: time.Now()}
 }
 
 // Initializes the engine and it's drivers.
