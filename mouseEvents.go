@@ -1,16 +1,13 @@
 package baukasten
 
-import (
-	"image"
-)
-
 type MousePositionEvent interface {
-	Position() image.Point
+	X() int
+	Y() int
 }
 
 type MouseButtonEvent interface {
-	Button() uint
-	State() uint
+	Button() int
+	State() int
 }
 
 type MouseWheelEvent interface {

@@ -75,6 +75,24 @@ func (d *Driver) Init(settings *baukasten.GraphicSettings) (err error) {
 		default:
 		}
 	})
+	glfw.SetMouseButtonCallback(func(button, state int) {
+		select {
+		case d.mouseButtonEvent <- NewMouseButtonEvent(button, state):
+		default:
+		}
+	})
+	glfw.SetMousePosCallback(func(x, y int) {
+		select {
+		case d.mousePositionEvent <- NewMousePositionEvent(x, y):
+		default:
+		}
+	})
+	glfw.SetMouseWheelCallback(func(delta int) {
+		select {
+		case d.mouseWheelEvent <- MouseWheelEvent(delta):
+		default:
+		}
+	})
 
 	d.graphicSettings = settings
 	return nil
