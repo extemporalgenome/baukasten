@@ -15,14 +15,25 @@ type SurfaceEmitter struct {
 	emitTime         time.Duration
 	emitAcceleration baukasten.Vector2
 	emitVelocity     baukasten.Vector2
+
+	manipulators []Manipulator
 }
 
 func NewSurfaceEmitter(s baukasten.Surface) *SurfaceEmitter {
-	return &SurfaceEmitter{particles: make([]Particle, 0), surface: s}
+	return &SurfaceEmitter{particles: make([]Particle, 0), surface: s, manipulators: make([]Manipulator, 0)}
 }
 
 func (e *SurfaceEmitter) Particles() []Particle {
 	return e.particles
+}
+
+func (e *SurfaceEmitter) AddManipulator(m Manipulator) {
+	for i := range e.manipulators {
+		if e.manipulators[i] == nil {
+			e.manipulators[i] = m
+		}
+	}
+	e.manipulators = append(e.manipulators, m)
 }
 
 func (e *SurfaceEmitter) Emit(frequency, life time.Duration, acceleration baukasten.Vector2, velocity baukasten.Vector2) {
@@ -39,6 +50,14 @@ func (e *SurfaceEmitter) Update(deltaTime time.Duration) {
 		for e.emitTime > 0 {
 			e.EmitParticle(e.emitAcceleration, e.emitVelocity, e.emitLife, Alive)
 			e.emitTime -= e.emitFrequency
+		}
+	}
+	for _, m := range e.manipulators {
+		if m != nil {
+			m.Update(deltaTime)
+			for i := range e.particles {
+				m.Manipulate(&e.particles[i])
+			}
 		}
 	}
 	for i := range e.particles {
