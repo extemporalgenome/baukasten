@@ -18,33 +18,33 @@ func (v Vector3) String() string {
 
 // ### Manipulation functions ###
 
-func (v Vector3) Set(x, y, z float32) {
+func (v *Vector3) Set(x, y, z float32) {
 	v.X = x
 	v.Y = y
 	v.Z = z
 }
 
 // Adds another vector
-func (v Vector3) Accumulate(vec Vector3) {
+func (v *Vector3) Accumulate(vec Vector3) {
 	v.X += vec.X
 	v.Y += vec.Y
 	v.Z += vec.Z
 }
 
 // Subtracts another vector
-func (v Vector3) Substract(vec Vector3) {
+func (v *Vector3) Substract(vec Vector3) {
 	v.X -= vec.X
 	v.Y -= vec.Y
 	v.Z -= vec.Z
 }
 
-func (v Vector3) Scale(scalar float32) {
+func (v *Vector3) Scale(scalar float32) {
 	v.X *= scalar
 	v.Y *= scalar
 	v.Z *= scalar
 }
 
-func (v Vector3) Normalize() {
+func (v *Vector3) Normalize() {
 	v.Scale(1 / v.Magnitude())
 }
 
