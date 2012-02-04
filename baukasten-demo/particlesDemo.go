@@ -38,10 +38,12 @@ func (demo *ParticlesDemo) Load() error {
 		return err
 	}
 	gravity := particles.NewGravityManipulator(baukasten.Vector2{10, -10})
+	pointGravity := particles.NewGravityPointManipulator(baukasten.Vector2{400, 200}, -10, 200)
 	demo.emitter = particles.NewSurfaceEmitter(surface)
 	demo.emitter.Position = baukasten.Vector2{400, 480}
-	demo.emitter.Emit(time.Second/2, time.Second*5, baukasten.Vector2{0, -10}, baukasten.Vector2{0, -10})
+	demo.emitter.Emit(time.Second/25, time.Second*10, baukasten.Vector2{0, 0}, baukasten.Vector2{0, 0})
 	demo.emitter.AddManipulator(gravity)
+	demo.emitter.AddManipulator(pointGravity)
 	return nil
 }
 
@@ -58,6 +60,8 @@ func (demo *ParticlesDemo) Update() {
 			demo.Unload() // Hackish
 		}
 	case <-demo.engine.KeyEvent():
+	case mouse := <-demo.engine.MousePositionEvent():
+		demo.emitter.Position = baukasten.Vector2{float32(mouse.X()), float32(mouse.Y())}
 	case windowSize := <-demo.engine.ResizeEvent():
 		demo.engine.GraphicResize(int(windowSize.Width()), int(windowSize.Height()))
 	default:
