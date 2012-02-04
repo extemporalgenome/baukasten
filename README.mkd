@@ -25,6 +25,9 @@ FontDrivers:
 ### Flexible coding structure
 With Baukasten, you have complete control over your rendering. You can pull events when and where you want.
 
+### Particle system
+A two dimensional particle system is available.
+
 ## Dependencies
 - Go weekly.2012-01-27: http://weekly.golang.org
 - Graphic rendering with OpenGL 3.3: https://github.com/chsc/GoGL
@@ -36,6 +39,7 @@ With Baukasten, you have complete control over your rendering. You can pull even
 - GLFW driver (ContextDriver, InputDriver): http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/glfw
 - OpenGL 3.3 driver (GraphicDriver): http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/ogl
 - Freetype driver (FontDriver): http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/freetype
+- Particle system: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/particles
 
 ## Examples
 A demo application can be found under baukasten-demo which can load different demos.
