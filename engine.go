@@ -40,7 +40,7 @@ func (e *Engine) Init(settings *GraphicSettings) (err error) {
 	if err != nil {
 		return err
 	}
-	if e.input == nil {
+	if e.graphic == nil {
 		return NoGraphicDriverError
 	}
 	err = e.graphic.Init(settings)
