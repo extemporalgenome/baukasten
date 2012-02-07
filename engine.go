@@ -83,36 +83,36 @@ func (e *Engine) GraphicResize(w, h int) {
 	e.graphic.Resize(w, h)
 }
 
-func (e *Engine) ResizeEvent() chan WindowSizeEvent {
+func (e *Engine) ResizeEvent() <-chan WindowSizeEvent {
 	return e.context.ResizeEvent()
 }
 
-func (e *Engine) ContextEvent() chan ContextEvent {
+func (e *Engine) ContextEvent() <-chan ContextEvent {
 	return e.context.ContextEvent()
 }
 
-func (e *Engine) KeyEvent() chan KeyEvent {
+func (e *Engine) KeyEvent() <-chan KeyEvent {
 	if e.input == nil {
 		panic(NoInputDriverError)
 	}
 	return e.input.KeyEvent()
 }
 
-func (e *Engine) MouseButtonEvent() chan MouseButtonEvent {
+func (e *Engine) MouseButtonEvent() <-chan MouseButtonEvent {
 	if e.input == nil {
 		panic(NoInputDriverError)
 	}
 	return e.input.MouseButtonEvent()
 }
 
-func (e *Engine) MousePositionEvent() chan MousePositionEvent {
+func (e *Engine) MousePositionEvent() <-chan MousePositionEvent {
 	if e.input == nil {
 		panic(NoInputDriverError)
 	}
 	return e.input.MousePositionEvent()
 }
 
-func (e *Engine) MouseWheelEvent() chan MouseWheelEvent {
+func (e *Engine) MouseWheelEvent() <-chan MouseWheelEvent {
 	if e.input == nil {
 		panic(NoInputDriverError)
 	}

@@ -22,7 +22,7 @@ type MousePositionEvent struct {
 }
 
 func NewMousePositionEvent(x, y int) *MousePositionEvent {
-	return &MousePositionEvent{x:x, y:y}
+	return &MousePositionEvent{x: x, y: y}
 }
 
 func (e *MousePositionEvent) X() int {

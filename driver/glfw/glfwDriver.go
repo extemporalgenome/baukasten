@@ -98,25 +98,25 @@ func (d *Driver) Init(settings *baukasten.GraphicSettings) (err error) {
 	return nil
 }
 
-func (d *Driver) ResizeEvent() chan baukasten.WindowSizeEvent {
+func (d *Driver) ResizeEvent() <-chan baukasten.WindowSizeEvent {
 	return d.resizeEvent
 }
 
-func (d *Driver) ContextEvent() chan baukasten.ContextEvent {
+func (d *Driver) ContextEvent() <-chan baukasten.ContextEvent {
 	return d.contextEvent
 }
 
-func (d *Driver) KeyEvent() chan baukasten.KeyEvent {
+func (d *Driver) KeyEvent() <-chan baukasten.KeyEvent {
 	return d.keyEvent
 }
 
-func (d *Driver) MouseButtonEvent() chan baukasten.MouseButtonEvent {
+func (d *Driver) MouseButtonEvent() <-chan baukasten.MouseButtonEvent {
 	return d.mouseButtonEvent
 }
-func (d *Driver) MousePositionEvent() chan baukasten.MousePositionEvent {
+func (d *Driver) MousePositionEvent() <-chan baukasten.MousePositionEvent {
 	return d.mousePositionEvent
 }
-func (d *Driver) MouseWheelEvent() chan baukasten.MouseWheelEvent {
+func (d *Driver) MouseWheelEvent() <-chan baukasten.MouseWheelEvent {
 	return d.mouseWheelEvent
 }
 
