@@ -78,6 +78,14 @@ func (e *Engine) EndFrame() {
 	e.context.SwapBuffers()
 }
 
+func (e *Engine) Camera() Camera {
+	return e.graphic.Camera()
+}
+
+func (e *Engine) SetCamera(c Camera) {
+	e.graphic.SetCamera(c)
+}
+
 // Resizes the graphic screen.
 func (e *Engine) GraphicResize(w, h int) {
 	e.graphic.Resize(w, h)

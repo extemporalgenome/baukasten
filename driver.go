@@ -9,11 +9,13 @@ type GraphicDriver interface {
 	Init(*GraphicSettings) error
 	Close()
 	BeginFrame()
-	SetClearColor(color.Color)
 	EndFrame()
+	SetClearColor(color.Color)
+	Camera() Camera
+	SetCamera(Camera)
+	Resize(int, int)
 	OpenSurface(string) (Surface, error)
 	LoadSurface(image.Image) (Surface, error)
-	Resize(int, int)
 	DrawPoints(color color.Color, vecs ...Vector2)
 	DrawLines(color color.Color, vecs ...Vector2)
 	DrawLineStrip(color color.Color, vecs ...Vector2)
@@ -52,4 +54,8 @@ type Surface interface {
 	Delete()
 	Scale(x, y float32)
 	Rotate(angle float32)
+}
+
+type Camera interface {
+	Get() Matrix4
 }

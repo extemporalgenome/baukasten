@@ -20,6 +20,7 @@ type Driver struct {
 	primitivesProgram        *Program
 	primitivesAttributeCoord *AttributeLocation
 	primitivesAttributeColor *AttributeLocation
+	camera                   baukasten.Camera
 }
 
 func NewDriver() *Driver {
@@ -79,6 +80,14 @@ func (d *Driver) BeginFrame() {
 func (d *Driver) SetClearColor(color color.Color) {
 	r, g, b, a := baukasten.ConvertColorF(color)
 	gl.ClearColor(gl.Clampf(r), gl.Clampf(g), gl.Clampf(b), gl.Clampf(a))
+}
+
+func (d *Driver) Camera() baukasten.Camera {
+	return d.camera
+}
+
+func (d *Driver) SetCamera(c baukasten.Camera) {
+	d.camera = c
 }
 
 func (d *Driver) EndFrame() {
