@@ -3,11 +3,11 @@ package baukasten
 import (
 	"image"
 	// For image loading
-	_ "image/bmp"
+	_ "code.google.com/p/go.image/bmp"
+	_ "code.google.com/p/go.image/tiff"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
-	_ "image/tiff"
 	"os"
 )
 
