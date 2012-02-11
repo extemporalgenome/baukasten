@@ -20,6 +20,7 @@ type Driver struct {
 	primitivesProgram        *Program
 	primitivesAttributeCoord *AttributeLocation
 	primitivesAttributeColor *AttributeLocation
+	primitivesUniformMatrix  *UniformLocation
 	camera                   baukasten.Camera
 }
 
@@ -67,6 +68,10 @@ func (d *Driver) Init(graphicSettings *baukasten.GraphicSettings) error {
 	d.primitivesAttributeColor, err = d.primitivesProgram.GetAttributeLocation(PrimitiveColorAttribLocationName)
 	if err != nil {
 		return fmt.Errorf("Init OpenGL extension loading failed at getting PrimitiveColorAttribLocation with %s.\n", err)
+	}
+	d.primitivesUniformMatrix, err = d.primitivesProgram.GetUniformLocation(PrimitiveMatrixLocationName)
+	if err != nil {
+		return fmt.Errorf("Init OpenGL extension loading failed at getting PrimitiveMatrixLocationName with %s.\n", err)
 	}
 	return nil
 }

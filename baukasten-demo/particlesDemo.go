@@ -26,7 +26,9 @@ func (demo *ParticlesDemo) Description() string {
 }
 
 func (demo *ParticlesDemo) Load() error {
-	graphicSettings := baukasten.NewGraphicSettings(853, 480, 0, false, true, "baukasten - Demo - Particles")
+	width := 853
+	height := 480
+	graphicSettings := baukasten.NewGraphicSettings(width, height, 0, false, true, "baukasten - Demo - Particles")
 
 	demo.engine = baukasten.NewEngine(ogl.DefaultDriver, glfw.DefaultDriver, glfw.DefaultDriver, nil)
 	err := demo.engine.Init(graphicSettings)
@@ -37,6 +39,7 @@ func (demo *ParticlesDemo) Load() error {
 	if err != nil {
 		return err
 	}
+	demo.engine.SetCamera(baukasten.NewTwoDCamera(0, float32(width), float32(height), 0))
 	gravity := particles.NewGravityManipulator(baukasten.Vector2{10, -10})
 	pointGravity := particles.NewGravityPointManipulator(baukasten.Vector2{400, 200}, -10, 200)
 	demo.emitter = particles.NewSurfaceEmitter(surface)

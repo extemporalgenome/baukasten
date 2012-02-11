@@ -55,7 +55,3 @@ type Surface interface {
 	Scale(x, y float32)
 	Rotate(angle float32)
 }
-
-type Camera interface {
-	Get() Matrix4
-}

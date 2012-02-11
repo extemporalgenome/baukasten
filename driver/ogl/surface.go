@@ -40,6 +40,9 @@ type Surface struct {
 	texcoord *AttributeLocation
 	mvp      *UniformLocation
 	texId    *UniformLocation
+
+	// driver
+	driver *Driver
 }
 
 var ScreenHeight = 480
@@ -118,6 +121,7 @@ func (d *Driver) LoadSurface(img image.Image) (baukasten.Surface, error) {
 	s.height = height
 	s.scaleX = 1
 	s.scaleY = 1
+	s.driver = d
 	return s, nil
 }
 
@@ -146,8 +150,7 @@ func (s *Surface) Draw(x, y float32) {
 	if s.angle != 0 {
 		model = model.Multiplied(baukasten.RotationMatrix(s.angle, baukasten.Vector3{0, 0, 1}))
 	}
-	projection := baukasten.Ortho2D(0, float32(ScreenWidth), float32(ScreenHeight), 0)
-	matrix := projection.Multiplied(model)
+	matrix := s.driver.Camera().Get().Multiplied(model)
 	s.mvp.UniformMatrix4fv(1, false, matrix.Transposed())
 
 	s.texId.Uniform1i(0)

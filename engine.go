@@ -67,6 +67,10 @@ func (e *Engine) DeltaTime() time.Duration {
 	return duration
 }
 
+func (e *Engine) SetClearColor(c color.Color) {
+	e.graphic.SetClearColor(c)
+}
+
 // This should be called before each frame is rendered.
 func (e *Engine) BeginFrame() {
 	e.graphic.BeginFrame()

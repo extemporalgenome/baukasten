@@ -11,11 +11,13 @@ import (
 const (
 	PrimitiveCoordAttribLocationName = "coord"
 	PrimitiveColorAttribLocationName = "v_color"
+	PrimitiveMatrixLocationName      = "mvp"
 	PrimitiveVertexShaderSource      = "#version 120\n" +
 		"attribute vec2 " + PrimitiveCoordAttribLocationName + ";\n" +
 		"attribute vec4 " + PrimitiveColorAttribLocationName + ";\n" +
 		"varying vec4 f_color;\n" +
-		"void main(void) {\n  gl_Position = vec4(" + PrimitiveCoordAttribLocationName + ", 0.0, 1.0);\n" +
+		"uniform mat4 " + PrimitiveMatrixLocationName + ";\n" +
+		"void main(void) {\n  gl_Position = " + PrimitiveMatrixLocationName + " * vec4(" + PrimitiveCoordAttribLocationName + ", 0.0, 1.0);\n" +
 		"f_color = " + PrimitiveColorAttribLocationName + ";\n}"
 	PrimitiveFragmentShaderSource = "#version 120\n" +
 		"varying vec4 f_color;\n" +
@@ -62,6 +64,7 @@ func (d *Driver) drawPrimitives(color color.Color, mode gl.Enum, vecs ...baukast
 		colors = append(colors, r, g, b, a)
 	}
 	d.primitivesProgram.Use()
+	d.primitivesUniformMatrix.UniformMatrix4fv(1, false, d.Camera().Get().Transposed())
 	d.primitivesAttributeCoord.Enable()
 	d.primitivesAttributeCoord.AttribPointer(2, gl.FLOAT, false, 0, gl.Pointer(&vertices[0]))
 

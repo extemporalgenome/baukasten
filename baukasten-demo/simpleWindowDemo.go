@@ -23,13 +23,16 @@ func (demo *SimpleWindowDemo) Description() string {
 }
 
 func (demo *SimpleWindowDemo) Load() error {
-	graphicSettings := baukasten.NewGraphicSettings(853, 480, 0, false, true, "baukasten - Demo - SimpleWindow")
+	width := 853
+	height := 480
+	graphicSettings := baukasten.NewGraphicSettings(width, height, 0, false, true, "baukasten - Demo - SimpleWindow")
 
 	demo.engine = baukasten.NewEngine(ogl.DefaultDriver, glfw.DefaultDriver, glfw.DefaultDriver, nil)
 	err := demo.engine.Init(graphicSettings)
 	if err != nil {
 		return err
 	}
+	demo.engine.SetCamera(baukasten.NewTwoDCamera(0, float32(width), float32(height), 0))
 	return nil
 }
 

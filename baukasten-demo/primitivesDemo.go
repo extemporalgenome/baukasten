@@ -23,14 +23,17 @@ func (demo *PrimitivesDemo) Description() string {
 }
 
 func (demo *PrimitivesDemo) Load() error {
-	graphicSettings := baukasten.NewGraphicSettings(853, 480, 0, false, true, "baukasten - Demo - Particles")
+	width := 853
+	height := 480
+	graphicSettings := baukasten.NewGraphicSettings(width, height, 0, false, true, "baukasten - Demo - Particles")
 
 	demo.engine = baukasten.NewEngine(ogl.DefaultDriver, glfw.DefaultDriver, glfw.DefaultDriver, nil)
 	err := demo.engine.Init(graphicSettings)
 	if err != nil {
 		return err
 	}
-	ogl.DefaultDriver.SetClearColor(baukasten.Black)
+	demo.engine.SetCamera(baukasten.NewTwoDCamera(0, float32(width), float32(height), 0))
+	demo.engine.SetClearColor(baukasten.Black)
 	return nil
 }
 
@@ -52,13 +55,15 @@ func (demo *PrimitivesDemo) Update() {
 	default:
 	}
 	demo.engine.BeginFrame()
-	demo.engine.DrawPoints(baukasten.White, baukasten.Vector2{0.1, -0.5}, baukasten.Vector2{0.2, -0.5}, baukasten.Vector2{0.3, -0.5}, baukasten.Vector2{0.4, -0.5})
-	demo.engine.DrawLines(baukasten.Aqua, baukasten.Vector2{-1, 0}, baukasten.Vector2{0, 0})
-	demo.engine.DrawLineStrip(baukasten.Blue, baukasten.Vector2{-1, -0.5}, baukasten.Vector2{0, -0.5}, baukasten.Vector2{0, -1})
-	demo.engine.DrawLineLoop(baukasten.Lightblue, baukasten.Vector2{-1, 0.5}, baukasten.Vector2{0, 0.5}, baukasten.Vector2{0.5, 1})
-	demo.engine.DrawTriangles(baukasten.Red, baukasten.Vector2{0, 0}, baukasten.Vector2{1, 0}, baukasten.Vector2{1, 1})
-	demo.engine.DrawTriangleStrip(baukasten.Lime, baukasten.Vector2{0, -0.2}, baukasten.Vector2{1, -0.2}, baukasten.Vector2{1, 0.8})
-	demo.engine.DrawTriangleFan(baukasten.Blue, baukasten.Vector2{0, -0.4}, baukasten.Vector2{1, -0.4}, baukasten.Vector2{1, 0.6})
+
+	demo.engine.DrawPoints(baukasten.White, baukasten.Vector2{0, 10}, baukasten.Vector2{10, 10}, baukasten.Vector2{20, 10}, baukasten.Vector2{30, 10})
+	demo.engine.DrawLines(baukasten.Aqua, baukasten.Vector2{0, 50}, baukasten.Vector2{100, 50})
+	demo.engine.DrawLineStrip(baukasten.Blue, baukasten.Vector2{0, 100}, baukasten.Vector2{100, 100}, baukasten.Vector2{100, 150})
+	demo.engine.DrawLineLoop(baukasten.Lightblue, baukasten.Vector2{0, 200}, baukasten.Vector2{100, 200}, baukasten.Vector2{100, 250})
+
+	demo.engine.DrawTriangles(baukasten.Red, baukasten.Vector2{200, 100}, baukasten.Vector2{300, 100}, baukasten.Vector2{300, 200})
+	demo.engine.DrawTriangleStrip(baukasten.Lime, baukasten.Vector2{200, 200}, baukasten.Vector2{300, 200}, baukasten.Vector2{300, 300})
+	demo.engine.DrawTriangleFan(baukasten.Blue, baukasten.Vector2{200, 300}, baukasten.Vector2{300, 300}, baukasten.Vector2{300, 400})
 
 	demo.engine.EndFrame()
 }
