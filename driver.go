@@ -38,6 +38,8 @@ type InputDriver interface {
 	MouseButtonEvent() <-chan MouseButtonEvent
 	MousePositionEvent() <-chan MousePositionEvent
 	MouseWheelEvent() <-chan MouseWheelEvent
+	JoystickPos(joy int) []Vector2
+	JoystickButtons(joy int) []bool
 }
 
 type FontDriver interface {

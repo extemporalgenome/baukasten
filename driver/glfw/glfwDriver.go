@@ -128,3 +128,39 @@ func (d *Driver) Close() {
 func (d *Driver) SwapBuffers() {
 	glfw.SwapBuffers()
 }
+
+func (d *Driver) JoystickParam(joy, param int) int {
+	return glfw.JoystickParam(joy, param)
+}
+
+// Two axes support
+func (d *Driver) JoystickPos(joy int) []baukasten.Vector2 {
+	axes := []float32{0, 0, 0, 0}
+	l := glfw.JoystickPos(joy, axes)
+	if l%2 == 0 {
+		return []baukasten.Vector2{}
+	}
+	vecAxes := make([]baukasten.Vector2, l/2)
+	for i := 0; i < l; i += 2 {
+		vecAxes[i] = baukasten.Vec2(axes[i], axes[i+1])
+	}
+	return vecAxes
+}
+
+// Ten button support
+func (d *Driver) JoystickButtons(joy int) []bool {
+	b := []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+	l := glfw.JoystickButtons(joy, b)
+	if l == 0 {
+		return []bool{}
+	}
+	buttons := make([]bool, len(b))
+	for i, x := range b {
+		if x == 0 {
+			buttons[i] = false // Released
+		} else {
+			buttons[i] = true // Pressed
+		}
+	}
+	return buttons
+}

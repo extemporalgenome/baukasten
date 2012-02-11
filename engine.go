@@ -95,6 +95,14 @@ func (e *Engine) GraphicResize(w, h int) {
 	e.graphic.Resize(w, h)
 }
 
+func (e *Engine) JoystickButtons(joy int) []bool {
+	return e.input.JoystickButtons(joy)
+}
+
+func (e *Engine) JoystickPos(joy int) []Vector2 {
+	return e.input.JoystickPos(joy)
+}
+
 func (e *Engine) ResizeEvent() <-chan WindowSizeEvent {
 	return e.context.ResizeEvent()
 }
