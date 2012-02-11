@@ -53,5 +53,7 @@ type Surface interface {
 	Draw(x, y float32)
 	Delete()
 	Scale(x, y float32)
+	GetScale() (float32, float32)
 	Rotate(angle float32)
+	Rotation() float32
 }

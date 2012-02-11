@@ -138,8 +138,16 @@ func (s *Surface) Scale(x, y float32) {
 	s.scaleY = y
 }
 
+func (s *Surface) GetScale() (float32, float32) {
+	return s.scaleX, s.scaleY
+}
+
 func (s *Surface) Rotate(angle float32) {
 	s.angle = angle
+}
+
+func (s *Surface) Rotation() float32 {
+	return s.angle
 }
 
 func (s *Surface) Draw(x, y float32) {
