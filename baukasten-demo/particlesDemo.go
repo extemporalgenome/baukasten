@@ -4,6 +4,7 @@ import (
 	"github.com/Agon/baukasten"
 	"github.com/Agon/baukasten/driver/glfw"
 	"github.com/Agon/baukasten/driver/ogl"
+	geometry "github.com/Agon/baukasten/geometry"
 	"github.com/Agon/baukasten/particles"
 	"time"
 )
@@ -40,15 +41,15 @@ func (demo *ParticlesDemo) Load() error {
 	if err != nil {
 		return err
 	}
-	c := baukasten.Blue
+	c := geometry.Blue
 	c.A = 175
 	demo.surface.SetColor(c)
 	demo.engine.SetCamera(baukasten.NewTwoDCamera(0, float32(width), float32(height), 0))
-	gravity := particles.NewGravityManipulator(baukasten.Vector2{10, -10})
-	pointGravity := particles.NewGravityPointManipulator(baukasten.Vector2{400, 200}, -10, 200)
+	gravity := particles.NewGravityManipulator(geometry.Vector2{10, -10})
+	pointGravity := particles.NewGravityPointManipulator(geometry.Vector2{400, 200}, -10, 200)
 	demo.emitter = particles.NewSurfaceEmitter(demo.surface)
-	demo.emitter.Position = baukasten.Vector2{400, 480}
-	demo.emitter.Emit(time.Second/25, time.Second*10, baukasten.Vector2{0, 0}, baukasten.Vector2{0, 0})
+	demo.emitter.Position = geometry.Vector2{400, 480}
+	demo.emitter.Emit(time.Second/25, time.Second*10, geometry.Vector2{0, 0}, geometry.Vector2{0, 0})
 	demo.emitter.AddManipulator(gravity)
 	demo.emitter.AddManipulator(pointGravity)
 	return nil
@@ -68,7 +69,7 @@ func (demo *ParticlesDemo) Update() {
 		}
 	case <-demo.engine.KeyEvent():
 	case mouse := <-demo.engine.MousePositionEvent():
-		demo.emitter.Position = baukasten.Vector2{float32(mouse.X()), float32(mouse.Y())}
+		demo.emitter.Position = geometry.Vector2{float32(mouse.X()), float32(mouse.Y())}
 	case windowSize := <-demo.engine.ResizeEvent():
 		demo.engine.GraphicResize(int(windowSize.Width()), int(windowSize.Height()))
 		demo.engine.SetCamera(baukasten.NewTwoDCamera(0, float32(windowSize.Width()), float32(windowSize.Height()), 0))

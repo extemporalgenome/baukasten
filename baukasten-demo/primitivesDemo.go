@@ -4,6 +4,7 @@ import (
 	"github.com/Agon/baukasten"
 	"github.com/Agon/baukasten/driver/glfw"
 	"github.com/Agon/baukasten/driver/ogl"
+	geometry "github.com/Agon/baukasten/geometry"
 )
 
 type PrimitivesDemo struct {
@@ -33,7 +34,7 @@ func (demo *PrimitivesDemo) Load() error {
 		return err
 	}
 	demo.engine.SetCamera(baukasten.NewTwoDCamera(0, float32(width), float32(height), 0))
-	demo.engine.SetClearColor(baukasten.Black)
+	demo.engine.SetClearColor(geometry.Black)
 	return nil
 }
 
@@ -57,14 +58,14 @@ func (demo *PrimitivesDemo) Update() {
 	}
 	demo.engine.BeginFrame()
 
-	demo.engine.DrawPoints(baukasten.White, baukasten.Vector2{0, 10}, baukasten.Vector2{10, 10}, baukasten.Vector2{20, 10}, baukasten.Vector2{30, 10})
-	demo.engine.DrawLines(baukasten.Aqua, baukasten.Vector2{0, 50}, baukasten.Vector2{100, 50})
-	demo.engine.DrawLineStrip(baukasten.Blue, baukasten.Vector2{0, 100}, baukasten.Vector2{100, 100}, baukasten.Vector2{100, 150})
-	demo.engine.DrawLineLoop(baukasten.Lightblue, baukasten.Vector2{0, 200}, baukasten.Vector2{100, 200}, baukasten.Vector2{100, 250})
+	demo.engine.DrawPoints(geometry.White, geometry.Vector2{0, 10}, geometry.Vector2{10, 10}, geometry.Vector2{20, 10}, geometry.Vector2{30, 10})
+	demo.engine.DrawLines(geometry.Aqua, geometry.Vector2{0, 50}, geometry.Vector2{100, 50})
+	demo.engine.DrawLineStrip(geometry.Blue, geometry.Vector2{0, 100}, geometry.Vector2{100, 100}, geometry.Vector2{100, 150})
+	demo.engine.DrawLineLoop(geometry.Lightblue, geometry.Vector2{0, 200}, geometry.Vector2{100, 200}, geometry.Vector2{100, 250})
 
-	demo.engine.DrawTriangles(baukasten.Red, baukasten.Vector2{200, 100}, baukasten.Vector2{300, 100}, baukasten.Vector2{300, 200})
-	demo.engine.DrawTriangleStrip(baukasten.Lime, baukasten.Vector2{200, 200}, baukasten.Vector2{300, 200}, baukasten.Vector2{300, 300})
-	demo.engine.DrawTriangleFan(baukasten.Blue, baukasten.Vector2{200, 300}, baukasten.Vector2{300, 300}, baukasten.Vector2{300, 400})
+	demo.engine.DrawTriangles(geometry.Red, geometry.Vector2{200, 100}, geometry.Vector2{300, 100}, geometry.Vector2{300, 200})
+	demo.engine.DrawTriangleStrip(geometry.Lime, geometry.Vector2{200, 200}, geometry.Vector2{300, 200}, geometry.Vector2{300, 300})
+	demo.engine.DrawTriangleFan(geometry.Blue, geometry.Vector2{200, 300}, geometry.Vector2{300, 300}, geometry.Vector2{300, 400})
 
 	demo.engine.EndFrame()
 }

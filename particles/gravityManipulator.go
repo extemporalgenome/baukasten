@@ -3,15 +3,15 @@ package particles
 import (
 	"time"
 
-	"github.com/Agon/baukasten"
+	math "github.com/Agon/baukasten/geometry"
 )
 
 // GravityManipulator manipulates all particles with a gravity.
 type GravityManipulator struct {
-	Gravity baukasten.Vector2
+	Gravity math.Vector2
 }
 
-func NewGravityManipulator(gravity baukasten.Vector2) *GravityManipulator {
+func NewGravityManipulator(gravity math.Vector2) *GravityManipulator {
 	return &GravityManipulator{Gravity: gravity}
 }
 

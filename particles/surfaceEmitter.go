@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/Agon/baukasten"
+	math "github.com/Agon/baukasten/geometry"
 )
 
 // SurfaceEmitter implements the ParticleEmitter interface.
@@ -17,8 +18,8 @@ type SurfaceEmitter struct {
 	emitFrequency    time.Duration
 	emitLife         time.Duration
 	emitTime         time.Duration
-	emitAcceleration baukasten.Vector2
-	emitVelocity     baukasten.Vector2
+	emitAcceleration math.Vector2
+	emitVelocity     math.Vector2
 
 	manipulators []Manipulator
 }
@@ -40,7 +41,7 @@ func (e *SurfaceEmitter) AddManipulator(m Manipulator) {
 	e.manipulators = append(e.manipulators, m)
 }
 
-func (e *SurfaceEmitter) Emit(frequency, life time.Duration, acceleration baukasten.Vector2, velocity baukasten.Vector2) {
+func (e *SurfaceEmitter) Emit(frequency, life time.Duration, acceleration math.Vector2, velocity math.Vector2) {
 	e.emitFrequency = frequency
 	e.emitLife = life
 	e.emitAcceleration = acceleration
@@ -87,7 +88,7 @@ func (e *SurfaceEmitter) Update(deltaTime time.Duration) {
 	}
 }
 
-func (e *SurfaceEmitter) EmitParticle(acceleration, velocity baukasten.Vector2, life time.Duration, condition Condition) {
+func (e *SurfaceEmitter) EmitParticle(acceleration, velocity math.Vector2, life time.Duration, condition Condition) {
 	for i := range e.particles {
 		if e.particles[i].Condition == Dead {
 			e.particles[i] = Par(acceleration, e.Position, velocity, life, condition)

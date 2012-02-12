@@ -4,17 +4,17 @@ package particles
 import (
 	"time"
 
-	"github.com/Agon/baukasten"
+	math "github.com/Agon/baukasten/geometry"
 )
 
 type Particle struct {
-	Acceleration baukasten.Vector2
-	Position     baukasten.Vector2
-	Velocity     baukasten.Vector2
+	Acceleration math.Vector2
+	Position     math.Vector2
+	Velocity     math.Vector2
 	Condition    Condition
 	Life         time.Duration
 }
 
-func Par(a, p, v baukasten.Vector2, life time.Duration, c Condition) Particle {
+func Par(a, p, v math.Vector2, life time.Duration, c Condition) Particle {
 	return Particle{Acceleration: a, Position: p, Velocity: v, Life: life, Condition: c}
 }

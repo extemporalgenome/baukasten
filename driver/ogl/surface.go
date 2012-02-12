@@ -4,9 +4,10 @@ import (
 	"image"
 	"image/color"
 
-	"github.com/Agon/baukasten"
-
 	gl "github.com/chsc/gogl/gl33"
+
+	"github.com/Agon/baukasten"
+	math "github.com/Agon/baukasten/geometry"
 )
 
 const (
@@ -146,11 +147,11 @@ func (s *Surface) Delete() {
 }
 
 func (s *Surface) Color() color.Color {
-	return baukasten.ConvertFColor(s.r, s.g, s.b, s.a)
+	return math.ConvertFColor(s.r, s.g, s.b, s.a)
 }
 
 func (s *Surface) SetColor(c color.Color) {
-	s.r, s.g, s.b, s.a = baukasten.ConvertColorF(c)
+	s.r, s.g, s.b, s.a = math.ConvertColorF(c)
 }
 
 func (s *Surface) Scale(x, y float32) {
@@ -173,10 +174,10 @@ func (s *Surface) Rotation() float32 {
 func (s *Surface) Draw(x, y float32) {
 	s.program.Use()
 	// projection->view->model(translation->rotation)
-	model := baukasten.TranslationMatrix(x, y, 0)
-	model = model.Multiplied(baukasten.ScaleMatrix(s.scaleX, s.scaleY, 1))
+	model := math.TranslationMatrix(x, y, 0)
+	model = model.Multiplied(math.ScaleMatrix(s.scaleX, s.scaleY, 1))
 	if s.angle != 0 {
-		model = model.Multiplied(baukasten.RotationMatrix(s.angle, baukasten.Vector3{0, 0, 1}))
+		model = model.Multiplied(math.RotationMatrix(s.angle, math.Vector3{0, 0, 1}))
 	}
 	matrix := s.driver.Camera().Get().Multiplied(model)
 	s.mvp.UniformMatrix4fv(1, false, matrix.Transposed())

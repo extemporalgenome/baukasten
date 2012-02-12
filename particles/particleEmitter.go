@@ -3,12 +3,12 @@ package particles
 import (
 	"time"
 
-	"github.com/Agon/baukasten"
+	math "github.com/Agon/baukasten/geometry"
 )
 
 type ParticleEmitter interface {
 	Particles() []Particle
-	Emit(duration, life time.Duration, acceleration baukasten.Vector2, velocity baukasten.Vector2)
+	Emit(duration, life time.Duration, acceleration math.Vector2, velocity math.Vector2)
 	Update(deltaTime time.Duration)
 	AddManipulator(*Manipulator)
 	Draw()

@@ -3,6 +3,8 @@ package baukasten
 import (
 	"image"
 	"image/color"
+
+	math "github.com/Agon/baukasten/geometry"
 )
 
 type GraphicDriver interface {
@@ -16,13 +18,13 @@ type GraphicDriver interface {
 	Resize(int, int)
 	OpenSurface(string) (Surface, error)
 	LoadSurface(image.Image) (Surface, error)
-	DrawPoints(color color.Color, vecs ...Vector2)
-	DrawLines(color color.Color, vecs ...Vector2)
-	DrawLineStrip(color color.Color, vecs ...Vector2)
-	DrawLineLoop(color color.Color, vecs ...Vector2)
-	DrawTriangles(color color.Color, vecs ...Vector2)
-	DrawTriangleStrip(color color.Color, vecs ...Vector2)
-	DrawTriangleFan(color color.Color, vecs ...Vector2)
+	DrawPoints(color color.Color, vecs ...math.Vector2)
+	DrawLines(color color.Color, vecs ...math.Vector2)
+	DrawLineStrip(color color.Color, vecs ...math.Vector2)
+	DrawLineLoop(color color.Color, vecs ...math.Vector2)
+	DrawTriangles(color color.Color, vecs ...math.Vector2)
+	DrawTriangleStrip(color color.Color, vecs ...math.Vector2)
+	DrawTriangleFan(color color.Color, vecs ...math.Vector2)
 }
 
 type ContextDriver interface {
@@ -38,7 +40,7 @@ type InputDriver interface {
 	MouseButtonEvent() <-chan MouseButtonEvent
 	MousePositionEvent() <-chan MousePositionEvent
 	MouseWheelEvent() <-chan MouseWheelEvent
-	JoystickPos(joy int) []Vector2
+	JoystickPos(joy int) []math.Vector2
 	JoystickButtons(joy int) []bool
 }
 

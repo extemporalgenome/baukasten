@@ -3,18 +3,18 @@ package particles
 import (
 	"time"
 
-	"github.com/Agon/baukasten"
+	math "github.com/Agon/baukasten/geometry"
 )
 
 // GravityPointManipulator manipulates particles, which are in range of the manipulator,
 // towards or away from the position of the manipulator.
 type GravityPointManipulator struct {
-	Position baukasten.Vector2
+	Position math.Vector2
 	Force    float32
 	Range    float32
 }
 
-func NewGravityPointManipulator(position baukasten.Vector2, force, gravityRange float32) *GravityPointManipulator {
+func NewGravityPointManipulator(position math.Vector2, force, gravityRange float32) *GravityPointManipulator {
 	return &GravityPointManipulator{Position: position, Force: force, Range: gravityRange}
 }
 

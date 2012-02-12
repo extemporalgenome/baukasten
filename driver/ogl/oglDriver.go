@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"image/color"
 
-	"github.com/Agon/baukasten"
 	gl "github.com/chsc/gogl/gl33"
+
+	"github.com/Agon/baukasten"
+	math "github.com/Agon/baukasten/geometry"
 )
 
 const (
@@ -83,7 +85,7 @@ func (d *Driver) BeginFrame() {
 }
 
 func (d *Driver) SetClearColor(color color.Color) {
-	r, g, b, a := baukasten.ConvertColorF(color)
+	r, g, b, a := math.ConvertColorF(color)
 	gl.ClearColor(gl.Clampf(r), gl.Clampf(g), gl.Clampf(b), gl.Clampf(a))
 }
 

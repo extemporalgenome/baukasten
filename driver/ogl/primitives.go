@@ -3,9 +3,9 @@ package ogl
 import (
 	"image/color"
 
-	"github.com/Agon/baukasten"
-
 	gl "github.com/chsc/gogl/gl33"
+
+	math "github.com/Agon/baukasten/geometry"
 )
 
 const (
@@ -26,37 +26,37 @@ const (
 		"}"
 )
 
-func (d *Driver) DrawPoints(color color.Color, vecs ...baukasten.Vector2) {
+func (d *Driver) DrawPoints(color color.Color, vecs ...math.Vector2) {
 	d.drawPrimitives(color, gl.POINTS, vecs...)
 }
 
-func (d *Driver) DrawLines(color color.Color, vecs ...baukasten.Vector2) {
+func (d *Driver) DrawLines(color color.Color, vecs ...math.Vector2) {
 	d.drawPrimitives(color, gl.LINES, vecs...)
 }
 
-func (d *Driver) DrawLineStrip(color color.Color, vecs ...baukasten.Vector2) {
+func (d *Driver) DrawLineStrip(color color.Color, vecs ...math.Vector2) {
 	d.drawPrimitives(color, gl.LINE_STRIP, vecs...)
 }
 
-func (d *Driver) DrawLineLoop(color color.Color, vecs ...baukasten.Vector2) {
+func (d *Driver) DrawLineLoop(color color.Color, vecs ...math.Vector2) {
 	d.drawPrimitives(color, gl.LINE_LOOP, vecs...)
 }
 
-func (d *Driver) DrawTriangles(color color.Color, vecs ...baukasten.Vector2) {
+func (d *Driver) DrawTriangles(color color.Color, vecs ...math.Vector2) {
 	d.drawPrimitives(color, gl.TRIANGLES, vecs...)
 }
 
-func (d *Driver) DrawTriangleStrip(color color.Color, vecs ...baukasten.Vector2) {
+func (d *Driver) DrawTriangleStrip(color color.Color, vecs ...math.Vector2) {
 	d.drawPrimitives(color, gl.TRIANGLE_STRIP, vecs...)
 }
 
-func (d *Driver) DrawTriangleFan(color color.Color, vecs ...baukasten.Vector2) {
+func (d *Driver) DrawTriangleFan(color color.Color, vecs ...math.Vector2) {
 	d.drawPrimitives(color, gl.TRIANGLE_FAN, vecs...)
 }
 
-func (d *Driver) drawPrimitives(color color.Color, mode gl.Enum, vecs ...baukasten.Vector2) {
+func (d *Driver) drawPrimitives(color color.Color, mode gl.Enum, vecs ...math.Vector2) {
 	vertices := make([]float32, len(vecs)*2)
-	r, g, b, a := baukasten.ConvertColorF(color)
+	r, g, b, a := math.ConvertColorF(color)
 	var colors []float32
 	for i := range vecs {
 		vertices[i*2] = vecs[i].X

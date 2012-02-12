@@ -6,6 +6,8 @@ import (
 	"image"
 	"image/color"
 	"time"
+
+	math "github.com/Agon/baukasten/geometry"
 )
 
 var NoContextDriverError = errors.New("baukasten.Engine has no loaded ContextDriver.")
@@ -99,7 +101,7 @@ func (e *Engine) JoystickButtons(joy int) []bool {
 	return e.input.JoystickButtons(joy)
 }
 
-func (e *Engine) JoystickPos(joy int) []Vector2 {
+func (e *Engine) JoystickPos(joy int) []math.Vector2 {
 	return e.input.JoystickPos(joy)
 }
 
@@ -140,13 +142,13 @@ func (e *Engine) MouseWheelEvent() <-chan MouseWheelEvent {
 }
 
 // DrawPoints draws each vector as a single point.
-func (e *Engine) DrawPoints(color color.Color, vecs ...Vector2) {
+func (e *Engine) DrawPoints(color color.Color, vecs ...math.Vector2) {
 	e.graphic.DrawPoints(color, vecs...)
 }
 
 // DrawLines draws each pair of vectors as an independent line segment.
 // The length of vecs needs to be a power of 2.
-func (e *Engine) DrawLines(color color.Color, vecs ...Vector2) {
+func (e *Engine) DrawLines(color color.Color, vecs ...math.Vector2) {
 	if len(vecs) < 2 {
 		panic("Not enough vectors specified.")
 	}
@@ -158,7 +160,7 @@ func (e *Engine) DrawLines(color color.Color, vecs ...Vector2) {
 
 // DrawLineStrip draws a connected group of line segments from the first vector to the last.
 // The length of vecs needs to be greater than one.
-func (e *Engine) DrawLineStrip(color color.Color, vecs ...Vector2) {
+func (e *Engine) DrawLineStrip(color color.Color, vecs ...math.Vector2) {
 	if len(vecs) < 2 {
 		panic("Not enough vectors specified.")
 	}
@@ -167,7 +169,7 @@ func (e *Engine) DrawLineStrip(color color.Color, vecs ...Vector2) {
 
 // DrawLineLoop draws a connected group of line segments from the first vector to the last, then back to the frist.
 // The length of vecs needs to be greater than one.
-func (e *Engine) DrawLineLoop(color color.Color, vecs ...Vector2) {
+func (e *Engine) DrawLineLoop(color color.Color, vecs ...math.Vector2) {
 	if len(vecs) < 2 {
 		panic("Not enough vectors specified.")
 	}
@@ -176,7 +178,7 @@ func (e *Engine) DrawLineLoop(color color.Color, vecs ...Vector2) {
 
 // DrawTriangles draws three vectors as an independent triangle.
 // The length of vecs needs to be a power of 3.
-func (e *Engine) DrawTriangles(color color.Color, vecs ...Vector2) {
+func (e *Engine) DrawTriangles(color color.Color, vecs ...math.Vector2) {
 	if len(vecs)%3 != 0 {
 		panic("Length of vecs is not a power of 3.")
 	}
@@ -185,7 +187,7 @@ func (e *Engine) DrawTriangles(color color.Color, vecs ...Vector2) {
 
 // DrawTriangleStrip draws a connected group of triangles.
 // The length of vecs needs to be greater than two.
-func (e *Engine) DrawTriangleStrip(color color.Color, vecs ...Vector2) {
+func (e *Engine) DrawTriangleStrip(color color.Color, vecs ...math.Vector2) {
 	if len(vecs) < 3 {
 		panic("Not enough vectors specified.")
 	}
@@ -194,7 +196,7 @@ func (e *Engine) DrawTriangleStrip(color color.Color, vecs ...Vector2) {
 
 // DrawTriangleFan draws a connected group of triangles, centering around the second vector.
 // The length of vecs needs to be greater than two.
-func (e *Engine) DrawTriangleFan(color color.Color, vecs ...Vector2) {
+func (e *Engine) DrawTriangleFan(color color.Color, vecs ...math.Vector2) {
 	if len(vecs) < 3 {
 		panic("Not enough vectors specified.")
 	}
@@ -202,16 +204,16 @@ func (e *Engine) DrawTriangleFan(color color.Color, vecs ...Vector2) {
 }
 
 // DrawRectangle draws a RectangleF as two triangles.
-func (e *Engine) DrawRectangle(color color.Color, r RectangleF) {
-	e.graphic.DrawTriangles(color, r.Min, Vector2{r.Min.X, r.Max.Y}, Vector2{r.Max.X, r.Min.Y}, Vector2{r.Max.X, r.Min.Y}, Vector2{r.Min.X, r.Max.Y}, r.Max)
+func (e *Engine) DrawRectangle(color color.Color, r math.RectangleF) {
+	e.graphic.DrawTriangles(color, r.Min, math.Vector2{r.Min.X, r.Max.Y}, math.Vector2{r.Max.X, r.Min.Y}, math.Vector2{r.Max.X, r.Min.Y}, math.Vector2{r.Min.X, r.Max.Y}, r.Max)
 }
 
 // DrawCircle draws a circle centered at v with a radius of r, with n number of points in color c.
-func (e *Engine) DrawCircle(c color.Color, r float32, n int, v Vector2) {
-	vectors := make([]Vector2, n)
+func (e *Engine) DrawCircle(c color.Color, r float32, n int, v math.Vector2) {
+	vectors := make([]math.Vector2, n)
 	for i := 0; i < n; i++ {
-		degInRad := (360 / float32(i)) * Pi() / 180
-		vectors[i] = v.Add(Vector2{Cos(degInRad) * r, Sin(degInRad) * r})
+		degInRad := (360 / float32(i)) * math.Pi() / 180
+		vectors[i] = v.Add(math.Vector2{math.Cos(degInRad) * r, math.Sin(degInRad) * r})
 	}
 	e.DrawLineLoop(c, vectors...)
 }
