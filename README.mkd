@@ -37,6 +37,7 @@ A two dimensional particle system is available.
 
 ## Documentation
 - Engine: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten
+- Geometry: http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/geometry
 - GLFW driver (ContextDriver, InputDriver): http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/glfw
 - OpenGL 3.3 driver (GraphicDriver): http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/ogl
 - Freetype driver (FontDriver): http://gopkgdoc.appspot.com/pkg/github.com/Agon/baukasten/driver/freetype
@@ -48,7 +49,8 @@ A demo application can be found under baukasten-demo which can load different de
 ## Status
 At the moment you can load the engine, render images as surfaces and create surfaces from text.<br>
 Drawing different primitive types is implemented, too.<br>
-It is also possible to track mouse, keyboard and system events.
+It is also possible to track mouse, keyboard and system events.<br>
+Basic joystick support is available, too.
 
 ## Note
 You need to call runtime.LockOSThread() before calling engine related functions. To unlock call runtime.LockOSThread().<br>
