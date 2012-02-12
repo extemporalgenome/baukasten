@@ -54,6 +54,8 @@ type Font interface {
 type Surface interface {
 	Draw(x, y float32)
 	Delete()
+	Color() color.Color
+	SetColor(color.Color)
 	Scale(x, y float32)
 	GetScale() (float32, float32)
 	Rotate(angle float32)

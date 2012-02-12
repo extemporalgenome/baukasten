@@ -2,14 +2,18 @@ package ogl
 
 import (
 	"image"
+	"image/color"
 
 	"github.com/Agon/baukasten"
 
 	gl "github.com/chsc/gogl/gl33"
 )
 
-var SurfaceFragmentShader = "#version 120\nvarying vec2 f_texcoord;\nuniform sampler2D texture;\nvoid main(void) {\ngl_FragColor = texture2D(texture, f_texcoord);\n}"
-var SurfaceVertexShader = "#version 120\nattribute vec2 coord2d;\nattribute vec2 texcoord;\nvarying vec2 f_texcoord;\nuniform mat4 mvp;\nvoid main(void) {\ngl_Position = mvp * vec4(coord2d, 0.0, 1.0);\nf_texcoord = texcoord;\n}"
+const (
+	SurfaceVertexShader   = "#version 120\nattribute vec2 coord2d;\nattribute vec2 texcoord;\nvarying vec2 f_texcoord;\nvarying vec4 f_color;\nuniform mat4 mvp;\nuniform vec4 v_color;\nvoid main(void) {\ngl_Position = mvp * vec4(coord2d, 0.0, 1.0);\nf_texcoord = texcoord;\nf_color = v_color;\n}"
+	SurfaceFragmentShader = "#version 120\nvarying vec2 f_texcoord;\nvarying vec4 f_color;\nuniform sampler2D texture;\nvoid main(void) {\n" +
+		"gl_FragColor = f_color * texture2D(texture, f_texcoord);\n}"
+)
 
 var SurfaceTriangles = []float32{
 	0, 0, 0,
@@ -28,6 +32,8 @@ type Surface struct {
 	angle float32
 	// Size
 	width, height float32
+	// Color
+	r, g, b, a float32
 	// OpenGL
 	texture *Texture
 	vbo     *VertexBufferObject
@@ -36,10 +42,11 @@ type Surface struct {
 	fs      *Shader
 
 	// Locations
-	coord2d  *AttributeLocation
-	texcoord *AttributeLocation
-	mvp      *UniformLocation
-	texId    *UniformLocation
+	coord2d    *AttributeLocation
+	texcoord   *AttributeLocation
+	colorCoord *UniformLocation
+	mvp        *UniformLocation
+	texId      *UniformLocation
 
 	// driver
 	driver *Driver
@@ -104,6 +111,10 @@ func (d *Driver) LoadSurface(img image.Image) (baukasten.Surface, error) {
 	if err != nil {
 		return nil, err
 	}
+	s.colorCoord, err = s.program.GetUniformLocation("v_color")
+	if err != nil {
+		return nil, err
+	}
 	s.texcoord, err = s.program.GetAttributeLocation("texcoord")
 	if err != nil {
 		return nil, err
@@ -122,6 +133,7 @@ func (d *Driver) LoadSurface(img image.Image) (baukasten.Surface, error) {
 	s.scaleX = 1
 	s.scaleY = 1
 	s.driver = d
+	s.r, s.g, s.b, s.a = 1, 1, 1, 1
 	return s, nil
 }
 
@@ -131,6 +143,14 @@ func (s *Surface) Delete() {
 	s.program.Delete()
 	s.vs.Delete()
 	s.fs.Delete()
+}
+
+func (s *Surface) Color() color.Color {
+	return baukasten.ConvertFColor(s.r, s.g, s.b, s.a)
+}
+
+func (s *Surface) SetColor(c color.Color) {
+	s.r, s.g, s.b, s.a = baukasten.ConvertColorF(c)
 }
 
 func (s *Surface) Scale(x, y float32) {
@@ -162,6 +182,7 @@ func (s *Surface) Draw(x, y float32) {
 	s.mvp.UniformMatrix4fv(1, false, matrix.Transposed())
 
 	s.texId.Uniform1i(0)
+	s.colorCoord.Uniform4f(s.r, s.g, s.b, s.a)
 
 	s.coord2d.Enable()
 	defer s.coord2d.Disable()
