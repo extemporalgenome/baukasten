@@ -52,6 +52,7 @@ func (demo *PrimitivesDemo) Update() {
 	case <-demo.engine.KeyEvent():
 	case windowSize := <-demo.engine.ResizeEvent():
 		demo.engine.GraphicResize(int(windowSize.Width()), int(windowSize.Height()))
+		demo.engine.SetCamera(baukasten.NewTwoDCamera(0, float32(windowSize.Width()), float32(windowSize.Height()), 0))
 	default:
 	}
 	demo.engine.BeginFrame()

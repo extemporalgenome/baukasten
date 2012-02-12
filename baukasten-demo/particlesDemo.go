@@ -11,6 +11,7 @@ import (
 type ParticlesDemo struct {
 	engine  *baukasten.Engine
 	emitter *particles.SurfaceEmitter
+	surface baukasten.Surface
 }
 
 func NewParticlesDemo() *ParticlesDemo {
@@ -35,14 +36,17 @@ func (demo *ParticlesDemo) Load() error {
 	if err != nil {
 		return err
 	}
-	surface, err := demo.engine.OpenSurface("smoke.png")
+	demo.surface, err = demo.engine.OpenSurface("smoke.png")
 	if err != nil {
 		return err
 	}
+	c := baukasten.Blue
+	c.A = 175
+	demo.surface.SetColor(c)
 	demo.engine.SetCamera(baukasten.NewTwoDCamera(0, float32(width), float32(height), 0))
 	gravity := particles.NewGravityManipulator(baukasten.Vector2{10, -10})
 	pointGravity := particles.NewGravityPointManipulator(baukasten.Vector2{400, 200}, -10, 200)
-	demo.emitter = particles.NewSurfaceEmitter(surface)
+	demo.emitter = particles.NewSurfaceEmitter(demo.surface)
 	demo.emitter.Position = baukasten.Vector2{400, 480}
 	demo.emitter.Emit(time.Second/25, time.Second*10, baukasten.Vector2{0, 0}, baukasten.Vector2{0, 0})
 	demo.emitter.AddManipulator(gravity)
@@ -67,6 +71,7 @@ func (demo *ParticlesDemo) Update() {
 		demo.emitter.Position = baukasten.Vector2{float32(mouse.X()), float32(mouse.Y())}
 	case windowSize := <-demo.engine.ResizeEvent():
 		demo.engine.GraphicResize(int(windowSize.Width()), int(windowSize.Height()))
+		demo.engine.SetCamera(baukasten.NewTwoDCamera(0, float32(windowSize.Width()), float32(windowSize.Height()), 0))
 	default:
 	}
 	demo.emitter.Update(demo.engine.DeltaTime())
