@@ -155,28 +155,32 @@ var (
 	Yellowgreen          = color.RGBA{154, 205, 50, 255}
 )
 
+func ConvertFColor(r, g, b, a float32) color.Color {
+	return color.RGBA{uint8(r * 0xFFFF), uint8(g * 0xFFFF), uint8(b * 0xFFFF), uint8(a * 0xFFFF)}
+}
+
 // Converts a Go type color.Color to red, green, blue and alpha float32 values with a range of 0 to 1.
 func ConvertColorF(color color.Color) (r float32, g float32, b float32, a float32) {
 	red, green, blue, alpha := color.RGBA()
 	if red == 0 {
 		r = 0
 	} else {
-		r = float32(0xFFFF / red)
+		r = float32(red) / float32(0xFFFF)
 	}
 	if green == 0 {
 		g = 0
 	} else {
-		g = float32(0xFFFF / green)
+		g = float32(green) / float32(0xFFFF)
 	}
 	if blue == 0 {
 		b = 0
 	} else {
-		b = float32(0xFFFF / blue)
+		b = float32(blue) / float32(0xFFFF)
 	}
 	if alpha == 0 {
 		a = 0
 	} else {
-		a = float32(0xFFFF / alpha)
+		a = float32(alpha) / float32(0xFFFF)
 	}
 	return
 }
