@@ -1,4 +1,4 @@
-package baukasten
+package geometry
 
 import (
 	"image/color"

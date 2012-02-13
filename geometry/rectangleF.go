@@ -1,4 +1,4 @@
-package baukasten
+package geometry
 
 // ZR is the zero RectangleF.
 var ZR RectangleF

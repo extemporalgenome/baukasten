@@ -5,7 +5,7 @@ import (
 	"github.com/jteeuwen/glfw"
 
 	"github.com/Agon/baukasten"
-	math "github.com/Agon/baukasten/geometry"
+	"github.com/Agon/baukasten/geometry"
 )
 
 const (
@@ -136,15 +136,15 @@ func (d *Driver) JoystickParam(joy, param int) int {
 }
 
 // Two axes support
-func (d *Driver) JoystickPos(joy int) []math.Vector2 {
+func (d *Driver) JoystickPos(joy int) []geometry.Vector2 {
 	axes := []float32{0, 0, 0, 0}
 	l := glfw.JoystickPos(joy, axes)
 	if l%2 == 0 {
-		return []math.Vector2{}
+		return []geometry.Vector2{}
 	}
-	vecAxes := make([]math.Vector2, l/2)
+	vecAxes := make([]geometry.Vector2, l/2)
 	for i := 0; i < l; i += 2 {
-		vecAxes[i] = math.Vec2(axes[i], axes[i+1])
+		vecAxes[i] = geometry.Vec2(axes[i], axes[i+1])
 	}
 	return vecAxes
 }

@@ -4,7 +4,7 @@ import (
 	"github.com/Agon/baukasten"
 	"github.com/Agon/baukasten/driver/glfw"
 	"github.com/Agon/baukasten/driver/ogl"
-	geometry "github.com/Agon/baukasten/geometry"
+	"github.com/Agon/baukasten/geometry"
 )
 
 type PrimitivesDemo struct {
