@@ -87,8 +87,8 @@ func (v Vector2) DotProduct(vec Vector2) float32 {
 }
 
 // Computes and returns the angle between another vector.
-func (v Vector2) AngleBetween(vec Vector2) float32 {
-	return Acos(v.DotProduct(vec) / (v.Magnitude() * vec.Magnitude()))
+func (v Vector2) AngleBetween(vec Vector2) Angle {
+	return Angle(Acos(v.DotProduct(vec) / (v.Magnitude() * vec.Magnitude())))
 }
 
 // Computes and returns the distance between another vector.

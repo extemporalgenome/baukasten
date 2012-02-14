@@ -100,8 +100,8 @@ func (v Vector3) CrossProduct(vec Vector3) Vector3 {
 }
 
 // Computes and returns the angle between another vector.
-func (v Vector3) AngleBetween(vec Vector3) float32 {
-	return Acos(v.DotProduct(vec) / (v.Magnitude() * vec.Magnitude()))
+func (v Vector3) AngleBetween(vec Vector3) Angle {
+	return Angle(Acos(v.DotProduct(vec) / (v.Magnitude() * vec.Magnitude())))
 }
 
 // Computes and returns the distance to another vector.
