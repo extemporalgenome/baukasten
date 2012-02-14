@@ -4,10 +4,8 @@ import (
 	"math"
 )
 
-// Pi returns the math.Pi number as a float32.
-func Pi() float32 {
-	return math.Pi
-}
+// Pi is math.Pi but as a float32 type
+const Pi = float32(math.Pi)
 
 // Similar to math.Acos but takes and returns a float32 instead of a float64.
 func Acos(angle float32) float32 {

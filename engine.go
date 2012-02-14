@@ -212,7 +212,7 @@ func (e *Engine) DrawRectangle(color color.Color, r math.RectangleF) {
 func (e *Engine) DrawCircle(c color.Color, r float32, n int, v math.Vector2) {
 	vectors := make([]math.Vector2, n)
 	for i := 0; i < n; i++ {
-		degInRad := (360 / float32(i)) * math.Pi() / 180
+		degInRad := (360 / float32(i)) * math.Pi / 180
 		vectors[i] = v.Add(math.Vector2{math.Cos(degInRad) * r, math.Sin(degInRad) * r})
 	}
 	e.DrawLineLoop(c, vectors...)
