@@ -53,5 +53,5 @@ It is also possible to track mouse, keyboard and system events.<br>
 Basic joystick support is available, too.
 
 ## Note
-You need to call runtime.LockOSThread() before calling engine related functions. To unlock call runtime.LockOSThread().<br>
+You need to call runtime.LockOSThread() before calling engine related functions. To unlock call runtime.UnlockOSThread().<br>
 Events are send through a channel with a buffer size of one, if the buffer is full new events are not passed through, at the moment.
