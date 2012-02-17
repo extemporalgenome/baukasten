@@ -203,8 +203,8 @@ func (e *Engine) DrawTriangleFan(color color.Color, vecs ...math.Vector2) {
 	e.graphic.DrawTriangleFan(color, vecs...)
 }
 
-// DrawRectangle draws a RectangleF as two triangles.
-func (e *Engine) DrawRectangle(color color.Color, r math.RectangleF) {
+// DrawRectangle draws a Rectanglef as two triangles.
+func (e *Engine) DrawRectangle(color color.Color, r math.Rectanglef) {
 	e.graphic.DrawTriangles(color, r.Min, math.Vector2{r.Min.X, r.Max.Y}, math.Vector2{r.Max.X, r.Min.Y}, math.Vector2{r.Max.X, r.Min.Y}, math.Vector2{r.Min.X, r.Max.Y}, r.Max)
 }
 
