@@ -5,7 +5,7 @@ type Circlef struct {
 	Radius   float32
 }
 
-func CircF(position Vector2, radius float32) Circlef {
+func Circf(position Vector2, radius float32) Circlef {
 	return Circlef{Position: position, Radius: radius}
 }
 
