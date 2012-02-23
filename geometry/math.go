@@ -36,3 +36,8 @@ func Signbit(value float32) bool {
 func Tan(x float32) float32 {
 	return float32(math.Tan(float64(x)))
 }
+
+// Similar to math.Mod but takes and returns a float32 instead of a float64.
+func Mod(x, y float32) float32 {
+	return float32(math.Mod(float64(x), float64(y)))
+}
