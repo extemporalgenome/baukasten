@@ -19,21 +19,9 @@ func (a Angle) Radians() float32 {
 }
 
 func (a Angle) Normalized() Angle {
-	for a > 360 {
-		a -= 360
-	}
-	for a < -360 {
-		a += 360
-	}
-	return a
+	return Angle(Mod(float32(a), 360))
 }
 
 func (a Angle) Normalized180() Angle {
-	for a > 180 {
-		a -= 180
-	}
-	for a < -180 {
-		a += 180
-	}
-	return a
+	return Angle(Mod(float32(a), 180))
 }

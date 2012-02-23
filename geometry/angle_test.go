@@ -7,11 +7,12 @@ import (
 const (
 	TestDegree     = float32(90)
 	TestRadians    = 1.5707963267948966
-	TestOverDegree = float32(370)
+	TestOverDegree = float32(370.10)
+	TestZero       = float32(0)
 )
 
 var (
-	TestOverDegreeResult = Deg(10)
+	TestOverDegreeResult = Deg(TestOverDegree - 360.0)
 )
 
 func TestAngle(t *testing.T) {
@@ -26,7 +27,18 @@ func TestAngle(t *testing.T) {
 	if d.Radians() != TestRadians {
 		t.Errorf("d.Radians() %f should equal %f", d.Radians(), TestRadians)
 	}
+
+	// Zero test
+	zeroDegree := Deg(TestZero)
+	if zeroDegree.Degrees() != TestZero {
+		t.Errorf("zeroDegree.Degrees() %f should equal %f", zeroDegree.Degrees(), TestZero)
+	}
+	if zeroDegree.Radians() != TestZero {
+		t.Errorf("zeroDegree.Radians() %f should equal %f", zeroDegree.Radians(), TestZero)
+	}
+
 	// Normalize
+	d = Deg(TestDegree)
 	if d.Normalized() != d {
 		t.Errorf("d.Normalized() %f should equal %f", d.Normalized(), d)
 	}
@@ -39,5 +51,11 @@ func TestAngle(t *testing.T) {
 	}
 	if overDegree.Normalized180() != TestOverDegreeResult {
 		t.Errorf("overDegree.Normalized180() %f should equal %f", overDegree.Normalized180(), TestOverDegreeResult)
+	}
+	if zeroDegree.Normalized() != zeroDegree {
+		t.Errorf("zeroDegree.Normalized() %f should equal %f", zeroDegree.Normalized(), zeroDegree)
+	}
+	if zeroDegree.Normalized180() != zeroDegree {
+		t.Errorf("zeroDegree.Normalized180() %f should equal %f", zeroDegree.Normalized180(), zeroDegree)
 	}
 }
