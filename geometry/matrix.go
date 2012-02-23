@@ -193,15 +193,18 @@ func (m Matrix4) Transposed() Matrix4 {
 	}
 }
 
-/*
-func MakePerspectiveMatrix(fovy, aspect, zNear, zFar float32) Matrix4 {
-	f := 1 / float32(math.Tan(float64(fovy/2)))
-	a := 1 / (zNear - zFar)
-	return Matrix4{
-		f / aspect, 0, 0, 0,
-		0, f, 0, 0,
-		0, 0, (zFar + zNear) * a, 2 * zFar * zNear * a,
-		0, 0, -1, 0,
-	}
+func (m Matrix4) Determinant() float32 {
+	a0 := m[0]*m[5] - m[1]*m[4]
+	a1 := m[0]*m[6] - m[2]*m[4]
+	a2 := m[0]*m[7] - m[3]*m[4]
+	a3 := m[1]*m[6] - m[2]*m[5]
+	a4 := m[1]*m[7] - m[3]*m[5]
+	a5 := m[2]*m[7] - m[3]*m[6]
+	b0 := m[8]*m[13] - m[9]*m[12]
+	b1 := m[8]*m[14] - m[10]*m[12]
+	b2 := m[8]*m[15] - m[11]*m[12]
+	b3 := m[9]*m[14] - m[10]*m[13]
+	b4 := m[9]*m[15] - m[11]*m[13]
+	b5 := m[10]*m[15] - m[11]*m[14]
+	return a0*b5 - a1*b4 + a2*b3 + a3*b2 - a4*b1 + a5*b0
 }
-*/
