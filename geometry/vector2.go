@@ -41,7 +41,7 @@ func (v *Vector2) Scale(scalar float32) {
 }
 
 func (v *Vector2) Normalize() {
-	v.Scale(1 / v.Magnitude())
+	v.Scale(1 / v.Length())
 }
 
 // ### Return functions ###
@@ -68,30 +68,30 @@ func (v Vector2) Scaled(scalar float32) Vector2 {
 
 // Returns the vector normalized.
 func (v Vector2) Normalized() Vector2 {
-	return v.Scaled(1 / v.Magnitude())
+	return v.Scaled(1 / v.Length())
 }
 
 // Returns the square of the length of the vector.
-func (v Vector2) MagnitudeSquared() float32 {
+func (v Vector2) SquaredLength() float32 {
 	return v.X*v.X + v.Y*v.Y
 }
 
 // Returns the length of the vector.
-func (v Vector2) Magnitude() float32 {
-	return Sqrt(v.MagnitudeSquared())
+func (v Vector2) Length() float32 {
+	return Sqrt(v.SquaredLength())
 }
 
 // Computes and returns the dot product with another vector.
-func (v Vector2) DotProduct(vec Vector2) float32 {
+func (v Vector2) Dot(vec Vector2) float32 {
 	return v.X*vec.X + v.Y*vec.Y
 }
 
 // Computes and returns the angle between another vector.
 func (v Vector2) AngleBetween(vec Vector2) Angle {
-	return Angle(Acos(v.DotProduct(vec) / (v.Magnitude() * vec.Magnitude())))
+	return Angle(Acos(v.Dot(vec) / (v.Length() * vec.Length())))
 }
 
 // Computes and returns the distance between another vector.
 func (v Vector2) DistanceBetween(vec Vector2) float32 {
-	return v.Sub(vec).Magnitude()
+	return v.Sub(vec).Length()
 }

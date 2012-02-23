@@ -113,9 +113,9 @@ func ReflectZMatrix() Matrix4 {
 // Similar to gluLookAt.
 func LookAtMatrix(eye, center, up Vector3) Matrix4 {
 	z := (center.Normalized()).Scaled(-1.0)
-	dk := center.CrossProduct(up)
+	dk := center.Cross(up)
 	x := dk.Normalized()
-	y := z.CrossProduct(x)
+	y := z.Cross(x)
 	return Matrix4{
 		x.X, y.X, z.X, -eye.X,
 		x.Y, y.Y, z.Y, -eye.X,

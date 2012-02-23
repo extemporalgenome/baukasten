@@ -45,7 +45,7 @@ func (v *Vector3) Scale(scalar float32) {
 }
 
 func (v *Vector3) Normalize() {
-	v.Scale(1 / v.Magnitude())
+	v.Scale(1 / v.Length())
 }
 
 // ### Return functions ###
@@ -72,26 +72,26 @@ func (v Vector3) Scaled(scalar float32) Vector3 {
 
 // Returns the vector normalized.
 func (v Vector3) Normalized() Vector3 {
-	return v.Scaled(1 / v.Magnitude())
-}
-
-// Returns the square of the length of the vector.
-func (v Vector3) MagnitudeSquared() float32 {
-	return v.X*v.X + v.Y*v.Y + v.Z*v.Z
+	return v.Scaled(1 / v.Length())
 }
 
 // Returns the length of the vector.
-func (v Vector3) Magnitude() float32 {
-	return Sqrt(v.MagnitudeSquared())
+func (v Vector3) Length() float32 {
+	return Sqrt(v.SquaredLength())
+}
+
+// Returns the square of the length of the vector.
+func (v Vector3) SquaredLength() float32 {
+	return v.X*v.X + v.Y*v.Y + v.Z*v.Z
 }
 
 // Computes and returns the dot product with another vector.
-func (v Vector3) DotProduct(vec Vector3) float32 {
+func (v Vector3) Dot(vec Vector3) float32 {
 	return v.X*vec.X + v.Y*vec.Y + v.Z*vec.Z
 }
 
 // Returns the cross product with another vector.
-func (v Vector3) CrossProduct(vec Vector3) Vector3 {
+func (v Vector3) Cross(vec Vector3) Vector3 {
 	return Vector3{
 		v.Y*vec.Z - v.Z*vec.Y,
 		v.Z*vec.X - v.X*vec.Z,
@@ -101,10 +101,10 @@ func (v Vector3) CrossProduct(vec Vector3) Vector3 {
 
 // Computes and returns the angle between another vector.
 func (v Vector3) AngleBetween(vec Vector3) Angle {
-	return Angle(Acos(v.DotProduct(vec) / (v.Magnitude() * vec.Magnitude())))
+	return Angle(Acos(v.Dot(vec) / (v.Length() * vec.Length())))
 }
 
 // Computes and returns the distance to another vector.
 func (v Vector3) DistanceBetween(vec Vector3) float32 {
-	return (v.Sub(vec)).Magnitude()
+	return (v.Sub(vec)).Length()
 }
