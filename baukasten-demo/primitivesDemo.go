@@ -66,6 +66,15 @@ func (demo *PrimitivesDemo) Update() {
 	demo.engine.DrawTriangles(geometry.Red, geometry.Vector2{200, 100}, geometry.Vector2{300, 100}, geometry.Vector2{300, 200})
 	demo.engine.DrawTriangleStrip(geometry.Lime, geometry.Vector2{200, 200}, geometry.Vector2{300, 200}, geometry.Vector2{300, 300})
 	demo.engine.DrawTriangleFan(geometry.Blue, geometry.Vector2{200, 300}, geometry.Vector2{300, 300}, geometry.Vector2{300, 400})
+	a, b, c, d := geometry.Vec2(400, 100), geometry.Vec2(500, 200), geometry.Vec2(600, 100), geometry.Vec2(700, 300)
+	curve := geometry.BCurve(a, b, c, d)
+	curveDetail := 100
+	curveVecs := make([]geometry.Vector2, curveDetail)
+	for i := 0; i < curveDetail; i++ {
+		curveVecs[i] = curve.RelativePoint(float32(i) / float32(curveDetail))
+	}
+	demo.engine.DrawLineStrip(geometry.Orange, curveVecs...)
+	demo.engine.DrawPoints(geometry.Green, a, b, c, d)
 
 	demo.engine.EndFrame()
 }
