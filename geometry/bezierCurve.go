@@ -7,32 +7,16 @@ func BCurve(points ...Vector2) BezierCurve {
 }
 
 func (b BezierCurve) RelativePoint(pos float32) Vector2 {
-	if pos < 0 || pos > 1 {
+	controlPoints := []Vector2(b)
+	if len(controlPoints) == 0 {
 		return Vec2(0, 0)
 	}
-	vecs := relativePoint([]Vector2(b), pos)
-	if len(vecs) == 0 {
-		return Vec2(0, 0)
-	}
-	if len(vecs) > 1 {
-		panic("relativePoint should reduce all points to one.")
-	}
-	return vecs[0]
-}
-
-func relativePoint(points []Vector2, pos float32) []Vector2 {
-	if len(points) < 2 {
-		if len(points) == 1 {
-			return points[:1]
+	p := 1.0 - pos
+	for j := len(controlPoints) - 1; j > 0; j-- {
+		for i := 0; i < j; i++ {
+			controlPoints[i].X = p*controlPoints[i].X + pos*controlPoints[i+1].X
+			controlPoints[i].Y = p*controlPoints[i].Y + pos*controlPoints[i+1].Y
 		}
-		return []Vector2{}
 	}
-	subPoints := make([]Vector2, len(points)-1)
-	for i := 0; i < len(points)-1; i++ {
-		subPoints[i] = points[i].Add(points[i+1].Sub(points[i]).Scaled(pos))
-	}
-	if len(subPoints) > 1 {
-		return relativePoint(subPoints, pos)
-	}
-	return subPoints
+	return controlPoints[0]
 }

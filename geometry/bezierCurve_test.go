@@ -11,18 +11,8 @@ func TestBezierCurve(t *testing.T) {
 	d := Vec2(3, 2)
 	curve := BCurve(a, b, c, d)
 
-	// Overflow
-	vec := curve.RelativePoint(2)
-	if vec.X != 0 && vec.Y != 0 {
-		t.Errorf("RelativePoint(2) should return {0,0} not %v, since it overflowed.", vec)
-	}
-	// Underflow
-	vec = curve.RelativePoint(-1)
-	if vec.X != 0 && vec.Y != 0 {
-		t.Errorf("RelativePoint(-1) should return {0,0} not %v, since it underflowed", vec)
-	}
 	// input 0 (min)
-	vec = curve.RelativePoint(0)
+	vec := curve.RelativePoint(0)
 	if vec != a {
 		t.Errorf("RelativePoint(0) should return %v not %v, since the curve should start at the first point", a, vec)
 	}
