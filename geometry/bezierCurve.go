@@ -6,6 +6,7 @@ func BCurve(points ...Vector2) BezierCurve {
 	return BezierCurve(points)
 }
 
+// RelativePoint returns the point on pos position on b's curve.
 func (b BezierCurve) RelativePoint(pos float32) Vector2 {
 	controlPoints := []Vector2(b)
 	if len(controlPoints) == 0 {

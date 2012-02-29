@@ -155,6 +155,8 @@ var (
 	Yellowgreen          = color.RGBA{154, 205, 50, 255}
 )
 
+// ConvertFColor returns r, g, b, a float32 types converted to color.Color.
+// Values below zero are capped at zero. Values greater than one are capped at one.
 func ConvertFColor(r, g, b, a float32) color.Color {
 	if r > 1 {
 		r = 1
@@ -183,9 +185,9 @@ func ConvertFColor(r, g, b, a float32) color.Color {
 	return color.RGBA{uint8(r * 0xFFFF), uint8(g * 0xFFFF), uint8(b * 0xFFFF), uint8(a * 0xFFFF)}
 }
 
-// Converts a Go type color.Color to red, green, blue and alpha float32 values with a range of 0 to 1.
-func ConvertColorF(color color.Color) (r float32, g float32, b float32, a float32) {
-	red, green, blue, alpha := color.RGBA()
+// ConvertColorF returns the converted colors from c a Go type color.Color to red, green, blue and alpha float32 types within a range of 0 to 1.
+func ConvertColorF(c color.Color) (r float32, g float32, b float32, a float32) {
+	red, green, blue, alpha := c.RGBA()
 	if red == 0 {
 		r = 0
 	} else {

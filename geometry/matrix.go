@@ -7,7 +7,7 @@ import (
 // A 4x4 matrix.
 type Matrix4 []float32
 
-// The identity 4x4 matrix.
+// IdentityMatrix returns the identity 4x4 matrix.
 func IdentityMatrix() Matrix4 {
 	return Matrix4{
 		1, 0, 0, 0,
@@ -16,7 +16,7 @@ func IdentityMatrix() Matrix4 {
 		0, 0, 0, 1}
 }
 
-// Creates a 4x4 matrix which represents a translation.
+// TranslationMatrix returns the translation matrix of x, y, z.
 func TranslationMatrix(x, y, z float32) Matrix4 {
 	return Matrix4{
 		1, 0, 0, x,
@@ -25,7 +25,7 @@ func TranslationMatrix(x, y, z float32) Matrix4 {
 		0, 0, 0, 1}
 }
 
-// Create a 4x4 matrix which represents a scaling operation.
+// ScaleMatrix returns the scalation matrix of x, y, z.
 func ScaleMatrix(x, y, z float32) Matrix4 {
 	return Matrix4{
 		x, 0, 0, 0,
@@ -34,10 +34,10 @@ func ScaleMatrix(x, y, z float32) Matrix4 {
 		0, 0, 0, 1}
 }
 
-// Create a 4x4 matrix which rotates about the x-axis.
-func XRotationMatrix(angle float32) Matrix4 {
-	cos := Cos(angle)
-	sin := Sin(angle)
+// XRotationMatrix returns the x-axis rotation matrix based on angle x.
+func XRotationMatrix(x float32) Matrix4 {
+	cos := Cos(x)
+	sin := Sin(x)
 	return Matrix4{
 		1, 0, 0, 0,
 		0, cos, -sin, 0,
@@ -45,10 +45,10 @@ func XRotationMatrix(angle float32) Matrix4 {
 		0, 0, 0, 1}
 }
 
-// Creates a 4x4 matrix which rotates about the y-axis.
-func YRotationMatrix(angle float32) Matrix4 {
-	cos := Cos(angle)
-	sin := Sin(angle)
+// YRotationMatrix returns the y-axis rotation matrix based on angle y.
+func YRotationMatrix(y float32) Matrix4 {
+	cos := Cos(y)
+	sin := Sin(y)
 	return Matrix4{
 		cos, 0, sin, 0,
 		0, 1, 0, 0,
@@ -56,10 +56,10 @@ func YRotationMatrix(angle float32) Matrix4 {
 		0, 0, 0, 1}
 }
 
-// Creates a 4x4 matrix which rotates about the z-axis.
-func ZRotationMatrix(angle float32) Matrix4 {
-	cos := Cos(angle)
-	sin := Cos(angle)
+// ZRotationMatrix returns the z-axis rotation matrix based on angle z.
+func ZRotationMatrix(z float32) Matrix4 {
+	cos := Cos(z)
+	sin := Cos(z)
 	return Matrix4{
 		cos, -sin, 0, 0,
 		sin, cos, 0, 0,
@@ -67,10 +67,10 @@ func ZRotationMatrix(angle float32) Matrix4 {
 		0, 0, 0, 1}
 }
 
-// Creates a 4x4 matrix which rotates in the direction of vec with the amount of angle.
-func RotationMatrix(angle float32, vec Vector3) Matrix4 {
-	c := float32(math.Cos(float64(angle)))
-	s := float32(math.Sin(float64(angle)))
+// RotationMatrix returns the rotation matrix based on vec with a amount.
+func RotationMatrix(a float32, vec Vector3) Matrix4 {
+	c := float32(math.Cos(float64(a)))
+	s := float32(math.Sin(float64(a)))
 	return Matrix4{
 		vec.X*vec.X*(1-c) + c, vec.X*vec.Y*(1-c) - vec.Z*s, vec.X*vec.Z*(1-c) + vec.Y*s, 0,
 		vec.X*vec.Y*(1-c) + vec.Z*s, vec.Y*vec.Y*(1-c) + c, vec.Y*vec.Z*(1-c) - vec.X*s, 0,
@@ -79,7 +79,7 @@ func RotationMatrix(angle float32, vec Vector3) Matrix4 {
 	}
 }
 
-// Creates a 4x4 matrix which reflects x coordinates.
+// ReflectXMatrix returns the reflection matrix for the x-axis.
 func ReflectXMatrix() Matrix4 {
 	return Matrix4{
 		-1, 0, 0, 0,
@@ -89,7 +89,7 @@ func ReflectXMatrix() Matrix4 {
 	}
 }
 
-// Creates a 4x4 matrix which reflects y coordinates.
+// ReflectYMatrix returns the reflection matrix for the y-axis.
 func ReflectYMatrix() Matrix4 {
 	return Matrix4{
 		1, 0, 0, 0,
@@ -99,7 +99,7 @@ func ReflectYMatrix() Matrix4 {
 	}
 }
 
-// Creates a 4x4 matrix which reflects z coordinates.
+// ReflectZMatrix returns the reflection matrix for the z-axis.
 func ReflectZMatrix() Matrix4 {
 	return Matrix4{
 		1, 0, 0, 0,
@@ -109,7 +109,7 @@ func ReflectZMatrix() Matrix4 {
 	}
 }
 
-// Creates a 4x4 view matrix derived from an eye point, a reference point indicating the center of the scene and an up vector.
+// LookAtMatrix returns the view matrix derived from an eye point, a reference point indicating the center of the scene and an up vector.
 // Similar to gluLookAt.
 func LookAtMatrix(eye, center, up Vector3) Matrix4 {
 	z := (center.Normalized()).Scaled(-1.0)
@@ -124,7 +124,7 @@ func LookAtMatrix(eye, center, up Vector3) Matrix4 {
 	}
 }
 
-// Creates a 4x4 projection matrix for perspective corrected views.
+// PerspectiveMatrix returns the projection matrix for perspective corrected views.
 // Similar to gluPerspective.
 func PerspectiveMatrix(fovy, aspect, zNear, zFar float32) Matrix4 {
 	if zNear == zFar {
@@ -139,7 +139,7 @@ func PerspectiveMatrix(fovy, aspect, zNear, zFar float32) Matrix4 {
 	}
 }
 
-// Creates a 4x4 projection matrix for an orthogonal perspective.
+// Ortho returns the projection matrix for an orthogonal perspective.
 // Similar to gluOrtho.
 func Ortho(left, right, bottom, top, near, far float32) Matrix4 {
 	tx := -((right + left) / (right - left))
@@ -153,14 +153,15 @@ func Ortho(left, right, bottom, top, near, far float32) Matrix4 {
 	}
 }
 
-// Creates a 4x4 projection matrix for an orthogonal perspective with 2D drawing in mind.
+// Ortho2D returns the projection matrix for an orthogonal perspective with 2D drawing in mind.
 // Equal to Ortho(left, right, bottom, top, -1, 1).
 // Similar to gluOrtho2D.
 func Ortho2D(left, right, bottom, top float32) Matrix4 {
 	return Ortho(left, right, bottom, top, -1, 1)
 }
 
-func (m1 Matrix4) Multiplied(m2 Matrix4) Matrix4 {
+// Mul returns m1 multiplied by m2.
+func (m1 Matrix4) Mul(m2 Matrix4) Matrix4 {
 	return Matrix4{
 		m1[0]*m2[0] + m1[1]*m2[4] + m1[2]*m2[8] + m1[3]*m2[12],
 		m1[0]*m2[1] + m1[1]*m2[5] + m1[2]*m2[9] + m1[3]*m2[13],
@@ -184,6 +185,8 @@ func (m1 Matrix4) Multiplied(m2 Matrix4) Matrix4 {
 	}
 }
 
+// Transposed returns m transposed.
+// The transposed matrix is used in OpenGL.
 func (m Matrix4) Transposed() Matrix4 {
 	return Matrix4{
 		m[0], m[4], m[8], m[12],
@@ -193,6 +196,7 @@ func (m Matrix4) Transposed() Matrix4 {
 	}
 }
 
+// Determinant returns m's determinant.
 func (m Matrix4) Determinant() float32 {
 	a0 := m[0]*m[5] - m[1]*m[4]
 	a1 := m[0]*m[6] - m[2]*m[4]

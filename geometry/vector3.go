@@ -16,81 +16,47 @@ func (v Vector3) String() string {
 	return "(" + strconv.FormatFloat(float64(v.X), 'e', 3, 32) + "," + strconv.FormatFloat(float64(v.Y), 'e', 3, 32) + "," + strconv.FormatFloat(float64(v.Z), 'e', 3, 32) + ")"
 }
 
-// ### Manipulation functions ###
-
-func (v *Vector3) Set(x, y, z float32) {
-	v.X = x
-	v.Y = y
-	v.Z = z
-}
-
-// Adds another vector
-func (v *Vector3) Accumulate(vec Vector3) {
-	v.X += vec.X
-	v.Y += vec.Y
-	v.Z += vec.Z
-}
-
-// Subtracts another vector
-func (v *Vector3) Substract(vec Vector3) {
-	v.X -= vec.X
-	v.Y -= vec.Y
-	v.Z -= vec.Z
-}
-
-func (v *Vector3) Scale(scalar float32) {
-	v.X *= scalar
-	v.Y *= scalar
-	v.Z *= scalar
-}
-
-func (v *Vector3) Normalize() {
-	v.Scale(1 / v.Length())
-}
-
-// ### Return functions ###
-
-// Returns the vector added with another vector.
+// Add returns v added on vec.
 func (v Vector3) Add(vec Vector3) Vector3 {
 	return Vector3{v.X + vec.X, v.Y + vec.Y, v.Z + vec.Z}
 }
 
-// Returns the vector substracted with another vector.
+// Sub returns v subtracted from vec.
 func (v Vector3) Sub(vec Vector3) Vector3 {
 	return Vector3{v.X - vec.X, v.Y - vec.Y, v.Z - vec.Z}
 }
 
-// Returns the vector multiplied with another vector.
+// Mul returns v multiplied by vec.
 func (v Vector3) Mul(vec Vector3) Vector3 {
 	return Vector3{v.X * vec.X, v.Y * vec.Y, v.Z * vec.Z}
 }
 
-// Returns the vector scaled.
+// Scaled returns v scaled by scalar.
 func (v Vector3) Scaled(scalar float32) Vector3 {
 	return Vector3{v.X * scalar, v.Y * scalar, v.Z * scalar}
 }
 
-// Returns the vector normalized.
+// Normalized returns v normalized.
 func (v Vector3) Normalized() Vector3 {
 	return v.Scaled(1 / v.Length())
 }
 
-// Returns the length of the vector.
-func (v Vector3) Length() float32 {
-	return Sqrt(v.SquaredLength())
-}
-
-// Returns the square of the length of the vector.
+// SquaredLength returns v's length squared.
 func (v Vector3) SquaredLength() float32 {
 	return v.X*v.X + v.Y*v.Y + v.Z*v.Z
 }
 
-// Computes and returns the dot product with another vector.
+// Length returns v's length.
+func (v Vector3) Length() float32 {
+	return Sqrt(v.SquaredLength())
+}
+
+// Dot returns v's dot product with vec.
 func (v Vector3) Dot(vec Vector3) float32 {
 	return v.X*vec.X + v.Y*vec.Y + v.Z*vec.Z
 }
 
-// Returns the cross product with another vector.
+// Cross returns v's cross product with vec.
 func (v Vector3) Cross(vec Vector3) Vector3 {
 	return Vector3{
 		v.Y*vec.Z - v.Z*vec.Y,
@@ -99,12 +65,12 @@ func (v Vector3) Cross(vec Vector3) Vector3 {
 	}
 }
 
-// Computes and returns the angle between another vector.
+// AngleBetween returns the angle between v and vec.
 func (v Vector3) AngleBetween(vec Vector3) Angle {
 	return Angle(Acos(v.Dot(vec) / (v.Length() * vec.Length())))
 }
 
-// Computes and returns the distance to another vector.
+// DistanceBetween returns the distance between v and vec.
 func (v Vector3) DistanceBetween(vec Vector3) float32 {
 	return (v.Sub(vec)).Length()
 }

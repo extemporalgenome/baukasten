@@ -9,10 +9,19 @@ func Lin2f(p, q Vector2) Line2f {
 	return Line2f{P: p, Q: q}
 }
 
+// Intersection returns the intersection point with another line and true if it intersects.
+// If it does not intersect a zero value Vector2 and false is returned.
 func (l Line2f) Intersection(line Line2f) (Vector2, bool) {
 	return DoLinesIntersect(l, line)
 }
 
+// DirectionVector returns l's direction vector.
+func (l Line2f) DirectionVector() Vector2 {
+	return (l.Q.Sub(l.P)).Normalized()
+}
+
+// DoLinesIntersect returns the intersection point between two lines and true if it intersects.
+// If it does not intersect a zero value Vector2 and false is returned.
 func DoLinesIntersect(L1, L2 Line2f) (Vector2, bool) {
 	d := (L2.Q.Y-L2.P.Y)*(L1.Q.X-L1.P.X) - (L2.Q.X-L2.P.X)*(L1.Q.Y-L1.P.Y)
 	if d == 0 {

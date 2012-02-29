@@ -38,6 +38,26 @@ func (r Rectanglef) Size() Vector2 {
 	return Vector2{r.Max.X - r.Min.X, r.Max.Y - r.Min.Y}
 }
 
+// Top returns r's top line segment
+func (r Rectanglef) Top() Line2f {
+	return Lin2f(Vec2(r.Min.X, r.Max.Y), r.Max)
+}
+
+// Top returns r's bottom line segment
+func (r Rectanglef) Bottom() Line2f {
+	return Lin2f(r.Min, Vec2(r.Max.X, r.Min.Y))
+}
+
+// Top returns r's left line segment
+func (r Rectanglef) Left() Line2f {
+	return Lin2f(r.Min, Vec2(r.Min.X, r.Max.Y))
+}
+
+// Top returns r's right line segment
+func (r Rectanglef) Right() Line2f {
+	return Lin2f(Vec2(r.Max.X, r.Min.Y), r.Max)
+}
+
 // Add returns the rectangle r translated by p.
 func (r Rectanglef) Add(v Vector2) Rectanglef {
 	return Rectanglef{
@@ -52,6 +72,10 @@ func (r Rectanglef) Sub(v Vector2) Rectanglef {
 		Vector2{r.Min.X - v.X, r.Min.Y - v.Y},
 		Vector2{r.Max.X - v.X, r.Max.Y - v.Y},
 	}
+}
+
+func (r Rectanglef) IsInside(vec Vector2) bool {
+	return (r.Max.X > vec.X && r.Max.Y > vec.Y) && (r.Min.X < vec.X && r.Min.Y < vec.Y)
 }
 
 // Intersect returns the largest rectangle contained by both r and s. If the
