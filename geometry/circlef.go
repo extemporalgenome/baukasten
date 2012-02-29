@@ -9,26 +9,21 @@ func Circf(position Vector2, radius float32) Circlef {
 	return Circlef{Position: position, Radius: radius}
 }
 
-// IsInside returns true if vec is inside c.
-func (c Circlef) IsInside(vec Vector2) bool {
-	return c.Radius >= c.Position.DistanceBetween(vec)
-}
-
-// IsCircleCollision returns true if c intersects c1.
-func (c Circlef) IsCircleCollision(c1 Circlef) bool {
+// Intersect returns true if c intersects c1.
+func (c Circlef) Intersect(c1 Circlef) bool {
 	return c.Radius+c1.Radius >= c.Position.DistanceBetween(c1.Position)
 }
 
-// IsLineCollision returns true if c intersects line.
-func (c Circlef) IsLineCollision(line Line2f) bool {
+// IntersectLine returns true if c intersects line.
+func (c Circlef) IntersectLine(line Line2f) bool {
 	closest := closestPointOnSeg(line, c.Position)
 	dist := c.Position.Sub(closest)
 	return dist.Length() <= c.Radius
 }
 
-// IsRectangleCollision returns true if c intersects rec.
-func (c Circlef) IsRectangleCollision(rec Rectanglef) bool {
-	return rec.IsInside(c.Position) || c.IsLineCollision(rec.Top()) || c.IsLineCollision(rec.Bottom()) || c.IsLineCollision(rec.Left()) || c.IsLineCollision(rec.Right())
+// IntersectRec returns true if c intersects rec.
+func (c Circlef) IntersectRec(rec Rectanglef) bool {
+	return c.Position.InRec(rec) || c.IntersectLine(rec.Top()) || c.IntersectLine(rec.Bottom()) || c.IntersectLine(rec.Left()) || c.IntersectLine(rec.Right())
 }
 
 // closestPointOnSeg returns the closest point towards vec from line.

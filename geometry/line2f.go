@@ -9,13 +9,21 @@ func Lin2f(p, q Vector2) Line2f {
 	return Line2f{P: p, Q: q}
 }
 
-// Intersection returns the intersection point with another line and true if it intersects.
+// Intersect returns the intersection point with another line and true if it intersects.
 // If it does not intersect a zero value Vector2 and false is returned.
-func (l Line2f) Intersection(line Line2f) (Vector2, bool) {
+func (l Line2f) Intersect(line Line2f) (Vector2, bool) {
 	return DoLinesIntersect(l, line)
 }
 
-func (l Line2f) IsRectangleCollision(rec Rectanglef) bool {
+// IntersectCircle returns true if l intersects c.
+func (l Line2f) IntersectCircle(c Circlef) bool {
+	closest := closestPointOnSeg(l, c.Position)
+	dist := c.Position.Sub(closest)
+	return dist.Length() <= c.Radius
+}
+
+// IntersectRec returns true if l intersects rec.
+func (l Line2f) IntersectRec(rec Rectanglef) bool {
 	return LineRectangleIntersection(l, rec)
 }
 

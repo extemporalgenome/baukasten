@@ -74,10 +74,6 @@ func (r Rectanglef) Sub(v Vector2) Rectanglef {
 	}
 }
 
-func (r Rectanglef) IsInside(vec Vector2) bool {
-	return (r.Max.X > vec.X && r.Max.Y > vec.Y) && (r.Min.X < vec.X && r.Min.Y < vec.Y)
-}
-
 // Intersect returns the largest rectangle contained by both r and s. If the
 // two rectangles do not overlap then the zero rectangle will be returned.
 func (r Rectanglef) Intersect(s Rectanglef) Rectanglef {
@@ -97,6 +93,16 @@ func (r Rectanglef) Intersect(s Rectanglef) Rectanglef {
 		return ZR
 	}
 	return r
+}
+
+// IntersectCircle returns true if r intersects c.
+func (r Rectanglef) IntersectCircle(c Circlef) bool {
+	return c.Position.InRec(r) || c.IntersectLine(r.Top()) || c.IntersectLine(r.Bottom()) || c.IntersectLine(r.Left()) || c.IntersectLine(r.Right())
+}
+
+// IntersectLine returns true if r intersects l.
+func (r Rectanglef) IntersectLine(line Line2f) bool {
+	return LineRectangleIntersection(line, r)
 }
 
 // Union returns the smallest rectangle that contains both r and s.
