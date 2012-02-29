@@ -21,19 +21,15 @@ func NewGravityPointManipulator(position math.Vector2, force, gravityRange float
 func (m *GravityPointManipulator) Update(deltaTime time.Duration, particles []Particle) {
 	if m.Range < 0 { // Global effect
 		for i := range particles {
-			way := particles[i].Position.Sub(m.Position)
-			way.Normalize()
-			way.Scale(m.Force)
-			particles[i].Velocity.Accumulate(way)
+			way := ((particles[i].Position.Sub(m.Position)).Normalized()).Scaled(m.Force)
+			particles[i].Velocity = particles[i].Velocity.Add(way)
 		}
 		return
 	}
 	for i := range particles {
 		if particles[i].Position.DistanceBetween(m.Position) <= m.Range {
-			way := particles[i].Position.Sub(m.Position)
-			way.Normalize()
-			way.Scale(m.Force)
-			particles[i].Velocity.Accumulate(way)
+			way := ((particles[i].Position.Sub(m.Position)).Normalized()).Scaled(m.Force)
+			particles[i].Velocity = particles[i].Velocity.Add(way)
 		}
 	}
 }

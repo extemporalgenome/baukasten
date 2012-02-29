@@ -78,8 +78,8 @@ func (e *SurfaceEmitter) Update(deltaTime time.Duration) {
 			// x = position
 			// v = v + a * dt
 			// x = x + v * dt
-			e.particles[i].Velocity.Accumulate(e.particles[i].Acceleration.Scaled(sec))
-			e.particles[i].Position.Accumulate(e.particles[i].Velocity.Scaled(sec))
+			e.particles[i].Velocity = e.particles[i].Velocity.Add(e.particles[i].Acceleration.Scaled(sec))
+			e.particles[i].Position = e.particles[i].Position.Add(e.particles[i].Velocity.Scaled(sec))
 			e.particles[i].Life -= deltaTime
 		default:
 			// Unknown condition, set to dead

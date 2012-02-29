@@ -175,11 +175,11 @@ func (s *Surface) Draw(x, y float32) {
 	s.program.Use()
 	// projection->view->model(translation->rotation)
 	model := geometry.TranslationMatrix(x, y, 0)
-	model = model.Multiplied(geometry.ScaleMatrix(s.scaleX, s.scaleY, 1))
+	model = model.Mul(geometry.ScaleMatrix(s.scaleX, s.scaleY, 1))
 	if s.angle != 0 {
-		model = model.Multiplied(geometry.RotationMatrix(s.angle, geometry.Vector3{0, 0, 1}))
+		model = model.Mul(geometry.RotationMatrix(s.angle, geometry.Vector3{0, 0, 1}))
 	}
-	matrix := s.driver.Camera().Get().Multiplied(model)
+	matrix := s.driver.Camera().Get().Mul(model)
 	s.mvp.UniformMatrix4fv(1, false, matrix.Transposed())
 
 	s.texId.Uniform1i(0)

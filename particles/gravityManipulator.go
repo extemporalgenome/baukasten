@@ -17,6 +17,6 @@ func NewGravityManipulator(gravity math.Vector2) *GravityManipulator {
 
 func (m *GravityManipulator) Update(deltaTime time.Duration, particles []Particle) {
 	for i := range particles {
-		particles[i].Acceleration.Accumulate(m.Gravity.Scaled(float32(deltaTime.Seconds())))
+		particles[i].Acceleration = particles[i].Acceleration.Add(m.Gravity.Scaled(float32(deltaTime.Seconds())))
 	}
 }
