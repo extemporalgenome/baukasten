@@ -56,12 +56,12 @@ func (v Vector2) Dot(vec Vector2) float32 {
 	return v.X*vec.X + v.Y*vec.Y
 }
 
-// In returns whether v is in c. 
+// InCirc returns whether v is in c. 
 func (v Vector2) InCirc(c Circlef) bool {
 	return c.Radius >= c.Position.DistanceBetween(v)
 }
 
-// In returns whether v is in r.
+// InRec returns whether v is in r.
 func (v Vector2) InRec(r Rectanglef) bool {
 	return r.Min.X <= v.X && v.X < r.Max.X &&
 		r.Min.Y <= v.Y && v.Y < r.Max.Y
