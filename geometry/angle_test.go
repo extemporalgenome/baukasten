@@ -28,6 +28,18 @@ func TestAngle(t *testing.T) {
 		t.Errorf("d.Radians() %f should equal %f", d.Radians(), TestRadians)
 	}
 
+	// Vec
+	a := Rad(0)
+	vec := Vec2(1, 0)
+	if a.Vec() != vec {
+		t.Errorf("%v.Vec() should result in %v not in %v", a, vec, a.Vec())
+	}
+	a = Deg(180)
+	vec = Vec2(-1, 0)
+	if a.Vec().X != vec.X {
+		t.Errorf("%v.Vec().X should result in %f not in %f", a, vec.X, a.Vec().X)
+	}
+
 	// Zero test
 	zeroDegree := Deg(TestZero)
 	if zeroDegree.Degrees() != TestZero {
