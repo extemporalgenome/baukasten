@@ -31,15 +31,17 @@ type ContextDriver interface {
 	Init(*GraphicSettings) error
 	Close()
 	SwapBuffers()
-	ResizeEvent() <-chan WindowSizeEvent
-	ContextEvent() <-chan ContextEvent
+	SetResizeCallback(chan<- WindowSize)
+	SetContextCallback(chan<- ContextEvent)
 }
 
 type InputDriver interface {
-	KeyEvent() <-chan KeyEvent
-	MouseButtonEvent() <-chan MouseButtonEvent
-	MousePositionEvent() <-chan MousePositionEvent
-	MouseWheelEvent() <-chan MouseWheelEvent
+	SetKeyCallback(chan<- Key)
+	SetMouseButtonCallback(chan<- MouseButton)
+	SetMousePositionCallback(chan<- MousePosition)
+	SetMouseWheelCallback(chan<- MouseWheel)
+
+	MousePos() MousePosition
 	JoystickPos(joy int) []math.Vector2
 	JoystickButtons(joy int) []bool
 }

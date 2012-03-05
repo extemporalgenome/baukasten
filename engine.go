@@ -2,6 +2,7 @@
 package baukasten
 
 import (
+	"container/list"
 	"errors"
 	"image"
 	"image/color"
@@ -27,6 +28,14 @@ type Engine struct {
 
 	currentTime time.Time
 	lastTime    time.Time
+
+	contextEvent chan ContextEvent
+	resizeEvent  chan WindowSize
+
+	keyEvent           chan Key
+	mouseButtonEvent   chan MouseButton
+	mousePositionEvent chan MousePosition
+	mouseWheelEvent    chan MouseWheel
 }
 
 func NewEngine(graphic GraphicDriver, context ContextDriver, input InputDriver, font FontDriver) *Engine {
@@ -105,40 +114,196 @@ func (e *Engine) JoystickPos(joy int) []math.Vector2 {
 	return e.input.JoystickPos(joy)
 }
 
-func (e *Engine) ResizeEvent() <-chan WindowSizeEvent {
-	return e.context.ResizeEvent()
+func (e *Engine) ResizeEvent() <-chan WindowSize {
+	if e.resizeEvent == nil {
+		event := make(chan WindowSize, 0)
+		in := make(chan WindowSize, 0)
+		e.resizeEvent = event
+		go func() {
+			l := list.New()
+			for {
+				if l.Len() > 0 { // Can receive->saved/saved->send
+					element := l.Front()
+					value := element.Value.(WindowSize)
+					select {
+					case e.resizeEvent <- value:
+						l.Remove(element)
+					case v := <-in:
+						l.PushBack(v)
+					}
+				} else { // Can send through / receive->saved
+					v := <-in
+					select {
+					case e.resizeEvent <- v:
+					default:
+						l.PushBack(v)
+					}
+				}
+			}
+		}()
+		e.context.SetResizeCallback(in)
+	}
+	return e.resizeEvent
 }
 
 func (e *Engine) ContextEvent() <-chan ContextEvent {
-	return e.context.ContextEvent()
+	if e.contextEvent == nil {
+		event := make(chan ContextEvent, 0)
+		in := make(chan ContextEvent, 0)
+		e.contextEvent = event
+		go func() {
+			l := list.New()
+			for {
+				if l.Len() > 0 { // Can receive->saved/saved->send
+					element := l.Front()
+					value := element.Value.(ContextEvent)
+					select {
+					case e.contextEvent <- value:
+						l.Remove(element)
+					case v := <-in:
+						l.PushBack(v)
+					}
+				} else { // Can send through / receive->saved
+					v := <-in
+					select {
+					case e.contextEvent <- v:
+					default:
+						l.PushBack(v)
+					}
+				}
+			}
+		}()
+		e.context.SetContextCallback(in)
+	}
+	return e.contextEvent
 }
 
-func (e *Engine) KeyEvent() <-chan KeyEvent {
-	if e.input == nil {
-		panic(NoInputDriverError)
+func (e *Engine) KeyEvent() <-chan Key {
+	if e.keyEvent == nil {
+		event := make(chan Key, 0)
+		in := make(chan Key, 0)
+		e.keyEvent = event
+		go func() {
+			l := list.New()
+			for {
+				if l.Len() > 0 { // Can receive->saved/saved->send
+					element := l.Front()
+					value := element.Value.(Key)
+					select {
+					case e.keyEvent <- value:
+						l.Remove(element)
+					case v := <-in:
+						l.PushBack(v)
+					}
+				} else { // Can send through / receive->saved
+					v := <-in
+					select {
+					case e.keyEvent <- v:
+					default:
+						l.PushBack(v)
+					}
+				}
+			}
+		}()
+		e.input.SetKeyCallback(in)
 	}
-	return e.input.KeyEvent()
+	return e.keyEvent
 }
 
-func (e *Engine) MouseButtonEvent() <-chan MouseButtonEvent {
-	if e.input == nil {
-		panic(NoInputDriverError)
+func (e *Engine) MouseButtonEvent() <-chan MouseButton {
+	if e.mouseButtonEvent == nil {
+		event := make(chan MouseButton, 0)
+		in := make(chan MouseButton, 0)
+		e.mouseButtonEvent = event
+		go func() {
+			l := list.New()
+			for {
+				if l.Len() > 0 { // Can receive->saved/saved->send
+					element := l.Front()
+					value := element.Value.(MouseButton)
+					select {
+					case e.mouseButtonEvent <- value:
+						l.Remove(element)
+					case v := <-in:
+						l.PushBack(v)
+					}
+				} else { // Can send through / receive->saved
+					v := <-in
+					select {
+					case e.mouseButtonEvent <- v:
+					default:
+						l.PushBack(v)
+					}
+				}
+			}
+		}()
+		e.input.SetMouseButtonCallback(in)
 	}
-	return e.input.MouseButtonEvent()
+	return e.mouseButtonEvent
 }
 
-func (e *Engine) MousePositionEvent() <-chan MousePositionEvent {
-	if e.input == nil {
-		panic(NoInputDriverError)
+func (e *Engine) MousePositionEvent() <-chan MousePosition {
+	if e.mousePositionEvent == nil {
+		event := make(chan MousePosition, 0)
+		in := make(chan MousePosition, 0)
+		e.mousePositionEvent = event
+		go func() {
+			l := list.New()
+			for {
+				if l.Len() > 0 { // Can receive->saved/saved->send
+					element := l.Front()
+					value := element.Value.(MousePosition)
+					select {
+					case e.mousePositionEvent <- value:
+						l.Remove(element)
+					case v := <-in:
+						l.PushBack(v)
+					}
+				} else { // Can send through / receive->saved
+					v := <-in
+					select {
+					case e.mousePositionEvent <- v:
+					default:
+						l.PushBack(v)
+					}
+				}
+			}
+		}()
+		e.input.SetMousePositionCallback(in)
 	}
-	return e.input.MousePositionEvent()
+	return e.mousePositionEvent
 }
 
-func (e *Engine) MouseWheelEvent() <-chan MouseWheelEvent {
-	if e.input == nil {
-		panic(NoInputDriverError)
+func (e *Engine) MouseWheelEvent() <-chan MouseWheel {
+	if e.mouseWheelEvent == nil {
+		event := make(chan MouseWheel, 0)
+		in := make(chan MouseWheel, 0)
+		e.mouseWheelEvent = event
+		go func() {
+			l := list.New()
+			for {
+				if l.Len() > 0 { // Can receive->saved/saved->send
+					element := l.Front()
+					value := element.Value.(MouseWheel)
+					select {
+					case e.mouseWheelEvent <- value:
+						l.Remove(element)
+					case v := <-in:
+						l.PushBack(v)
+					}
+				} else { // Can send through / receive->saved
+					v := <-in
+					select {
+					case e.mouseWheelEvent <- v:
+					default:
+						l.PushBack(v)
+					}
+				}
+			}
+		}()
+		e.input.SetMouseWheelCallback(in)
 	}
-	return e.input.MouseWheelEvent()
+	return e.mouseWheelEvent
 }
 
 // DrawPoints draws each vector as a single point.

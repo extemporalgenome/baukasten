@@ -45,7 +45,7 @@ func (demo *SimpleWindowDemo) Update() {
 	select {
 	case contextEvent := <-demo.engine.ContextEvent():
 		switch contextEvent.Type() {
-		case baukasten.SystemQuit:
+		case baukasten.WindowClose:
 			demo.Unload() // Hackish
 		}
 	case <-demo.engine.KeyEvent():

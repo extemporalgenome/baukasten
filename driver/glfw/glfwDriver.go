@@ -16,24 +16,26 @@ var DefaultDriver = NewDriver()
 
 type Driver struct {
 	graphicSettings    *baukasten.GraphicSettings
-	resizeEvent        chan baukasten.WindowSizeEvent
+	resizeEvent        chan baukasten.WindowSize
 	contextEvent       chan baukasten.ContextEvent
-	keyEvent           chan baukasten.KeyEvent
-	mouseButtonEvent   chan baukasten.MouseButtonEvent
-	mousePositionEvent chan baukasten.MousePositionEvent
-	mouseWheelEvent    chan baukasten.MouseWheelEvent
+	keyEvent           chan baukasten.Key
+	mouseButtonEvent   chan baukasten.MouseButton
+	mousePositionEvent chan baukasten.MousePosition
+	mouseWheelEvent    chan baukasten.MouseWheel
 }
 
 func NewDriver() *Driver {
 	return &Driver{
-		resizeEvent:        make(chan baukasten.WindowSizeEvent, ChanBuffer),
+		resizeEvent:        make(chan baukasten.WindowSize, ChanBuffer),
 		contextEvent:       make(chan baukasten.ContextEvent, ChanBuffer),
-		keyEvent:           make(chan baukasten.KeyEvent, ChanBuffer),
-		mouseButtonEvent:   make(chan baukasten.MouseButtonEvent, ChanBuffer),
-		mousePositionEvent: make(chan baukasten.MousePositionEvent, ChanBuffer),
-		mouseWheelEvent:    make(chan baukasten.MouseWheelEvent, ChanBuffer),
+		keyEvent:           make(chan baukasten.Key, ChanBuffer),
+		mouseButtonEvent:   make(chan baukasten.MouseButton, ChanBuffer),
+		mousePositionEvent: make(chan baukasten.MousePosition, ChanBuffer),
+		mouseWheelEvent:    make(chan baukasten.MouseWheel, ChanBuffer),
 	}
 }
+
+// ### ContextDriver implementations ###
 
 func (d *Driver) Init(settings *baukasten.GraphicSettings) (err error) {
 	err = glfw.Init()
@@ -58,68 +60,8 @@ func (d *Driver) Init(settings *baukasten.GraphicSettings) (err error) {
 	}
 	glfw.SetSwapInterval(1) // VSync
 	glfw.SetWindowTitle(settings.Title)
-	glfw.SetWindowSizeCallback(func(w, h int) {
-		select {
-		case d.resizeEvent <- NewWindowSize(uint(w), uint(h)):
-		default:
-		}
-	})
-	glfw.SetWindowCloseCallback(func() int {
-		select {
-		case d.contextEvent <- ContextEvent(baukasten.SystemQuit):
-		default:
-		}
-		return 0
-	})
-	glfw.SetKeyCallback(func(key, state int) {
-		select {
-		case d.keyEvent <- NewKeyEvent(key, state):
-		default:
-		}
-	})
-	glfw.SetMouseButtonCallback(func(button, state int) {
-		select {
-		case d.mouseButtonEvent <- NewMouseButtonEvent(button, state):
-		default:
-		}
-	})
-	glfw.SetMousePosCallback(func(x, y int) {
-		select {
-		case d.mousePositionEvent <- NewMousePositionEvent(x, y):
-		default:
-		}
-	})
-	glfw.SetMouseWheelCallback(func(delta int) {
-		select {
-		case d.mouseWheelEvent <- MouseWheelEvent(delta):
-		default:
-		}
-	})
-
 	d.graphicSettings = settings
 	return nil
-}
-
-func (d *Driver) ResizeEvent() <-chan baukasten.WindowSizeEvent {
-	return d.resizeEvent
-}
-
-func (d *Driver) ContextEvent() <-chan baukasten.ContextEvent {
-	return d.contextEvent
-}
-
-func (d *Driver) KeyEvent() <-chan baukasten.KeyEvent {
-	return d.keyEvent
-}
-
-func (d *Driver) MouseButtonEvent() <-chan baukasten.MouseButtonEvent {
-	return d.mouseButtonEvent
-}
-func (d *Driver) MousePositionEvent() <-chan baukasten.MousePositionEvent {
-	return d.mousePositionEvent
-}
-func (d *Driver) MouseWheelEvent() <-chan baukasten.MouseWheelEvent {
-	return d.mouseWheelEvent
 }
 
 func (d *Driver) Close() {
@@ -129,6 +71,53 @@ func (d *Driver) Close() {
 
 func (d *Driver) SwapBuffers() {
 	glfw.SwapBuffers()
+}
+
+func (d *Driver) SetResizeCallback(callback chan<- baukasten.WindowSize) {
+	glfw.SetWindowSizeCallback(func(width, height int) {
+		callback <- NewWindowSize(width, height)
+	})
+}
+
+func (d *Driver) SetContextCallback(callback chan<- baukasten.ContextEvent) {
+	glfw.SetWindowCloseCallback(func() int {
+		callback <- ContextEvent(baukasten.WindowClose)
+		return 0
+	})
+	glfw.SetWindowRefreshCallback(func() {
+		callback <- ContextEvent(baukasten.WindowRefresh)
+	})
+}
+
+// ### InputDriver implementations ###
+
+func (d *Driver) SetKeyCallback(callback chan<- baukasten.Key) {
+	glfw.SetKeyCallback(func(key, state int) {
+		callback <- NewKeyEvent(key, state)
+	})
+}
+
+func (d *Driver) SetMouseButtonCallback(callback chan<- baukasten.MouseButton) {
+	glfw.SetMouseButtonCallback(func(button, state int) {
+		callback <- NewMouseButtonEvent(button, state)
+	})
+}
+
+func (d *Driver) SetMousePositionCallback(callback chan<- baukasten.MousePosition) {
+	glfw.SetMousePosCallback(func(x, y int) {
+		callback <- NewMousePositionEvent(x, y)
+	})
+}
+
+func (d *Driver) SetMouseWheelCallback(callback chan<- baukasten.MouseWheel) {
+	glfw.SetMouseWheelCallback(func(delta int) {
+		callback <- MouseWheelEvent(delta)
+	})
+}
+
+func (d *Driver) MousePos() baukasten.MousePosition {
+	x, y := glfw.MousePos()
+	return NewMousePositionEvent(x, y)
 }
 
 func (d *Driver) JoystickParam(joy, param int) int {

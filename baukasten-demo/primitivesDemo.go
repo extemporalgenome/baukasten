@@ -47,7 +47,7 @@ func (demo *PrimitivesDemo) Update() {
 	select {
 	case contextEvent := <-demo.engine.ContextEvent():
 		switch contextEvent.Type() {
-		case baukasten.SystemQuit:
+		case baukasten.WindowClose:
 			demo.Unload() // Hackish
 		}
 	case <-demo.engine.KeyEvent():
@@ -75,6 +75,5 @@ func (demo *PrimitivesDemo) Update() {
 	}
 	demo.engine.DrawLineStrip(geometry.Orange, curveVecs...)
 	demo.engine.DrawPoints(geometry.Green, a, b, c, d)
-
 	demo.engine.EndFrame()
 }

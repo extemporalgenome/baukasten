@@ -81,7 +81,7 @@ const (
 	KeyMenu
 )
 
-type KeyEvent interface {
+type Key interface {
 	Key() uint
 	State() uint
 }
