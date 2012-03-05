@@ -106,6 +106,10 @@ func (e *Engine) GraphicResize(w, h int) {
 	e.graphic.Resize(w, h)
 }
 
+func (e *Engine) MousePos() MousePosition {
+	return e.input.MousePos()
+}
+
 func (e *Engine) JoystickButtons(joy int) []bool {
 	return e.input.JoystickButtons(joy)
 }
