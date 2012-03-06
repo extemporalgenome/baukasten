@@ -38,6 +38,11 @@ func (r Rectanglef) Size() Vector2 {
 	return Vector2{r.Max.X - r.Min.X, r.Max.Y - r.Min.Y}
 }
 
+// Center returns r's center.
+func (r Rectanglef) Center() Vector2 {
+	return Vec2(r.Min.X+r.Dx()/2, r.Min.Y+r.Dy()/2)
+}
+
 // Top returns r's top line segment
 func (r Rectanglef) Top() Line2f {
 	return Lin2f(Vec2(r.Min.X, r.Max.Y), r.Max)
