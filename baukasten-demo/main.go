@@ -29,10 +29,11 @@ func main() {
 	simpleWindowDemo := NewSimpleWindowDemo()
 	primitivesDemo := NewPrimitivesDemo()
 	particlesDemo := NewParticlesDemo()
+	surfaceDemo := NewSurfaceDemo()
 
 	demoManager := NewDemoManager()
 	defer demoManager.Unload()
-	demoManager.AddDemos(simpleWindowDemo, primitivesDemo, particlesDemo)
+	demoManager.AddDemos(simpleWindowDemo, primitivesDemo, particlesDemo, surfaceDemo)
 
 	runtime.LockOSThread()
 	defer runtime.UnlockOSThread()
