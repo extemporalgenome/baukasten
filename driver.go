@@ -57,6 +57,8 @@ type Font interface {
 
 type Surface interface {
 	Draw(x, y float32)
+	DrawRec(dest math.Rectanglef)
+	DrawRegionRec(src math.Rectanglef, dest math.Rectanglef)
 	Delete()
 	Color() color.Color
 	SetColor(color.Color)

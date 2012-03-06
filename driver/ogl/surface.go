@@ -16,15 +16,6 @@ const (
 		"gl_FragColor = f_color * texture2D(texture, f_texcoord);\n}"
 )
 
-var SurfaceTriangles = []float32{
-	0, 0, 0,
-	1, 0, 0,
-	1, 1, 0,
-	1, 1, 0,
-	0, 1, 0,
-	0, 0, 0,
-}
-
 type Surface struct {
 	// Scale
 	scaleX float32
@@ -198,6 +189,96 @@ func (s *Surface) Draw(x, y float32) {
 	s.texcoord.Enable()
 	defer s.texcoord.Disable()
 	s.texcoord.AttribPointer(2, gl.FLOAT, false, 16, gl.Offset(nil, 8))
+
+	s.vbo.DrawArrays(0, 6)
+}
+
+func (s *Surface) DrawRec(rec geometry.Rectanglef) {
+	s.program.Use()
+	// projection->view->model(translation->rotation)
+	pos := rec.Center()
+	model := geometry.TranslationMatrix(pos.X, pos.Y, 0)
+	model = model.Mul(geometry.ScaleMatrix(s.scaleX, s.scaleY, 1))
+	if s.angle != 0 {
+		model = model.Mul(geometry.RotationMatrix(s.angle, geometry.Vector3{0, 0, 1}))
+	}
+	matrix := s.driver.Camera().Get().Mul(model)
+	s.mvp.UniformMatrix4fv(1, false, matrix.Transposed())
+
+	s.texId.Uniform1i(0)
+	s.colorCoord.Uniform4f(s.r, s.g, s.b, s.a)
+
+	s.coord2d.Enable()
+	defer s.coord2d.Disable()
+
+	vertices := []float32{
+		rec.Min.X, rec.Min.Y,
+		rec.Max.X, rec.Min.Y,
+		rec.Max.X, rec.Max.Y,
+		rec.Max.X, rec.Max.Y,
+		rec.Min.X, rec.Max.Y,
+		rec.Min.X, rec.Min.Y,
+	}
+
+	s.coord2d.AttribPointer(2, gl.FLOAT, false, 0, gl.Pointer(&vertices[0]))
+
+	s.vbo.Bind()
+	defer s.vbo.Unbind()
+
+	s.texture.Bind()
+	defer s.texture.Unbind()
+
+	s.texcoord.Enable()
+	defer s.texcoord.Disable()
+	s.texcoord.AttribPointer(2, gl.FLOAT, false, 16, gl.Offset(nil, 8))
+
+	s.vbo.DrawArrays(0, 6)
+}
+
+func (s *Surface) DrawRegionRec(src geometry.Rectanglef, dest geometry.Rectanglef) {
+	s.program.Use()
+	// projection->view->model(translation->rotation)
+	pos := dest.Center()
+	model := geometry.TranslationMatrix(pos.X, pos.Y, 0)
+	model = model.Mul(geometry.ScaleMatrix(s.scaleX, s.scaleY, 1))
+	if s.angle != 0 {
+		model = model.Mul(geometry.RotationMatrix(s.angle, geometry.Vector3{0, 0, 1}))
+	}
+	matrix := s.driver.Camera().Get().Mul(model)
+	s.mvp.UniformMatrix4fv(1, false, matrix.Transposed())
+
+	s.texId.Uniform1i(0)
+	s.colorCoord.Uniform4f(s.r, s.g, s.b, s.a)
+
+	s.coord2d.Enable()
+	defer s.coord2d.Disable()
+
+	vertices := []float32{
+		dest.Min.X, dest.Min.Y,
+		dest.Max.X, dest.Min.Y,
+		dest.Max.X, dest.Max.Y,
+		dest.Max.X, dest.Max.Y,
+		dest.Min.X, dest.Max.Y,
+		dest.Min.X, dest.Min.Y,
+	}
+
+	s.coord2d.AttribPointer(2, gl.FLOAT, false, 0, gl.Pointer(&vertices[0]))
+
+	texCoords := []float32{
+		src.Min.X, src.Min.Y,
+		src.Max.X, src.Min.Y,
+		src.Max.X, src.Max.Y,
+		src.Max.X, src.Max.Y,
+		src.Min.X, src.Max.Y,
+		src.Min.X, src.Min.Y,
+	}
+
+	s.texture.Bind()
+	defer s.texture.Unbind()
+
+	s.texcoord.Enable()
+	defer s.texcoord.Disable()
+	s.texcoord.AttribPointer(2, gl.FLOAT, false, 0, gl.Pointer(&texCoords[0]))
 
 	s.vbo.DrawArrays(0, 6)
 }
