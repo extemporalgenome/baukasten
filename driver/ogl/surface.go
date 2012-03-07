@@ -65,7 +65,7 @@ func (d *Driver) LoadSurface(img image.Image) (baukasten.Surface, error) {
 	}
 	// Generate triangles
 	width := float32(img.Bounds().Dx())
-	height := float32(img.Bounds().Dx())
+	height := float32(img.Bounds().Dy())
 
 	x := width / 2
 	y := height / 2
