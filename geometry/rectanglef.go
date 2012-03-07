@@ -105,8 +105,8 @@ func (r Rectanglef) IntersectCircle(c Circlef) bool {
 	return c.Position.InRec(r) || c.IntersectLine(r.Top()) || c.IntersectLine(r.Bottom()) || c.IntersectLine(r.Left()) || c.IntersectLine(r.Right())
 }
 
-// IntersectLine returns true if r intersects l.
-func (r Rectanglef) IntersectLine(line Line2f) bool {
+// IntersectLine returns true if r intersects l and the intersection points.
+func (r Rectanglef) IntersectLine(line Line2f) (bool, []Vector2) {
 	return LineRectangleIntersection(line, r)
 }
 

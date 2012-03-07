@@ -22,8 +22,8 @@ func (l Line2f) IntersectCircle(c Circlef) bool {
 	return dist.Length() <= c.Radius
 }
 
-// IntersectRec returns true if l intersects rec.
-func (l Line2f) IntersectRec(rec Rectanglef) bool {
+// IntersectRec returns true if l intersects rec and the intersection points
+func (l Line2f) IntersectRec(rec Rectanglef) (bool, []Vector2) {
 	return LineRectangleIntersection(l, rec)
 }
 
@@ -54,16 +54,25 @@ func DoLinesIntersect(L1, L2 Line2f) (Vector2, bool) {
 	return Vec2(0, 0), false
 }
 
-func LineRectangleIntersection(line Line2f, rec Rectanglef) bool {
-	if _, intersects := DoLinesIntersect(line, rec.Top()); intersects {
-		return true
+// LineRectangleIntersection returns true if line intersects rec and the intersection points.
+func LineRectangleIntersection(line Line2f, rec Rectanglef) (bool, []Vector2) {
+	points := make([]Vector2, 0)
+	intersection := false
+	if p, intersects := DoLinesIntersect(line, rec.Top()); intersects {
+		intersection = true
+		points = append(points, p)
 	}
-	if _, intersects := DoLinesIntersect(line, rec.Bottom()); intersects {
-		return true
+	if p, intersects := DoLinesIntersect(line, rec.Bottom()); intersects {
+		intersection = true
+		points = append(points, p)
 	}
-	if _, intersects := DoLinesIntersect(line, rec.Left()); intersects {
-		return true
+	if p, intersects := DoLinesIntersect(line, rec.Left()); intersects {
+		intersection = true
+		points = append(points, p)
 	}
-	_, intersects := DoLinesIntersect(line, rec.Right())
-	return intersects
+	if p, intersects := DoLinesIntersect(line, rec.Right()); intersects {
+		intersection = true
+		points = append(points, p)
+	}
+	return intersection, points
 }

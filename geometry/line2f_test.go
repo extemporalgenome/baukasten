@@ -24,15 +24,15 @@ func TestLine2f(t *testing.T) {
 	// IntersectRec
 	line := Lin2f(Vec2(0, 0), Vec2(1, 1))
 	rec := RectF(0, 0, 1, 1)
-	if line.IntersectRec(rec) == false {
+	if intersects, _ := line.IntersectRec(rec); intersects == false {
 		t.Errorf("%v should collide with %v", line, rec)
 	}
 	rec = RectF(0.5, 0.5, 2, 2)
-	if line.IntersectRec(rec) == false {
+	if intersects, _ := line.IntersectRec(rec); intersects == false {
 		t.Errorf("%v should collide with %v", line, rec)
 	}
 	rec = RectF(1.1, 1.1, 2, 2)
-	if line.IntersectRec(rec) {
+	if intersects, _ := line.IntersectRec(rec); intersects {
 		t.Errorf("%v should not collide with %v", line, rec)
 	}
 }
