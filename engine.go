@@ -406,8 +406,8 @@ func (e *Engine) OpenFont(name string) (Font, error) {
 	return e.font.OpenFont(name)
 }
 
-// RenderSurface renders a text to an image and creates a Surface of it.
-func (e *Engine) RenderSurface(text string, width, height int, size float64, color color.Color, font Font) (Surface, error) {
+// RenderText renders a text to an image and creates a Surface of it.
+func (e *Engine) RenderText(text string, width, height int, size float64, color color.Color, font Font) (Surface, error) {
 	if e.font == nil {
 		return nil, NoFontDriverError
 	}
