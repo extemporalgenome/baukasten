@@ -120,9 +120,8 @@ func (e *Engine) JoystickPos(joy int) []math.Vector2 {
 
 func (e *Engine) ResizeEvent() <-chan WindowSize {
 	if e.resizeEvent == nil {
-		event := make(chan WindowSize, 0)
 		in := make(chan WindowSize, 0)
-		e.resizeEvent = event
+		e.resizeEvent = make(chan WindowSize, 0)
 		go func() {
 			l := list.New()
 			for {
@@ -152,9 +151,8 @@ func (e *Engine) ResizeEvent() <-chan WindowSize {
 
 func (e *Engine) ContextEvent() <-chan ContextEvent {
 	if e.contextEvent == nil {
-		event := make(chan ContextEvent, 0)
 		in := make(chan ContextEvent, 0)
-		e.contextEvent = event
+		e.contextEvent = make(chan ContextEvent, 0)
 		go func() {
 			l := list.New()
 			for {
@@ -184,9 +182,8 @@ func (e *Engine) ContextEvent() <-chan ContextEvent {
 
 func (e *Engine) KeyEvent() <-chan Key {
 	if e.keyEvent == nil {
-		event := make(chan Key, 0)
 		in := make(chan Key, 0)
-		e.keyEvent = event
+		e.keyEvent = make(chan Key, 0)
 		go func() {
 			l := list.New()
 			for {
@@ -216,9 +213,8 @@ func (e *Engine) KeyEvent() <-chan Key {
 
 func (e *Engine) MouseButtonEvent() <-chan MouseButton {
 	if e.mouseButtonEvent == nil {
-		event := make(chan MouseButton, 0)
 		in := make(chan MouseButton, 0)
-		e.mouseButtonEvent = event
+		e.mouseButtonEvent = make(chan MouseButton, 0)
 		go func() {
 			l := list.New()
 			for {
@@ -248,9 +244,8 @@ func (e *Engine) MouseButtonEvent() <-chan MouseButton {
 
 func (e *Engine) MousePositionEvent() <-chan MousePosition {
 	if e.mousePositionEvent == nil {
-		event := make(chan MousePosition, 0)
 		in := make(chan MousePosition, 0)
-		e.mousePositionEvent = event
+		e.mousePositionEvent = make(chan MousePosition, 10)
 		go func() {
 			l := list.New()
 			for {
@@ -280,9 +275,8 @@ func (e *Engine) MousePositionEvent() <-chan MousePosition {
 
 func (e *Engine) MouseWheelEvent() <-chan MouseWheel {
 	if e.mouseWheelEvent == nil {
-		event := make(chan MouseWheel, 0)
 		in := make(chan MouseWheel, 0)
-		e.mouseWheelEvent = event
+		e.mouseWheelEvent = make(chan MouseWheel, 0)
 		go func() {
 			l := list.New()
 			for {
