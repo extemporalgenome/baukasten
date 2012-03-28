@@ -14,7 +14,7 @@ import (
 var NoContextDriverError = errors.New("baukasten.Engine has no loaded ContextDriver.")
 var NoGraphicDriverError = errors.New("baukasten.Engine has no loaded GraphicDriver.")
 var NoInputDriverError = errors.New("baukasten.Engine has no loaded InputDriver.")
-var NoFontDriverError = errors.New("baukasten.Engine has no loaded InputDriver.")
+var NoFontDriverError = errors.New("baukasten.Engine has no loaded FontDriver.")
 
 // Engine handles loading, unloading of drivers and is able to call general functions to the drivers.
 type Engine struct {
