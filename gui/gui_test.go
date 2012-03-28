@@ -36,7 +36,7 @@ func TestBasicGui(t *testing.T) {
 
 	label := NewLabel(nil)
 	label.SetFont(font)
-	label.SetText("Some text")
+	label.SetText("This is a label.\nWhich contains Text.")
 	label.SetBorder(NewBorder(label))
 
 	runtime.LockOSThread()
