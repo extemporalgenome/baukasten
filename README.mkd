@@ -29,7 +29,7 @@ With Baukasten, you have complete control over your rendering. You can pull even
 A two dimensional particle system is available.
 
 ## Dependencies
-- Go weekly.2012-03-04: http://weekly.golang.org
+- Go1: http://golang.org
 - Image formats for decoding from: http://code.google.com/p/go.image
 - Graphic rendering with OpenGL 3.3: https://github.com/chsc/GoGL
 - Context creation with GLFW 2.7: https://github.com/jteeuwen/glfw
