@@ -13,8 +13,8 @@ type FontContext struct {
 	units   int
 }
 
-func (f *FontContext) Render(text string, width, height int, size float64, color color.Color) image.Image {
-	fg := image.NewUniform(color)
+func (f *FontContext) Render(text string, width, height int, size float64, c color.Color) image.Image {
+	fg := image.NewUniform(c)
 	bg := image.Transparent
 	rgba := image.NewRGBA(image.Rect(0, 0, width, height))
 	draw.Draw(rgba, rgba.Bounds(), bg, image.ZP, draw.Src)
@@ -24,7 +24,7 @@ func (f *FontContext) Render(text string, width, height int, size float64, color
 	f.context.SetSrc(fg)
 
 	// Draw the text.
-	pt := freetype.Pt(10, 10+f.context.FUnitToPixelRU(f.units))
+	pt := freetype.Pt(0, f.context.FUnitToPixelRU(f.units))
 	f.context.DrawString(text, pt)
 
 	return rgba

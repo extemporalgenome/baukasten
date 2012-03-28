@@ -33,5 +33,5 @@ func (d *Driver) LoadFont(data []byte) (baukasten.Font, error) {
 	// Context
 	c := freetype.NewContext()
 	c.SetFont(font)
-	return &FontContext{c, font.UnitsPerEm()}, nil
+	return &FontContext{context: c, units: font.UnitsPerEm()}, nil
 }
