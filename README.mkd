@@ -1,0 +1,22 @@
+## Baukasten
+Baukasten is a game toolkit written in Go which focuses on easier game development.<br>
+Baukasten is the German word for "construction kit".<br>
+
+## Engine
+The old engine based approach is located in the 'engine' branch.<br>
+
+## Status
+This is a toy project at the moment and most of it will most likly change.
+
+## Notes
+You probably need to call runtime.LockOSThread() before calling most OpenGL and GLFW related functions. To unlock call runtime.UnlockOSThread().<br>
+
+Folder structure:
+
+image
+image/color
+image/texture
+math
+math/matrix
+gl
+glfw
