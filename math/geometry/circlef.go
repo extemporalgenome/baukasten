@@ -1,4 +1,4 @@
-package image
+package geometry
 
 type Circlef struct {
 	Position Vector2

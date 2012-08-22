@@ -1,4 +1,4 @@
-package image
+package geometry
 
 type BezierCurve []Vector2
 

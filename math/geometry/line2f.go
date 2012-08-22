@@ -1,4 +1,4 @@
-package image
+package geometry
 
 type Line2f struct {
 	P Vector2

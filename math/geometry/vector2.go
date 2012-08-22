@@ -1,8 +1,8 @@
-package image
+package geometry
 
 import (
-	"strconv"
 	"github.com/Agon/baukasten/math"
+	"strconv"
 )
 
 // Vector2 is a two dimensional vector.

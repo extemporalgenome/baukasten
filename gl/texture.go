@@ -1,9 +1,9 @@
 package gl
 
 import (
-	"image"
-	gl "github.com/chsc/gogl/gl33"
 	glimage "github.com/Agon/baukasten/image"
+	gl "github.com/chsc/gogl/gl33"
+	"image"
 )
 
 type Texture struct {
@@ -47,7 +47,7 @@ func (t *Texture) Render(location *UniformLocation) {
 	//gl.ActiveTexture(gl.TEXTURE0)
 	location.Uniform1i(0) // gl.Texture or 0
 	gl.BindTexture(gl.TEXTURE_2D, t.id)
-	
+
 }
 
 // Delete deletes the memory buffer on the graphic card.

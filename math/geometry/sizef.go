@@ -1,4 +1,4 @@
-package image
+package geometry
 
 type Sizef struct {
 	Width, Height float32

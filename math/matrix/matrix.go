@@ -2,7 +2,7 @@ package matrix
 
 import (
 	"github.com/Agon/baukasten/math"
-	"github.com/Agon/baukasten/image"
+	"github.com/Agon/baukasten/math/geometry"
 )
 
 // A 4x4 matrix.
@@ -69,7 +69,7 @@ func ZRotationMatrix(z float32) Matrix4 {
 }
 
 // RotationMatrix returns the rotation matrix based on vec with a amount.
-func RotationMatrix(a float32, vec image.Vector3) Matrix4 {
+func RotationMatrix(a float32, vec geometry.Vector3) Matrix4 {
 	c := math.Cos(a)
 	s := math.Sin(a)
 	return Matrix4{
@@ -112,7 +112,7 @@ func ReflectZMatrix() Matrix4 {
 
 // LookAtMatrix returns the view matrix derived from an eye point, a reference point indicating the center of the scene and an up vector.
 // Similar to gluLookAt.
-func LookAtMatrix(eye, center, up image.Vector3) Matrix4 {
+func LookAtMatrix(eye, center, up geometry.Vector3) Matrix4 {
 	z := (center.Normalized()).Scaled(-1.0)
 	dk := center.Cross(up)
 	x := dk.Normalized()

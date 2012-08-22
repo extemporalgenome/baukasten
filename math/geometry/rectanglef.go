@@ -1,4 +1,4 @@
-package image
+package geometry
 
 // ZR is the zero Rectanglef.
 var ZR Rectanglef

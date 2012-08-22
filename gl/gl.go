@@ -1,9 +1,9 @@
 package gl
 
 import (
+	glcolor "github.com/Agon/baukasten/image/color"
 	gl "github.com/chsc/gogl/gl33"
 	"image/color"
-	glcolor "github.com/Agon/baukasten/image/color"
 )
 
 func Clear(c color.Color) {

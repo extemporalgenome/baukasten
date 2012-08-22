@@ -1,4 +1,4 @@
-package image
+package geometry
 
 import (
 	"github.com/Agon/baukasten/math"
