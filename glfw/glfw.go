@@ -25,17 +25,93 @@
 package glfw
 
 import (
+	"errors"
 	"github.com/jteeuwen/glfw"
 	"time"
 )
 
-// TODO Pass a struct as settings
-func NewWindow(width, height int) (*window, error) {
+var (
+	ErrUnknownOpenGLProfile = errors.New("Unknown OpenGLProfile")
+)
+
+type OpenGLProfile int
+
+const (
+	OpenGLCoreProfile   = OpenGLProfile(glfw.OpenGLCoreProfile)
+	OpenGLCompatProfile = OpenGLProfile(glfw.OpenGLCompatProfile)
+)
+
+type Properties struct {
+	Width, Height  int
+	R, G, B, A     int
+	Depth, Stencil int
+	Fullscreen     bool
+}
+
+type AdvancedProperties struct {
+	RefreshRate                                                 int
+	AccumRedBits, AccumGreenBits, AccumBlueBits, AccumAlphaBits int
+	AuxBuffers                                                  int
+	Stereo                                                      bool
+	NoWindowResize                                              bool
+	FsaaSamples                                                 int
+	OpenGLVersionMajor, OpenGLVersionMinor                      int
+	OpenGLForwardCompat                                         bool
+	OpenGLDebugContext                                          bool
+	OpenGLProfile                                               OpenGLProfile
+}
+
+// NewWindow initialize glfw and opens a new window with p's properties.
+// The AdvancedProperties ap is optional.
+func NewWindow(p Properties, ap *AdvancedProperties) (*window, error) {
 	if err := glfw.Init(); err != nil {
 		return nil, err
 	}
 	w := &window{t: time.Now()}
-	if err := glfw.OpenWindow(width, height, 8, 8, 8, 0, 0, 0, glfw.Windowed); err != nil {
+	if ap != nil {
+		glfw.OpenWindowHint(glfw.RefreshRate, ap.RefreshRate)
+		glfw.OpenWindowHint(glfw.AccumRedBits, ap.AccumRedBits)
+		glfw.OpenWindowHint(glfw.AccumGreenBits, ap.AccumGreenBits)
+		glfw.OpenWindowHint(glfw.AccumBlueBits, ap.AccumBlueBits)
+		glfw.OpenWindowHint(glfw.AccumAlphaBits, ap.AccumAlphaBits)
+		glfw.OpenWindowHint(glfw.AuxBuffers, ap.AuxBuffers)
+		if ap.Stereo {
+			glfw.OpenWindowHint(glfw.Stereo, 1)
+		} else {
+			glfw.OpenWindowHint(glfw.Stereo, 0)
+		}
+		if ap.NoWindowResize {
+			glfw.OpenWindowHint(glfw.WindowNoResize, 1)
+		} else {
+			glfw.OpenWindowHint(glfw.WindowNoResize, 0)
+		}
+		glfw.OpenWindowHint(glfw.FsaaSamples, ap.FsaaSamples)
+		glfw.OpenWindowHint(glfw.OpenGLVersionMajor, ap.OpenGLVersionMajor)
+		glfw.OpenWindowHint(glfw.OpenGLVersionMinor, ap.OpenGLVersionMinor)
+		if ap.OpenGLForwardCompat {
+			glfw.OpenWindowHint(glfw.OpenGLForwardCompat, 1)
+		} else {
+			glfw.OpenWindowHint(glfw.OpenGLForwardCompat, 0)
+		}
+		if ap.OpenGLDebugContext {
+			glfw.OpenWindowHint(glfw.OpenGLDebugContext, 1)
+		} else {
+			glfw.OpenWindowHint(glfw.OpenGLDebugContext, 0)
+		}
+		switch ap.OpenGLProfile {
+		case OpenGLCompatProfile:
+			glfw.OpenWindowHint(glfw.OpenGLProfile, glfw.OpenGLCompatProfile)
+		case OpenGLCoreProfile:
+			glfw.OpenWindowHint(glfw.OpenGLProfile, glfw.OpenGLCoreProfile)
+		default:
+			return nil, ErrUnknownOpenGLProfile
+		}
+	}
+	mode := glfw.Windowed
+	if p.Fullscreen {
+		mode = glfw.Fullscreen
+	}
+	if err := glfw.OpenWindow(p.Width, p.Height, p.R, p.G, p.B, p.A, p.Depth, p.Stencil, mode); err != nil {
 		return nil, err
 	}
 	return w, nil
