@@ -13,14 +13,14 @@ Baukasten is made available under the [Simplified BSD License](http://en.wikiped
 
 ## Documentation
 GoPkgDoc:
--- OpenGL (3.3 shader based) utility: http://go.pkgdoc.org/github.com/Agon/baukasten/gl
--- GLFW (2.7.x) utility wrapper: http://go.pkgdoc.org/github.com/Agon/baukasten/glfw
--- Simple image/file utils: http://go.pkgdoc.org/github.com/Agon/baukasten/image
--- Color converting utils: http://go.pkgdoc.org/github.com/Agon/baukasten/image/color
--- Math: http://go.pkgdoc.org/github.com/Agon/baukasten/math
--- Geometry: http://go.pkgdoc.org/github.com/Agon/baukasten/math/geometry
--- Simple matrix functions for OpenGL: http://go.pkgdoc.org/github.com/Agon/baukasten/math/matrix
--- Time based utils: http://go.pkgdoc.org/github.com/Agon/baukasten/time/timeutil
+- OpenGL (3.3 shader based) utility: http://go.pkgdoc.org/github.com/Agon/baukasten/gl
+- GLFW (2.7.x) utility wrapper: http://go.pkgdoc.org/github.com/Agon/baukasten/glfw
+- Simple image/file utils: http://go.pkgdoc.org/github.com/Agon/baukasten/image
+- Color converting utils: http://go.pkgdoc.org/github.com/Agon/baukasten/image/color
+- Math: http://go.pkgdoc.org/github.com/Agon/baukasten/math
+- Geometry: http://go.pkgdoc.org/github.com/Agon/baukasten/math/geometry
+- Simple matrix functions for OpenGL: http://go.pkgdoc.org/github.com/Agon/baukasten/math/matrix
+- Time based utils: http://go.pkgdoc.org/github.com/Agon/baukasten/time/timeutil
 
 ## Notes
 You probably need to call runtime.LockOSThread() before calling most OpenGL and GLFW related functions. To unlock call runtime.UnlockOSThread().<br>
