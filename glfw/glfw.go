@@ -26,6 +26,7 @@ package glfw
 
 import (
 	"github.com/jteeuwen/glfw"
+	"time"
 )
 
 // TODO Pass a struct as settings
@@ -33,7 +34,7 @@ func NewWindow(width, height int) (*window, error) {
 	if err := glfw.Init(); err != nil {
 		return nil, err
 	}
-	w := &window{}
+	w := &window{t: time.Now()}
 	if err := glfw.OpenWindow(width, height, 8, 8, 8, 0, 0, 0, glfw.Windowed); err != nil {
 		return nil, err
 	}
@@ -44,7 +45,9 @@ type CloseCallbackHandler func() bool
 type SizeCallbackHandler func(width, height int)
 
 // TODO Window size handling
-type window struct{}
+type window struct {
+	t time.Time
+}
 
 func (w *window) SetTitle(title string) {
 	glfw.SetWindowTitle(title)
@@ -73,6 +76,27 @@ func (w *window) Size() (int, int) {
 
 func (w *window) SetPos(x, y int) {
 	glfw.SetWindowPos(x, y)
+}
+
+func (w *window) MousePos() (int, int) {
+	return glfw.MousePos()
+}
+
+func (w *window) SetMousePos(x, y int) {
+	glfw.SetMousePos(x, y)
+}
+
+// Time returns the time passed since NewWindow was called.
+// NOTE: This does not use the equally named glfw function.
+func (w *window) Time() time.Duration {
+	return w.t.Sub(time.Now())
+}
+
+// SetTime sets the current time of the timer to the specified time.
+// Subsequent calls to window.Time will be relative to this time.
+// NOTE: This does not use the equally named glfw function.
+func (w *window) SetTime(d time.Duration) {
+	w.t.Add(d)
 }
 
 func (w *window) Iconify() {
@@ -171,7 +195,45 @@ func (w *window) OpenGLProfile() int {
 	return glfw.WindowParam(glfw.OpenGLProfile)
 }
 
-// TODO Enable and disable functions
+func (w *window) SetMouseCursor(enable bool) {
+	if enable {
+		glfw.Enable(glfw.MouseCursor)
+		return
+	}
+	glfw.Disable(glfw.MouseCursor)
+}
+
+func (w *window) SetStickyKeys(enable bool) {
+	if enable {
+		glfw.Enable(glfw.StickyKeys)
+		return
+	}
+	glfw.Disable(glfw.StickyKeys)
+}
+
+func (w *window) SetStickyMouseButtons(enable bool) {
+	if enable {
+		glfw.Enable(glfw.StickyMouseButtons)
+		return
+	}
+	glfw.Disable(glfw.StickyMouseButtons)
+}
+
+func (w *window) SetSystemKeys(enable bool) {
+	if enable {
+		glfw.Enable(glfw.SystemKeys)
+		return
+	}
+	glfw.Disable(glfw.SystemKeys)
+}
+
+func (w *window) SetKeyRepeat(enable bool) {
+	if enable {
+		glfw.Enable(glfw.KeyRepeat)
+		return
+	}
+	glfw.Disable(glfw.KeyRepeat)
+}
 
 func (w *window) SetCloseCallback(f CloseCallbackHandler) {
 	glfw.SetWindowCloseCallback(func() int {
