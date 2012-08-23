@@ -169,6 +169,24 @@ func (w *window) SetMouseWheel(pos int) {
 	glfw.SetMouseWheel(pos)
 }
 
+// Key returns true if the given key k is held down, or false otherwise.
+func (w *window) Key(k Key) bool {
+	if glfw.Key(int(k)) == glfw.KeyPress {
+		return true
+	}
+	return false
+}
+
+// MouseButton returns true if the given mouse button btn is held down, or false otherwise.
+func (w *window) MouseButton(btn MouseButton) bool {
+	if glfw.MouseButton(int(btn)) == glfw.KeyPress {
+		return true
+	}
+	return false
+}
+
+// TODO Joystick support
+
 // Time returns the time passed since NewWindow was called.
 // NOTE: This does not use the equally named glfw function.
 func (w *window) Time() time.Duration {
