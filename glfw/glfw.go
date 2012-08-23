@@ -44,7 +44,6 @@ func NewWindow(width, height int) (*window, error) {
 type CloseCallbackHandler func() bool
 type SizeCallbackHandler func(width, height int)
 
-// TODO Window size handling
 type window struct {
 	t time.Time
 }
@@ -84,6 +83,14 @@ func (w *window) MousePos() (int, int) {
 
 func (w *window) SetMousePos(x, y int) {
 	glfw.SetMousePos(x, y)
+}
+
+func (w *window) MouseWheel() int {
+	return glfw.MouseWheel()
+}
+
+func (w *window) SetMouseWheel(pos int) {
+	glfw.SetMouseWheel(pos)
 }
 
 // Time returns the time passed since NewWindow was called.
