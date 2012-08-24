@@ -55,8 +55,13 @@ func main() {
 	}
 	defer window.Close()
 	window.SetTitle(WindowTitle)
+	window.SetVSync(true)
 	window.SetCloseCallback(onClose)
 	window.SetSizeCallback(onResize)
+	window.SetMouseButtonCallback(onMouseButton)
+	window.SetMouseWheelCallback(onMouseWheel)
+	window.SetKeyCallback(onKey)
+	window.SetCharCallback(onChar)
 
 	timer := timeutil.NewDeltaTimer()
 	ticker := time.NewTicker(time.Second / FPSLimit)
@@ -83,4 +88,18 @@ func onClose() bool {
 	return true // Close window
 }
 
-// TODO mouse, mouseWheel, key, char callbacks
+func onMouseButton(btn glfw.MouseButton, pressed bool) {
+	fmt.Printf("Button %d is pressed %b\n", btn, pressed)
+}
+
+func onMouseWheel(delta int) {
+	fmt.Printf("Mouse wheel's delta: %d\n", delta)
+}
+
+func onKey(k glfw.Key, pressed bool) {
+	fmt.Printf("Key %s , pressed=%b\n", k, pressed)
+}
+
+func onChar(k glfw.Key, pressed bool) {
+	fmt.Printf("Char %s , pressed=%b\n", k, pressed)
+}
