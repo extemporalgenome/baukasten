@@ -44,6 +44,8 @@ const (
 
 type Key int
 
+func (k Key) String() string { return string(k) }
+
 const (
 	_ Key = 256 + iota
 	KeyEsc
