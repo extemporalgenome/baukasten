@@ -117,9 +117,6 @@ func NewWindow(p Properties, ap *AdvancedProperties) (*window, error) {
 	return w, nil
 }
 
-type CloseCallbackHandler func() bool
-type SizeCallbackHandler func(width, height int)
-
 type window struct {
 	t time.Time
 }
@@ -336,7 +333,7 @@ func (w *window) SetKeyRepeat(enable bool) {
 	glfw.Disable(glfw.KeyRepeat)
 }
 
-func (w *window) SetCloseCallback(f CloseCallbackHandler) {
+func (w *window) SetCloseCallback(f func() bool) {
 	glfw.SetWindowCloseCallback(func() int {
 		closeWindow := f()
 		if closeWindow {
@@ -346,10 +343,32 @@ func (w *window) SetCloseCallback(f CloseCallbackHandler) {
 	})
 }
 
-func (w *window) SetSizeCallback(f SizeCallbackHandler) {
+func (w *window) SetSizeCallback(f func(int, int)) {
 	glfw.SetWindowSizeCallback(func(width, height int) {
 		f(width, height)
 	})
 }
 
-// TODO MouseButton, MouseWheel, Key, Char callbacks
+func (w *window) SetMouseButtonCallback(f func(MouseButton, bool)) {
+	glfw.SetMouseButtonCallback(func(button, state int) {
+		f(MouseButton(button), state == 1)
+	})
+}
+
+func (w *window) SetMouseWheelCallback(f func(int)) {
+	glfw.SetMouseWheelCallback(func(delta int) {
+		f(delta)
+	})
+}
+
+func (w *window) SetKeyCallback(f func(Key, bool)) {
+	glfw.SetKeyCallback(func(key, state int) {
+		f(Key(key), state == 1)
+	})
+}
+
+func (w *window) SetCharCallback(f func(Key, bool)) {
+	glfw.SetCharCallback(func(key, state int) {
+		f(Key(key), state == 1)
+	})
+}
