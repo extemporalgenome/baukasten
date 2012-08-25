@@ -67,11 +67,12 @@ func LoadTexture(img image.Image) (*Texture, error) {
 	return &Texture{id: textureId}, nil
 }
 
-func (t *Texture) Render(location *UniformLocation) {
-	//gl.ActiveTexture(gl.TEXTURE0)
-	location.Uniform1i(0) // gl.Texture or 0
+func (t *Texture) Bind() {
 	gl.BindTexture(gl.TEXTURE_2D, t.id)
+}
 
+func (t *Texture) Unbind() {
+	gl.BindTexture(gl.TEXTURE_2D, 0)
 }
 
 // Delete deletes the memory buffer on the graphic card.

@@ -30,11 +30,62 @@ import (
 	"image/color"
 )
 
+const (
+	FloatType = gl.FLOAT
+)
+
 func Init() error {
 	if err := gl.Init(); err != nil {
 		return err
 	}
+	// Load default vertex- and fragmentshader for surfaces
+	surfaceVS, err := LoadShader(surfaceVertexShaderData, VertexShader)
+	if err != nil {
+		return err
+	}
+	surfaceFS, err := LoadShader(surfaceFragmentShaderData, FragmentShader)
+	if err != nil {
+		return err
+	}
+	DefaultSurfaceShaderProgram = NewProgram()
+	DefaultSurfaceShaderProgram.AttachShaders(surfaceVS, surfaceFS)
+	if err = DefaultSurfaceShaderProgram.Link(); err != nil {
+		return err
+	}
+	// Surface AttributeLocations
+	surfaceCoordAttrib, err = DefaultSurfaceShaderProgram.GetAttributeLocation("coord2d")
+	if err != nil {
+		return err
+	}
+	surfaceTexAttrib, err = DefaultSurfaceShaderProgram.GetAttributeLocation("texcoord")
+	if err != nil {
+		return err
+	}
+	// UniformLocations
+	surfaceColorUni, err = DefaultSurfaceShaderProgram.GetUniformLocation("v_color")
+	if err != nil {
+		return err
+	}
+	surfaceMvpUni, err = DefaultSurfaceShaderProgram.GetUniformLocation("mvp")
+	if err != nil {
+		return err
+	}
+	surfaceTexUni, err = DefaultSurfaceShaderProgram.GetUniformLocation("texture")
+	if err != nil {
+		return err
+	}
 	return nil
+}
+
+func Close() {
+	// TODO Both surface shaders aren't getting deleted in this func (?)
+	DefaultSurfaceShaderProgram.Delete()
+}
+
+// TODO Allow different blend functions
+func EnableBlend() {
+	gl.Enable(gl.BLEND)
+	gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
 }
 
 func Clear(c color.Color) {
