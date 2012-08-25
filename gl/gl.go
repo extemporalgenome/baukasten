@@ -30,6 +30,13 @@ import (
 	"image/color"
 )
 
+func Init() error {
+	if err := gl.Init(); err != nil {
+		return err
+	}
+	return nil
+}
+
 func Clear(c color.Color) {
 	r, g, b, a := glcolor.ConvertColorGL(c)
 	gl.ClearColor(r, g, b, a)
