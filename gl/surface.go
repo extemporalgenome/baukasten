@@ -39,7 +39,6 @@ const (
 
 var (
 	DefaultSurfaceShaderProgram *Program
-	DefaultSurfaceCamera        matrix.Matrix4
 	surfaceCoordAttrib          *AttributeLocation
 	surfaceTexAttrib            *AttributeLocation
 	surfaceColorUni             *UniformLocation
@@ -114,7 +113,7 @@ func (s *Surface) Draw(x, y float32) {
 	if s.angle != 0 {
 		model = model.Mul(matrix.RotationMatrix(s.angle, geometry.Vector3{0, 0, 1}))
 	}
-	matrix := DefaultSurfaceCamera.Mul(model)
+	matrix := DefaultCamera.Mul(model)
 	surfaceMvpUni.UniformMatrix4fv(1, false, matrix.Transposed())
 
 	surfaceTexUni.Uniform1i(0)

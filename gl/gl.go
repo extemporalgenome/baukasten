@@ -26,12 +26,17 @@ package gl
 
 import (
 	glcolor "github.com/Agon/baukasten/image/color"
+	"github.com/Agon/baukasten/math/matrix"
 	gl "github.com/chsc/gogl/gl33"
 	"image/color"
 )
 
 const (
 	FloatType = gl.FLOAT
+)
+
+var (
+	DefaultCamera matrix.Matrix4
 )
 
 func Init() error {
@@ -74,6 +79,7 @@ func Init() error {
 	if err != nil {
 		return err
 	}
+	// TODO Load primitives shaders, program, attribute- and uniformlocations
 	return nil
 }
 
