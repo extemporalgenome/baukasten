@@ -79,7 +79,34 @@ func Init() error {
 	if err != nil {
 		return err
 	}
-	// TODO Load primitives shaders, program, attribute- and uniformlocations
+
+	// Primitives
+	primitivesVertexShader, err := LoadShader(primitivesVertexShaderData, VertexShader)
+	if err != nil {
+		return err
+	}
+	primitivesFragmentShader, err := LoadShader(primitivesFragmentShaderData, FragmentShader)
+	if err != nil {
+		return err
+	}
+	DefaultPrimitivesShaderProgram = NewProgram()
+	DefaultPrimitivesShaderProgram.AttachShaders(primitivesVertexShader, primitivesFragmentShader)
+	err = DefaultPrimitivesShaderProgram.Link()
+	if err != nil {
+		return err
+	}
+	primitivesAttributeCoord, err = DefaultPrimitivesShaderProgram.GetAttributeLocation("coord")
+	if err != nil {
+		return err
+	}
+	primitivesAttributeColor, err = DefaultPrimitivesShaderProgram.GetAttributeLocation("v_color")
+	if err != nil {
+		return err
+	}
+	primitivesUniformMatrix, err = DefaultPrimitivesShaderProgram.GetUniformLocation("mvp")
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -92,6 +119,10 @@ func Close() {
 func EnableBlend() {
 	gl.Enable(gl.BLEND)
 	gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+}
+
+func SetViewport(left, top, right, bottom int) {
+	gl.Viewport(gl.Int(left), gl.Int(top), gl.Sizei(right), gl.Sizei(bottom))
 }
 
 func Clear(c color.Color) {
