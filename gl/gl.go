@@ -48,8 +48,14 @@ func Init() error {
 	if err != nil {
 		return err
 	}
+	if err = surfaceVS.Compile(); err != nil {
+		return err
+	}
 	surfaceFS, err := LoadShader(surfaceFragmentShaderData, FragmentShader)
 	if err != nil {
+		return err
+	}
+	if err = surfaceFS.Compile(); err != nil {
 		return err
 	}
 	DefaultSurfaceShaderProgram = NewProgram()
@@ -85,8 +91,14 @@ func Init() error {
 	if err != nil {
 		return err
 	}
+	if err = primitivesVertexShader.Compile(); err != nil {
+		return err
+	}
 	primitivesFragmentShader, err := LoadShader(primitivesFragmentShaderData, FragmentShader)
 	if err != nil {
+		return err
+	}
+	if err = primitivesFragmentShader.Compile(); err != nil {
 		return err
 	}
 	DefaultPrimitivesShaderProgram = NewProgram()
