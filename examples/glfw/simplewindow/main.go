@@ -89,7 +89,7 @@ func onClose() bool {
 }
 
 func onMouseButton(btn glfw.MouseButton, pressed bool) {
-	fmt.Printf("Button %d is pressed %b\n", btn, pressed)
+	fmt.Printf("Button %d is pressed %v\n", btn, pressed)
 }
 
 func onMouseWheel(delta int) {
@@ -97,9 +97,9 @@ func onMouseWheel(delta int) {
 }
 
 func onKey(k glfw.Key, pressed bool) {
-	fmt.Printf("Key %s , pressed=%b\n", k, pressed)
+	fmt.Printf("Key %s , pressed=%v\n", k, pressed)
 }
 
 func onChar(k glfw.Key, pressed bool) {
-	fmt.Printf("Char %s , pressed=%b\n", k, pressed)
+	fmt.Printf("Char %s , pressed=%v\n", k, pressed)
 }
