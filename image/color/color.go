@@ -236,7 +236,12 @@ func ConvertColorF(c color.Color) (r float32, g float32, b float32, a float32) {
 	return
 }
 
-func ConvertColorGL(c color.Color) (gl.Clampf, gl.Clampf, gl.Clampf, gl.Clampf) {
+func ConvertColorGL(c color.Color) (gl.Float, gl.Float, gl.Float, gl.Float) {
+	r, g, b, a := ConvertColorF(c)
+	return gl.Float(r), gl.Float(g), gl.Float(b), gl.Float(a)
+}
+
+func ConvertColorGLClampf(c color.Color) (gl.Clampf, gl.Clampf, gl.Clampf, gl.Clampf) {
 	r, g, b, a := ConvertColorF(c)
 	return gl.Clampf(r), gl.Clampf(g), gl.Clampf(b), gl.Clampf(a)
 }
