@@ -31,10 +31,6 @@ import (
 	gl "github.com/chsc/gogl/gl33"
 )
 
-var (
-	ErrProgramError = errors.New("Error in program.")
-)
-
 type Program struct {
 	id gl.Uint
 }
@@ -51,14 +47,23 @@ func (p *Program) AttachShaders(shaders ...*Shader) {
 }
 
 func (p *Program) Link() error {
-	var compileOk gl.Int
+	linkOk := gl.Int(gl.FALSE)
 	gl.LinkProgram(p.id)
-	gl.GetProgramiv(p.id, gl.LINK_STATUS, &compileOk)
-	if compileOk == 0 {
-		// TODO Get errror
-		return ErrProgramError
+	gl.GetProgramiv(p.id, gl.LINK_STATUS, &linkOk)
+	if linkOk == gl.FALSE {
+		return p.getError()
 	}
 	return nil
+}
+
+func (p *Program) getError() error {
+	var logLength gl.Int
+	gl.GetProgramiv(p.id, gl.INFO_LOG_LENGTH, &logLength)
+	log := gl.GLStringAlloc(gl.Sizei(logLength))
+	defer gl.GLStringFree(log)
+	gl.GetProgramInfoLog(p.id, gl.Sizei(logLength), nil, log)
+	err := gl.GoString(log)
+	return errors.New(err)
 }
 
 func (p *Program) Use() {

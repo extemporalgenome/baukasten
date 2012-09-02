@@ -26,7 +26,6 @@ package gl
 
 import (
 	"errors"
-	"fmt"
 	"io/ioutil"
 
 	gl "github.com/chsc/gogl/gl33"
@@ -82,12 +81,21 @@ func (s *Shader) Id() gl.Uint {
 }
 
 func (s *Shader) Compile() error {
-	var compileOk gl.Int
+	compileOk := gl.Int(gl.FALSE)
 	gl.CompileShader(s.id)
 	gl.GetShaderiv(s.id, gl.COMPILE_STATUS, &compileOk)
-	if compileOk == 0 {
-		errNum := gl.GetError()
-		return errors.New(fmt.Sprintf("Error in vertex shader: %d\n", errNum))
+	if compileOk == gl.FALSE {
+		return s.getError()
 	}
 	return nil
+}
+
+func (s *Shader) getError() error {
+	var logLength gl.Int
+	gl.GetShaderiv(s.id, gl.INFO_LOG_LENGTH, &logLength)
+	log := gl.GLStringAlloc(gl.Sizei(logLength))
+	defer gl.GLStringFree(log)
+	gl.GetShaderInfoLog(s.id, gl.Sizei(logLength), nil, log)
+	err := gl.GoString(log)
+	return errors.New(err)
 }
