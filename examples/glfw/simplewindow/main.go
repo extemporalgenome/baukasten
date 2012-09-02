@@ -31,15 +31,16 @@ import (
 	"time"
 )
 
-var (
+const (
 	Width, Height                           = 256, 256
 	RedBits, GreenBits, BlueBits, AlphaBits = 8, 8, 8, 8
 	DepthBits, StencilBits                  = 0, 0
 	Fullscreen                              = false
 	WindowTitle                             = "baukasten - gl, glfw - SimpleWindow"
-	FPSLimit                                = time.Duration(60)
-	CloseChan                               = make(chan bool, 1)
+	FPSLimit                                = 60
 )
+
+var CloseChan = make(chan bool, 1)
 
 func main() {
 	properties := glfw.Properties{
